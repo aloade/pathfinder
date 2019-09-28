@@ -26,8 +26,8 @@
 
 /* général */
 @font-face {
-    font-family: "Bordofixed Tryout";
-    src: url("http://www.fontsaddict.com/fontface/bordofixed-tryout.ttf");
+    font-family: "Gloos And Bloom";
+    src: url("https://github.com/aloade/pathfinder/blob/master/Gloss_And_Bloom.ttf");
 }
 
 @font-face {
@@ -294,6 +294,7 @@
 }
 
 .sheet-header-character input {
+    font-family: "Gloss And Bloom", Arial, Sans;
     border: none;
     font-size: 3rem;
     line-height: 3.2rem;
