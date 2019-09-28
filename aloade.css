@@ -1,0 +1,565 @@
+/* correctif roll20 */
+.charsheet *, .charsheet::after, .charsheet::before {
+    box-sizing: border-box;
+}
+
+.charsheet * {
+    font-size: 1.3rem;
+    line-height: 1rem;
+}
+
+.charsheet::before, .charsheet::after {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.charsheet input, .charsheet select, .charsheet textarea {
+    display: inline-block;
+    width: 100% !important;
+    margin: 0;
+    border-radius: 0;
+}
+
+.charsheet label {
+    margin: 0;
+}
+
+/* général */
+@font-face {
+    font-family: "Bordofixed Tryout";
+    src: url("http://www.fontsaddict.com/fontface/bordofixed-tryout.ttf");
+}
+
+@font-face {
+    font-family: "Monotype Corsiva";
+    src: url("https://fonts.google.com/css?family=Shadows+Into+Light");
+}
+
+.charsheet {
+    font-family: "Bordofixed Tryout", "Monotype Corsiva", Arial, Sans;
+    font-size: 1.1rem;
+    abackground: url('https://texturefabrik.files.wordpress.com/2014/05/texture_fabrik_paper_vol-4_10.jpg?w=520');
+    background-color: rgb(245, 241, 206);;
+}
+
+/* barre de navigation */
+.sheet-tab {
+    position: relative;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sheet-tab > input {
+    display: none;
+}
+
+.sheet-tab > label {
+    display: block;
+    flex-grow: 1;
+    width: auto;
+    height: 3rem;
+    text-align: center;
+    overflow: hidden;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    color: rgb(150, 150, 150);
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-bottom: 1px solid rgb(190, 186, 151);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.sheet-tab-content {
+    position: relative;
+    flex-grow: 7;
+    width: 100%;
+    top:0;
+    left: 0;
+    z-index: 2;
+    display: none;
+    background-color: rgb(255, 251, 216);
+    padding: 1rem;
+    border: 1px solid rgb(190, 186, 151);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border-top: none;
+}
+
+.sheet-tab > label:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sheet-tab > input:checked + label {
+    border: 1px solid rgb(190, 186, 151);
+    border-bottom: 1px solid transparent;
+    background-color: rgb(255, 251, 216);
+    color: rgb(0, 0, 0);
+}
+
+.sheet-tab > input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
+.sheet-tab > input:checked:nth-of-type(2) ~ .sheet-tab-content:nth-of-type(2),
+.sheet-tab > input:checked:nth-of-type(3) ~ .sheet-tab-content:nth-of-type(3),
+.sheet-tab > input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
+.sheet-tab > input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
+.sheet-tab > input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
+.sheet-tab > input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7) {
+    display: block;
+}
+
+/* grille */
+.sheet-flexrow {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin-right: -0.5rem;
+}
+
+.sheet-flexcol,
+.sheet-flexcol2,
+.sheet-flexcol3,
+.sheet-flexcol4,
+.sheet-flexcol5,
+.sheet-flexcol6,
+.sheet-flexcol7,
+.sheet-flexcol8,
+.sheet-flexcol9,
+.sheet-flexcol10,
+.sheet-flexcol11 {
+    position: relative;
+    width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 0 0.5rem;
+}
+.sheet-flexcol  { max-width: 100%;}
+.sheet-flexcol1  { max-width: 8.333333%;}
+.sheet-flexcol2  { max-width: 16.666667%;}
+.sheet-flexcol3  { max-width: 25%;}
+.sheet-flexcol4  { max-width: 33.333333%;}
+.sheet-flexcol5  { max-width: 41.666667%;}
+.sheet-flexcol6  { max-width: 50%;}
+.sheet-flexcol7  { max-width: 58.333333%;}
+.sheet-flexcol8  { max-width: 66.666667%;}
+.sheet-flexcol9  { max-width: 75%;}
+.sheet-flexcol10 { max-width: 83.333333%;}
+.sheet-flexcol11 { max-width: 91.666667%;}
+
+.sheet-flexcol-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+.sheet-center {
+    text-align: center;
+}
+
+.sheet-strong {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* input group */
+.charsheet .sheet-input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.charsheet .sheet-input-group input, .charsheet .sheet-input-group select {
+    flex: 1 1 auto;
+    width: 1% !important;
+}
+
+.charsheet .sheet-input-group-prepend {
+
+}
+
+.charsheet .sheet-input-group-append {
+
+}
+
+.charsheet .sheet-input-group-text {
+    text-align: center;
+    white-space: nowrap;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+
+.charsheet .sheet-input-group.sheet-disabled {
+    background-color: rgba(0, 0, 0, 0.03);
+    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 5px, transparent 5px, transparent 7px);
+}
+
+.charsheet .sheet-input-group.sheet-disabled input, .charsheet .sheet-input-group.sheet-disabled select {
+    background: none !important;
+}
+
+/* accordéon */
+.sheet-accordion {
+    position: relative;
+}
+
+.sheet-accordion-checkbox {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 2rem !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+}
+
+.sheet-accordion-container {
+    padding-left: 3rem;
+    min-height: 2rem;
+}
+
+.sheet-accordion-container::before {
+    display: block;
+    content: "-";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2rem;
+    height: 100%;
+    line-height: 2rem;
+    font-size: 2rem;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sheet-accordion-checkbox:not(:checked) ~ .sheet-accordion-container .sheet-accordion-content {
+    display: none;
+}
+
+.sheet-accordion-checkbox:not(:checked) ~ .sheet-accordion-container::before {
+    content: "+";
+}
+
+/* contenu générique */
+.charsheet .sheet-center {
+    text-align: center;
+}
+
+.charsheet input, .charsheet select {
+    display: inline-block;
+    background-color: transparent;
+    width: auto;
+    text-align: center;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.charsheet input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.charsheet textarea {
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    resize: vertical;
+    min-height: 5.1rem;
+    padding: 1rem;
+    line-height: 1.6rem;
+}
+
+.charsheet button[type="roll"] {
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 2.8rem !important;
+    line-height: 2.8rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    border: none;
+    color: rgb(50, 50, 50);
+    font-weight: bold;
+    background-color: transparent;
+}
+
+/* entête */
+.sheet-header {
+    margin: 1rem 1rem 3rem;
+}
+
+.sheet-header-character input {
+    border: none;
+    font-size: 3rem;
+    line-height: 3.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.sheet-header input:disabled {
+    border: none;
+}
+
+.sheet-header-stat input, .sheet-header-stat span {
+    height: 2rem !important;
+    line-height: 2rem;
+}
+
+.sheet-header-stat span {
+    text-align: right;
+}
+
+.sheet-header-stat input {
+    border: none;
+}
+
+.sheet-header span[title] {
+    text-decoration: underline dashed rgb(50, 50, 50);
+    cursor: help;
+    /* la balise attr n'est pas autorisé */
+}
+
+/* section */
+.sheet-tab-content {
+    min-height: 50rem;
+}
+
+.sheet-tab-content h1 {}
+
+.sheet-tab-content h2 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    color: rgb(125, 125, 125);
+    border-bottom: 2px solid rgb(190, 186, 151);
+}
+
+.sheet-tab-content input:disabled {
+    background-color: rgba(0, 0, 0, 0.03);
+    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 5px, transparent 5px, transparent 7px);
+    border: none;
+}
+
+.sheet-tab-content input.sheet-strong:disabled {
+    background: rgba(0, 0, 0, 0.03);
+    border: none;
+}
+
+.sheet-tab-content .sheet-section {
+    margin-bottom: 2rem;
+}
+
+.sheet-tab-content table {
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+
+.sheet-tab-content table thead th, .sheet-tab-content .sheet-thead {
+    background-color: rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.sheet-tab-content th[title], td[title] span {
+    text-decoration: underline dashed rgb(50, 50, 50);
+    cursor: help;
+}
+
+.sheet-tab-content table td + td {
+    padding: 0.25rem;
+}
+
+.sheet-tab-content input, .sheet-tab-content select, .sheet-tab-content span {
+    height: 2.6rem;
+    line-height: 2.6rem;
+}
+
+/* compétences */
+.sheet-skill-summary {}
+
+.sheet-skill-summary table {
+    width: 50%;
+}
+
+.sheet-skill {}
+
+.sheet-skill-custom {
+    text-align: left;
+}
+
+/* traits racial */
+.sheet-featracial {}
+
+.sheet-featracial-content {
+    margin-bottom: 1rem;
+}
+
+.sheet-featracial-label {
+    display: block;
+    text-align: left;
+    border: none;
+    margin-top: 0.5rem;
+}
+
+.sheet-featracial-description-short {}
+
+.sheet-featracial-description {}
+
+/* don */
+.sheet-feat {}
+
+.sheet-feat-content {
+    margin-bottom: 1rem;
+}
+
+.sheet-feat span {
+    display: inline-block;
+}
+
+.sheet-feat-description-short {
+    display: block;
+    text-align: left;
+    border: none;
+    margin-top: 0.5rem;
+}
+
+.sheet-feat-description {}
+
+/* compétences de classes */
+.sheet-class-skill {}
+
+.sheet-class-skill-description-label {
+    display: inline-block;
+}
+
+.sheet-class-skill-description-content {
+    min-height: 5rem;
+}
+
+.sheet-initiative {}
+
+.sheet-initiative table {
+    width: 50%;
+}
+
+/* combats */
+.sheet-attack {}
+
+.sheet-attack-content {
+    margin-bottom: 1rem;
+}
+
+.sheet-attack-subcontent {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.sheet-attack-label, .sheet-attack-subcontent table:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.sheet-attack-name {
+    border: none;
+    text-align: left;
+}
+
+/* èquipement arme */
+.sheet-equipment-weapon {
+    margin-bottom: 1rem;
+}
+
+.sheet-equipment-weapon-content {}
+
+.sheet-equipment-weapon-content select {
+    width: 60px !important;
+}
+
+/* équipement armure */
+.sheet-equipment-summary {
+
+}
+
+.sheet-equipment-summary .sheet-input-group {
+    width: 30%;
+    margin-bottom: 1rem;
+}
+
+/* équipement magique */
+.sheet-equipment-magic {
+
+}
+
+.sheet-equipment-magic tbody tr td:first-child {
+    text-align: right;
+    padding-right: 0.5rem;
+}
+
+/* note */
+.sheet-note {
+
+}
+
+.sheet-note-label {
+    text-align: left;
+    border: none;
+    margin-left: 1rem;
+}
+
+.sheet-note-content {
+    min-height: 10rem;
+}
+
+/* non utilisés */
+.sheet-battlemoves {}
+.sheet-character {}
+.sheet-class {}
+.sheet-devise {}
+.sheet-equipment-armor {}
+.sheet-inventory1 {}
+.sheet-inventory2 {}
+.sheet-inventory-description {}
+.sheet-inventory-quantity {}
+.sheet-magic {}
+.sheet-stat {}
+.sheet-saves {}
+.sheet-spell {}
+
+/* rolltemplate */
+.sheet-rolltemplate-roll .sheet-body {
+    padding: 0.5rem;
+    background-color: rgb(255, 251, 216);
+    border: 1px solid rgb(190, 186, 151);
+    border-radius: 0.25rem;
+}
+.sheet-rolltemplate-roll .sheet-flexrow {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 -0.5rem;
+}
+
+.sheet-rolltemplate-roll .sheet-flexcol {
+    position: relative;
+    width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 0 0.5rem;
+}
+
+.sheet-rolltemplate-roll .sheet-center {
+    text-align: center;
+}
+
+.sheet-rolltemplate-roll .sheet-basic {
+    display: inline-block;
+}
