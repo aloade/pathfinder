@@ -4,11 +4,12 @@
 }
 
 .charsheet * {
-    font-size: 1.3rem;
+    font-size: 1rem;
     line-height: 1rem;
+    color: rgb(50, 50, 50);
 }
 
-.charsheet::before, .charsheet::after {
+.charsheet *::before, .charsheet *::after {
     font-size: inherit;
     line-height: inherit;
 }
@@ -20,93 +21,30 @@
     border-radius: 0;
 }
 
+.charsheet button[type="roll"] {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none;
+    box-shadow: none;
+}
+
+.charsheet button[type="roll"]:hover {
+    background-position: 0 0 !important;
+}
+
 .charsheet label {
     margin: 0;
 }
 
 /* général */
-@font-face {
-    font-family: "Gloos And Bloom";
-    src: url("https://github.com/aloade/pathfinder/blob/master/Gloss_And_Bloom.ttf");
-}
-
-@font-face {
-    font-family: "Monotype Corsiva";
-    src: url("https://fonts.google.com/css?family=Shadows+Into+Light");
+.charsheet * {
+    font-family: Patrick Hand, Arial, Sans;
+    /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
+    font-size: 1.6rem;
 }
 
 .charsheet {
-    font-family: "Bordofixed Tryout", "Monotype Corsiva", Arial, Sans;
-    font-size: 1.1rem;
-    abackground: url('https://texturefabrik.files.wordpress.com/2014/05/texture_fabrik_paper_vol-4_10.jpg?w=520');
-    background-color: rgb(245, 241, 206);;
-}
-
-/* barre de navigation */
-.sheet-tab {
-    position: relative;
-    max-width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.sheet-tab > input {
-    display: none;
-}
-
-.sheet-tab > label {
-    display: block;
-    flex-grow: 1;
-    width: auto;
-    height: 3rem;
-    text-align: center;
-    overflow: hidden;
-    font-size: 1.8rem;
-    line-height: 3rem;
-    color: rgb(150, 150, 150);
-    font-weight: bold;
-    border: 1px solid transparent;
-    border-bottom: 1px solid rgb(190, 186, 151);
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    cursor: pointer;
-}
-
-.sheet-tab-content {
-    position: relative;
-    flex-grow: 7;
-    width: 100%;
-    top:0;
-    left: 0;
-    z-index: 2;
-    display: none;
-    background-color: rgb(255, 251, 216);
-    padding: 1rem;
-    border: 1px solid rgb(190, 186, 151);
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    border-top: none;
-}
-
-.sheet-tab > label:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.sheet-tab > input:checked + label {
-    border: 1px solid rgb(190, 186, 151);
-    border-bottom: 1px solid transparent;
-    background-color: rgb(255, 251, 216);
-    color: rgb(0, 0, 0);
-}
-
-.sheet-tab > input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
-.sheet-tab > input:checked:nth-of-type(2) ~ .sheet-tab-content:nth-of-type(2),
-.sheet-tab > input:checked:nth-of-type(3) ~ .sheet-tab-content:nth-of-type(3),
-.sheet-tab > input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
-.sheet-tab > input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
-.sheet-tab > input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
-.sheet-tab > input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7) {
-    display: block;
+    background: rgb(201, 183, 126) url("https://github.com/aloade/pathfinder/raw/master/image/noise_dark.jpg") repeat top left;
 }
 
 /* grille */
@@ -154,15 +92,6 @@
     max-width: 100%;
 }
 
-.sheet-center {
-    text-align: center;
-}
-
-.sheet-strong {
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
 /* input group */
 .charsheet .sheet-input-group {
     position: relative;
@@ -175,27 +104,24 @@
 .charsheet .sheet-input-group input, .charsheet .sheet-input-group select {
     flex: 1 1 auto;
     width: 1% !important;
+    height: 2.6rem;
+    line-height: 2.6rem;
 }
 
-.charsheet .sheet-input-group-prepend {
 
-}
+.charsheet .sheet-input-group-prepend {}
 
-.charsheet .sheet-input-group-append {
-
-}
+.charsheet .sheet-input-group-append {}
 
 .charsheet .sheet-input-group-text {
     text-align: center;
     white-space: nowrap;
     align-items: center;
-    padding: 0 0.5rem;
+    line-height: 2.6rem;
 }
 
-
 .charsheet .sheet-input-group.sheet-disabled {
-    background-color: rgba(0, 0, 0, 0.03);
-    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 5px, transparent 5px, transparent 7px);
+    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
 }
 
 .charsheet .sheet-input-group.sheet-disabled input, .charsheet .sheet-input-group.sheet-disabled select {
@@ -231,8 +157,7 @@
     left: 0;
     width: 2rem;
     height: 100%;
-    line-height: 2rem;
-    font-size: 2rem;
+    line-height: 2.6rem;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -246,8 +171,13 @@
 }
 
 /* contenu générique */
-.charsheet .sheet-center {
+.sheet-center {
     text-align: center;
+}
+
+.sheet-strong {
+    font-weight: bold;
+    font-size: 110%;
 }
 
 .charsheet input, .charsheet select {
@@ -256,6 +186,8 @@
     width: auto;
     text-align: center;
     border: none;
+    height: 2.6rem !important;
+    line-height: 2.6rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -265,9 +197,9 @@
 }
 
 .charsheet textarea {
-    background-color: rgba(255, 255, 255, 0.4);
     width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
     resize: vertical;
     min-height: 5.1rem;
@@ -276,52 +208,151 @@
 }
 
 .charsheet button[type="roll"] {
-    padding: 0 !important;
-    margin: 0 !important;
-    font-size: 2.8rem !important;
+    font-size: 150% !important;
     line-height: 2.8rem;
     width: 2.8rem;
     height: 2.8rem;
-    border: none;
     color: rgb(50, 50, 50);
     font-weight: bold;
-    background-color: transparent;
+    background: none;
 }
 
-/* entête */
+.sheet-alert {
+    font-family: "Pictos";
+    color: rgb(220, 53, 69);
+}
+
+.sheet-alert::after {
+    content : "!";
+}
+
+/* header */
 .sheet-header {
-    margin: 1rem 1rem 3rem;
+    margin: 0 0 2rem;
 }
 
-.sheet-header-character input {
-    font-family: "Gloss And Bloom", Arial, Sans;
-    border: none;
-    font-size: 3rem;
-    line-height: 3.2rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-.sheet-header input:disabled {
+.sheet-header input {
     border: none;
 }
 
-.sheet-header-stat input, .sheet-header-stat span {
-    height: 2rem !important;
-    line-height: 2rem;
-}
-
-.sheet-header-stat span {
+.sheet-header td {
     text-align: right;
 }
 
-.sheet-header-stat input {
-    border: none;
+.sheet-header-character, .sheet-header-player {
+    margin-bottom: 2rem;
+    height: 4rem;
+}
+
+.sheet-header-character input {
+    font-size: 180%;
+    line-height: 4rem;
+    height: 4rem !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.sheet-header-player input {
+    line-height: 4rem;
+    height: 4rem !important;
 }
 
 .sheet-header span[title] {
-    text-decoration: underline dashed rgb(50, 50, 50);
     cursor: help;
     /* la balise attr n'est pas autorisé */
+}
+
+.sheet-header-stat {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sheet-device {
+    display: inline-block;
+    width: calc(1.5rem - 2px);
+    height: calc(1.5rem - 2px);
+    border: 2px solid transparent;
+    border-radius: 100%;
+}
+
+.sheet-device-gold {
+    background-color: rgb(255,223,0);
+    border-color: rgb(215,193,0);
+}
+
+.sheet-device-silver {
+    background-color: rgb(192,192,192);
+    border-color: rgb(152,152,152);
+}
+
+.sheet-device-copper {
+    background-color: rgb(184, 115, 51);
+    border-color: rgb(144, 75, 11);
+}
+
+
+/* barre de navigation */
+.sheet-tab {
+    position: relative;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.sheet-tab > input {
+    display: none;
+}
+
+.sheet-tab > label {
+    display: block;
+    flex-grow: 1;
+    width: auto;
+    height: 3rem;
+    text-align: center;
+    overflow: hidden;
+    line-height: 3rem;
+    color: rgb(100, 100, 100);
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-bottom: 1px solid rgb(120, 120, 120);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.sheet-tab-content {
+    position: relative;
+    flex-grow: 7;
+    width: 100%;
+    top:0;
+    left: 0;
+    z-index: 2;
+    display: none;
+    padding: 1rem;
+    border: 1px solid rgb(120, 120, 120);
+    background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
+    border-top: none;
+}
+
+.sheet-tab > label:hover {
+    color: rgb(50, 50, 50);
+}
+
+.sheet-tab > input:checked + label {
+    color: rgb(50, 50, 50);
+    border: 1px solid rgb(120, 120, 120);
+    border-bottom: 1px solid transparent;
+    background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
+}
+
+.sheet-tab > input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
+.sheet-tab > input:checked:nth-of-type(2) ~ .sheet-tab-content:nth-of-type(2),
+.sheet-tab > input:checked:nth-of-type(3) ~ .sheet-tab-content:nth-of-type(3),
+.sheet-tab > input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
+.sheet-tab > input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
+.sheet-tab > input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
+.sheet-tab > input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7) {
+    display: block;
 }
 
 /* section */
@@ -332,22 +363,21 @@
 .sheet-tab-content h1 {}
 
 .sheet-tab-content h2 {
-    font-size: 2.5rem;
+    font-size: 140%;
     line-height: 2.5rem;
     padding-left: 1rem;
     margin-bottom: 1rem;
-    color: rgb(125, 125, 125);
-    border-bottom: 2px solid rgb(190, 186, 151);
+    color: rgb(50, 50, 50);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
 }
 
 .sheet-tab-content input:disabled {
-    background-color: rgba(0, 0, 0, 0.03);
-    background: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03) 5px, transparent 5px, transparent 7px);
+    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
     border: none;
 }
 
 .sheet-tab-content input.sheet-strong:disabled {
-    background: rgba(0, 0, 0, 0.03);
+    background: rgba(0, 0, 0, 0.07);
     border: none;
 }
 
@@ -365,22 +395,17 @@
     background-color: rgba(0, 0, 0, 0.1);
     text-align: center;
     height: 2rem;
-    font-size: 1.2rem;
+    font-size: 105%;
     font-weight: bold;
 }
 
-.sheet-tab-content th[title], td[title] span {
+.sheet-tab-content th[title], td[title] span:not(.sheet-alert) {
     text-decoration: underline dashed rgb(50, 50, 50);
     cursor: help;
 }
 
 .sheet-tab-content table td + td {
     padding: 0.25rem;
-}
-
-.sheet-tab-content input, .sheet-tab-content select, .sheet-tab-content span {
-    height: 2.6rem;
-    line-height: 2.6rem;
 }
 
 /* compétences */
@@ -392,8 +417,8 @@
 
 .sheet-skill {}
 
-.sheet-skill-custom {
-    text-align: left;
+.sheet-skill .sheet-input-group input {
+    text-align: left !important;
 }
 
 /* traits racial */
@@ -434,17 +459,6 @@
 
 .sheet-feat-description {}
 
-/* compétences de classes */
-.sheet-class-skill {}
-
-.sheet-class-skill-description-label {
-    display: inline-block;
-}
-
-.sheet-class-skill-description-content {
-    min-height: 5rem;
-}
-
 .sheet-initiative {}
 
 .sheet-initiative table {
@@ -454,23 +468,48 @@
 /* combats */
 .sheet-attack {}
 
+.sheet-attack-roll {
+    width: 2.8rem;
+    margin-top: 1rem;
+}
+
 .sheet-attack-content {
     margin-bottom: 1rem;
 }
 
 .sheet-attack-subcontent {
     border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
     padding: 1rem;
+    position: relative;
 }
 
-.sheet-attack-label, .sheet-attack-subcontent table:not(:last-child) {
+.sheet-accordion-content {
+    margin-top: 1rem;
+}
+
+.sheet-attack-subcontent table:not(:last-child) {
     margin-bottom: 1rem;
 }
 
-.sheet-attack-name {
-    border: none;
+.sheet-attack-label input {
     text-align: left;
+}
+
+.sheet-attack-name {
+    font-weight: bold;
+    border: none;
+}
+
+/* équipement bourse */
+.sheet-equipment-purse {
+    width: 50%;
+    margin-left: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    padding: 1rem;
 }
 
 /* èquipement arme */
@@ -495,8 +534,11 @@
 }
 
 /* équipement magique */
-.sheet-equipment-magic {
+.sheet-equipment-magic {}
 
+.sheet-equipment-magic table {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/equipment-magic.png") no-repeat center;
+    background-size: contain;
 }
 
 .sheet-equipment-magic tbody tr td:first-child {
@@ -537,10 +579,26 @@
 /* rolltemplate */
 .sheet-rolltemplate-roll .sheet-body {
     padding: 0.5rem;
-    background-color: rgb(255, 251, 216);
-    border: 1px solid rgb(190, 186, 151);
-    border-radius: 0.25rem;
+    background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0.5rem;
 }
+
+.sheet-rolltemplate-roll .sheet-body p {
+    margin: 0;
+}
+
+.sheet-rolltemplate-roll .sheet-body .inlinerollresult {
+    display: inline-block;
+    border-radius: 2rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    text-align: center;
+    line-height: 2rem;
+    font-weight: bold;
+}
+
 .sheet-rolltemplate-roll .sheet-flexrow {
     width: 100%;
     display: flex;
@@ -557,10 +615,19 @@
     padding: 0 0.5rem;
 }
 
+.sheet-rolltemplate-roll .sheet-left {
+    text-align: left;
+}
+
+.sheet-rolltemplate-roll .sheet-right {
+    text-align: right;
+}
+
 .sheet-rolltemplate-roll .sheet-center {
     text-align: center;
 }
 
-.sheet-rolltemplate-roll .sheet-basic {
-    display: inline-block;
+.sheet-rolltemplate-roll .sheet-danger {
+    color: rgb(220, 53, 69);
+    font-weight: bold;
 }

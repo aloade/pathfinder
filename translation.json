@@ -1,0 +1,10 @@
+{
+	"separator": "/",
+	"character-name": "Nom du personnage",
+	"player-name": "Nom du joueur",
+	"level": "Niveau",
+	"experience": "Exp.",
+	"experience-title": "Expérience",
+	"vitality": "Vitalité",
+	"health": "Santé"
+}
