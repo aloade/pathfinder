@@ -1,4 +1,6 @@
-/* correctif roll20 */
+/* --------------------------------------------------- */
+/* correctifs roll20 */
+/* --------------------------------------------------- */
 .charsheet *, .charsheet::after, .charsheet::before {
     box-sizing: border-box;
 }
@@ -6,7 +8,6 @@
 .charsheet * {
     font-size: 1rem;
     line-height: 1rem;
-    color: rgb(50, 50, 50);
 }
 
 .charsheet *::before, .charsheet *::after {
@@ -18,6 +19,7 @@
     display: inline-block;
     width: 100% !important;
     margin: 0;
+    padding: 0;
     border-radius: 0;
 }
 
@@ -34,20 +36,15 @@
 
 .charsheet label {
     margin: 0;
+    padding: 0;
 }
 
-/* général */
-.charsheet * {
-    font-family: Patrick Hand, Arial, Sans;
-    /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
-    font-size: 1.6rem;
+.charsheet .repcontainer .repitem .itemcontrol {
+    z-index: 999;
 }
-
-.charsheet {
-    background: rgb(201, 183, 126) url("https://github.com/aloade/pathfinder/raw/master/image/noise_dark.jpg") repeat top left;
-}
-
+/* --------------------------------------------------- */
 /* grille */
+/* --------------------------------------------------- */
 .sheet-flexrow {
     width: 100%;
     display: flex;
@@ -92,7 +89,9 @@
     max-width: 100%;
 }
 
+/* --------------------------------------------------- */
 /* input group */
+/* --------------------------------------------------- */
 .charsheet .sheet-input-group {
     position: relative;
     display: flex;
@@ -107,7 +106,6 @@
     height: 2.6rem;
     line-height: 2.6rem;
 }
-
 
 .charsheet .sheet-input-group-prepend {}
 
@@ -128,7 +126,9 @@
     background: none !important;
 }
 
+/* --------------------------------------------------- */
 /* accordéon */
+/* --------------------------------------------------- */
 .sheet-accordion {
     position: relative;
 }
@@ -142,6 +142,10 @@
     height: 100% !important;
     opacity: 0;
     z-index: 2;
+}
+
+.sheet-accordion-label {
+    min-height: 2.6rem;
 }
 
 .sheet-accordion-container {
@@ -170,7 +174,128 @@
     content: "+";
 }
 
-/* contenu générique */
+/* --------------------------------------------------- */
+/* checkbox swap */
+/* --------------------------------------------------- */
+.sheet-swap {
+    position: relative;
+    display: inline-block;
+}
+
+.sheet-swap input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+}
+
+.sheet-swap-label {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 1;
+    transition: opacity 0.25s ease;
+}
+
+.sheet-swap input:checked ~ .sheet-swap-on {
+    opacity: 1;
+}
+
+.sheet-swap input:not(:checked) ~ .sheet-swap-off {
+    opacity: 1;
+}
+
+/* --------------------------------------------------- */
+/* checkbox coin */
+/* --------------------------------------------------- */
+.sheet-coin {
+	perspective: 1000rem;
+	position: relative;
+	display: inline-block;
+}
+
+.sheet-coin input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	z-index: 3;
+}
+
+.sheet-coin-content {
+	position: relative;
+	transition: 0.25s;
+	transform-style: preserve-3d;
+}
+
+.sheet-coin-on, .sheet-coin-off {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: lightgray;
+	border-radius: 1.3rem;
+	backface-visibility: hidden;
+}
+
+.sheet-coin-on {
+	z-index: 2;
+	transform: rotateY(180deg); /* for firefox 31 */
+}
+
+.sheet-coin-off {
+	z-index: 1;
+	transform: rotateY(0deg);
+}
+
+.sheet-coin input:checked ~ .sheet-coin-content {
+	transform: rotateY(180deg);
+	animation-name: coin-frames;
+	animation-duration: 0.25s;
+}
+
+@keyframes coin-frames {
+	0%  	{ transform: scale(1); }
+	50%     { transform: scale(1.2);}
+	100%	{ transform: scale(1); }
+}
+
+/* --------------------------------------------------- */
+/* contenu */
+/* --------------------------------------------------- */
+
+/* générique */
+@font-face {
+    font-family: "Dancing Script";
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/DancingScript.ttf"") format("truetype");
+}
+
+@font-face {
+    font-family: "Julietta Messie";
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Julietta-Messie.ttf"") format("truetype");
+}
+
+.charsheet * {
+    font-family: Julietta Messie, Patrick Hand, Arial, Sans;
+    /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
+    font-size: 1.6rem;
+    color: rgb(56, 61, 65);
+}
+
+.charsheet {
+    background: rgb(201, 183, 126) url("https://github.com/aloade/pathfinder/raw/master/image/noise_dark.jpg") repeat top left;
+}
+
 .sheet-center {
     text-align: center;
 }
@@ -178,43 +303,6 @@
 .sheet-strong {
     font-weight: bold;
     font-size: 110%;
-}
-
-.charsheet input, .charsheet select {
-    display: inline-block;
-    background-color: transparent;
-    width: auto;
-    text-align: center;
-    border: none;
-    height: 2.6rem !important;
-    line-height: 2.6rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.charsheet input[type="number"] {
-    -moz-appearance: textfield;
-    appearance: textfield;
-}
-
-.charsheet textarea {
-    width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 0.25rem;
-    resize: vertical;
-    min-height: 5.1rem;
-    padding: 1rem;
-    line-height: 1.6rem;
-}
-
-.charsheet button[type="roll"] {
-    font-size: 150% !important;
-    line-height: 2.8rem;
-    width: 2.8rem;
-    height: 2.8rem;
-    color: rgb(50, 50, 50);
-    font-weight: bold;
-    background: none;
 }
 
 .sheet-alert {
@@ -225,6 +313,116 @@
 .sheet-alert::after {
     content : "!";
 }
+
+.sheet-fixed-small {
+    min-width: 6rem;
+}
+
+.sheet-fixed-medium {
+    min-width: 13rem;
+}
+
+.sheet-fixed-large {
+    min-width: 18rem;
+}
+
+input, select {
+    display: inline-block;
+    background-color: transparent;
+    width: auto;
+    text-align: center;
+    border: none;
+    height: 2.6rem !important;
+    line-height: 2.6rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input.sheet-text-left {
+    text-align: left !important;
+    padding-left: 0.25rem;
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    resize: vertical;
+    min-height: 5.1rem;
+    padding: 1rem;
+    line-height: 1.6rem;
+}
+
+button[type="roll"], .sheet-fake-button-roll {
+    width: 2.8rem;
+}
+
+button[type="roll"] {
+    height: 2.8rem;
+    font-size: 150% !important;
+    line-height: 2.8rem;
+    color: rgb(50, 50, 50);
+    font-weight: bold;
+    background: none;
+}
+
+.sheet-swap {
+    width: 2.6rem;
+    height: 2.6rem;
+}
+
+.sheet-swap-label {
+	background-color: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 50%;
+	line-height: calc(2.6rem - 2px);
+	text-align: center;
+	font-size: 75%;
+	font-weight: bold;
+}
+
+.sheet-swap-on {
+    color: rgb(21, 87, 36);
+    background-color: rgb(212, 237, 218);
+}
+
+.sheet-swap-off {
+}
+
+.sheet-coin, .sheet-coin-face {
+	width: 2.6rem;
+	height: 2.6rem;
+}
+
+.sheet-coin-face {
+	display: block;
+	line-height: calc(2.6rem - 4px);
+	font-size: 75%;
+	border-radius: 50%;
+	text-align: center;
+	text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+	font-weight: bold;
+	background-color: transparent;
+	border: 2px solid transparent;
+}
+
+.sheet-coin-on {
+    color: rgb(212, 212, 212);
+	background: rgb(182,182,182) linear-gradient(-45deg, rgb(182,182,182), rgb(212,212,212)); 
+	border-color: rgb(172,172,172);
+}
+
+.sheet-coin-off {
+    color: rgb(192, 192, 192);
+	background: rgb(152,152,152) linear-gradient(-45deg, rgb(192,192,192), rgb(152,152,152)); 
+	border-color: rgb(142, 142, 142);
+}
+
 
 /* header */
 .sheet-header {
@@ -248,6 +446,7 @@
     font-size: 180%;
     line-height: 4rem;
     height: 4rem !important;
+    font-family: Dancing Script;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
@@ -257,38 +456,14 @@
 }
 
 .sheet-header span[title] {
+    text-decoration: underline dashed rgb(50, 50, 50);
     cursor: help;
-    /* la balise attr n'est pas autorisé */
 }
 
 .sheet-header-stat {
     border: 1px solid rgba(0, 0, 0, 0.1);
     background-color: rgba(255, 255, 255, 0.1);
 }
-
-.sheet-device {
-    display: inline-block;
-    width: calc(1.5rem - 2px);
-    height: calc(1.5rem - 2px);
-    border: 2px solid transparent;
-    border-radius: 100%;
-}
-
-.sheet-device-gold {
-    background-color: rgb(255,223,0);
-    border-color: rgb(215,193,0);
-}
-
-.sheet-device-silver {
-    background-color: rgb(192,192,192);
-    border-color: rgb(152,152,152);
-}
-
-.sheet-device-copper {
-    background-color: rgb(184, 115, 51);
-    border-color: rgb(144, 75, 11);
-}
-
 
 /* barre de navigation */
 .sheet-tab {
@@ -351,7 +526,8 @@
 .sheet-tab > input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
 .sheet-tab > input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
 .sheet-tab > input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
-.sheet-tab > input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7) {
+.sheet-tab > input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7),
+.sheet-tab > input:checked:nth-of-type(8) ~ .sheet-tab-content:nth-of-type(8) {
     display: block;
 }
 
@@ -399,7 +575,7 @@
     font-weight: bold;
 }
 
-.sheet-tab-content th[title], td[title] span:not(.sheet-alert) {
+.sheet-tab-content span[title]:not(.sheet-alert) {
     text-decoration: underline dashed rgb(50, 50, 50);
     cursor: help;
 }
@@ -417,10 +593,6 @@
 
 .sheet-skill {}
 
-.sheet-skill .sheet-input-group input {
-    text-align: left !important;
-}
-
 /* traits racial */
 .sheet-featracial {}
 
@@ -430,7 +602,6 @@
 
 .sheet-featracial-label {
     display: block;
-    text-align: left;
     border: none;
     margin-top: 0.5rem;
 }
@@ -452,7 +623,6 @@
 
 .sheet-feat-description-short {
     display: block;
-    text-align: left;
     border: none;
     margin-top: 0.5rem;
 }
@@ -462,7 +632,7 @@
 .sheet-initiative {}
 
 .sheet-initiative table {
-    width: 50%;
+    width: 40%;
 }
 
 /* combats */
@@ -500,6 +670,36 @@
 .sheet-attack-name {
     font-weight: bold;
     border: none;
+}
+
+/* magie - concentration */
+.sheet-concentration {}
+.sheet-concentration > table {
+    width: 60%
+}
+
+/* équipement device */
+.sheet-device {
+    display: inline-block;
+    width: calc(1.5rem - 2px);
+    height: calc(1.5rem - 2px);
+    border: 2px solid transparent;
+    border-radius: 100%;
+}
+
+.sheet-device-gold {
+    background-color: rgb(255,223,0);
+    border-color: rgb(215,193,0);
+}
+
+.sheet-device-silver {
+    background-color: rgb(192,192,192);
+    border-color: rgb(152,152,152);
+}
+
+.sheet-device-copper {
+    background-color: rgb(184, 115, 51);
+    border-color: rgb(144, 75, 11);
 }
 
 /* équipement bourse */
@@ -552,7 +752,6 @@
 }
 
 .sheet-note-label {
-    text-align: left;
     border: none;
     margin-left: 1rem;
 }
@@ -571,7 +770,9 @@
 .sheet-inventory2 {}
 .sheet-inventory-description {}
 .sheet-inventory-quantity {}
-.sheet-magic {}
+.sheet-magic-resistance {}
+.sheet-contact_attack {}
+.sheet-spells {}
 .sheet-stat {}
 .sheet-saves {}
 .sheet-spell {}
@@ -597,6 +798,8 @@
     text-align: center;
     line-height: 2rem;
     font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.55);
 }
 
 .sheet-rolltemplate-roll .sheet-flexrow {
