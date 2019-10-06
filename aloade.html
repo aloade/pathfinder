@@ -13,37 +13,10 @@
 -->
 
 <script type="text/worker">
-    /* ===== PARAMETERS ==========
-    destination     the name of the attribute that stores the total quantity
-    section         name of repeating fieldset, without the repeating_
-    fields          the name of the attribute field to be summed
-                    can be a single attribute: 'weight'
-                    or an array of attributes: ['weight','number','equipped']
-    multiplier      a multiplier to the entire fieldset total.
-                    For instance, if summing coins of weight 0.02, might want to multiply the final total by 0.02.
-    */
-    const repeatingSum = (destination, section, fields, multiplier = 1) => {
-        if (!Array.isArray(fields)) fields = [fields];
-        getSectionIDs(`repeating_${section}`, idArray => {
-            const attrArray = idArray.reduce( (m,id) => [...m, ...(fields.map(field => `repeating_${section}_${id}_${field}`))],[]);
-            getAttrs(attrArray, v => {
-                console.log("v: "+ JSON.stringify(v));
-
-                // getValue: if not a number, returns 1 if it is 'on' (checkbox), otherwise returns 0..
-                const getValue = (section, id, field) => parseFloat(v[`repeating_${section}_${id}_${field}`], 10) || (v[`repeating_${section}_${id}_${field}`] === "on" ? 1 : 0);
-                const sumTotal = idArray.reduce((total, id) => total + fields.reduce((subtotal,field) => subtotal * getValue(section, id,field),1),0);
-
-                console.log({[destination]: sumTotal * multiplier});
-                setAttrs({[destination]: sumTotal * multiplier});
-            });
-        });
-    };
-
     // classes
-    // repeating_<section>_<field>
     on("sheet:opened change:repeating_classes remove:repeating_classes", function() {
         console.log("--repeating_classes-----------------------------------------");
-        let section = "repeating_classes";
+        let section = "classes";
         let fields = [
             {
                 "source": "classes_bba1",
@@ -83,35 +56,19 @@
             }
         ];
 
-        getValuesRaw(section, fields.map(field => field.source), logic);
+        getRepeatingValuesRaw(section, fields.map(field => field.source), logic);
         function logic(load) {
             // somme BBA && somme reflexes && somme vigueur && somme volonté && somme niveau
             // somme ( cpt.niv. x niveau )
             console.log(load);
+            //setAttrs({attribute: value});
         }
     });
 
-    function getValuesRaw(section, fields, callback) {
-        getSectionIDs(section, ids => {
-
-            let attributeNames = ids.reduce( (m,id) => [...m, ...(fields.map(field => section+'_'+id+'_'+field))],[]);
-            getAttrs(attributeNames, load => {
-                Object.keys(load).map( key => load[key] = parseValue(load[key]) );
-                callback(load);
-            });
-        });
-    }
-
-    function parseValue(value) {
-        // if not a number, returns 1 if it is 'on' (checkbox), otherwise returns 0.
-        return ( parseFloat(value, 10) || (value === "on" ? 1 : 0) );
-    }
-
-
-    // armure
+    // armor
     on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor", function() {
         console.log("--repeating_equipmentarmor-----------------------------------------");
-        let section = "repeating_equipmentarmor";
+        let section = "equipmentarmor";
         let fields = [
             {
                 "source": "equipment_armor_bonus",
@@ -127,14 +84,67 @@
             }
         ];
 
-        getValuesRaw(section, fields.map(field => field.source), logic);
+        getRepeatingValuesRaw(section, fields.map(field => field.source), logic);
         function logic(load) {
             // somme armure équipé
             // mini( somme dextérité équipement équipé && mini des dextérité max équipé )
             console.log("logic");
             console.log(load);
+            //setAttrs({attribute: value});
         }
     });
+
+    // get all attributes name and their values from a repeating block
+    //
+    // section	        string from "repeating_<section>_<field>"
+    // fields           string or array of string from "repeating_<section>_<field>"
+    // callback         returning function after async. )
+    function getRepeatingValuesRaw(section, fields, callback) {
+        if (!Array.isArray(fields)) fields = [fields];
+        if (!(callback instanceof Function)) callback = () => {};
+        
+        getSectionIDs(section, ids => {
+            // prepares attributes name for "getAttrs"
+            let attributeNames = ids.reduce( (m,id) => [...m, ...(fields.map(field => 'repeating_'section+'_'+id+'_'+field))],[]);
+            // get data from DOM
+            getAttrs(attributeNames, load => {
+                Object.keys(load).map( key => load[key] = parseValue(load[key]) );
+                callback(load);
+            });
+        });
+    }
+
+    // parse values got in DOM and clean it
+    function parseValue(value) {
+        // checkbox from roll20 return "on" or 0
+        return parseFloat(value, 10) || (value === "on" ? 1 : 0);
+    }
+    
+    /* ===== PARAMETERS ==========
+    destination     the name of the attribute that stores the total quantity
+    section         name of repeating fieldset, without the repeating_
+    fields          the name of the attribute field to be summed
+                    can be a single attribute: 'weight'
+                    or an array of attributes: ['weight','number','equipped']
+    multiplier      a multiplier to the entire fieldset total.
+                    For instance, if summing coins of weight 0.02, might want to multiply the final total by 0.02.
+    */
+    const repeatingSum = (destination, section, fields, multiplier = 1) => {
+        if (!Array.isArray(fields)) fields = [fields];
+        getSectionIDs(`repeating_${section}`, idArray => {
+            const attrArray = idArray.reduce( (m,id) => [...m, ...(fields.map(field => `repeating_${section}_${id}_${field}`))],[]);
+            getAttrs(attrArray, v => {
+                console.log("v: "+ JSON.stringify(v));
+
+                // getValue: if not a number, returns 1 if it is 'on' (checkbox), otherwise returns 0..
+                const getValue = (section, id, field) => parseFloat(v[`repeating_${section}_${id}_${field}`], 10) || (v[`repeating_${section}_${id}_${field}`] === "on" ? 1 : 0);
+                const sumTotal = idArray.reduce((total, id) => total + fields.reduce((subtotal,field) => subtotal * getValue(section, id,field),1),0);
+
+                console.log({[destination]: sumTotal * multiplier});
+                setAttrs({[destination]: sumTotal * multiplier});
+            });
+        });
+    };
 </script>
 
 <div class="header">
@@ -258,7 +268,12 @@
                         </thead>
                         <tr>
                             <td>
-                                <button title="test de force" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de force}} {{test=[[1D20cf<1cs>20+@{character_strength_total}]]}})" name="roll_character_strength"></button>
+                                <button
+                                    title="test de force"
+                                    type="roll"
+                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de force}} {{test=[[1D20cf<1cs>20+@{character_strength_total}]]}})"
+                                    name="roll_character_strength"
+                                ></button>
                             </td>
                             <td class="center">
                                 <span>Force</span>
@@ -281,7 +296,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <button title="test de dextérité" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de dextérité}} {{test=[[1D20cf<1cs>20+@{character_dexterity_total}]]}})" name="roll_character_dexterity"></button>
+                                <button
+                                    title="test de dextérité"
+                                    type="roll"
+                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de dextérité}} {{test=[[1D20cf<1cs>20+@{character_dexterity_total}]]}})"
+                                    name="roll_character_dexterity"
+                                ></button>
                             </td>
                             <td class="center">
                                 <span>Dextérité</span>
@@ -304,7 +324,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <button title="test de constitution" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de constitution}} {{test=[[1D20cs>20+@{character_constitution_total}]]}})" name="roll_character_constitution"></button>
+                                <button
+                                    title="test de constitution"
+                                    type="roll"
+                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de constitution}} {{test=[[1D20cs>20+@{character_constitution_total}]]}})"
+                                    name="roll_character_constitution"
+                                ></button>
                             </td>
                             <td class="center">
                                 <span>Constitution</span>
@@ -327,7 +352,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <button title="test d'intelligence" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test d'intelligence}} {{test=[[1D20cs>20+@{character_intelligence_total}]]}})" name="roll_character_intelligence"></button>
+                                <button
+                                    title="test d'intelligence"
+                                    type="roll"
+                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test d'intelligence}} {{test=[[1D20cs>20+@{character_intelligence_total}]]}})"
+                                    name="roll_character_intelligence"
+                                ></button>
                             </td>
                             <td class="center">
                                 <span>Intelligence</span>
@@ -350,7 +380,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <button title="test de sagesse" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de sagesse}} {{test=[[1D20cs>20+@{character_wisdom_total}]]}})" name="roll_character_wisdom"></button>
+                                <button
+                                    title="test de sagesse"
+                                    type="roll"
+                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de sagesse}} {{test=[[1D20cs>20+@{character_wisdom_total}]]}})"
+                                    name="roll_character_wisdom"
+                                ></button>
                             </td>
                             <td class="center">
                                 <span>Sagesse</span>
@@ -373,7 +408,12 @@
                         </tr>
                         <tr>
                             <td>
-                                <button title="test de charisme" type="roll" value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de charisme}} {{test=[[1D20cs>20+@{character_charisma_total}]]}})" name="roll_character_charisma"></button>
+                                <button
+                                    title="test de charisme"
+                                    type="roll"
+                                    value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de charisme}} {{test=[[1D20cs>20+@{character_charisma_total}]]}})"
+                                    name="roll_character_charisma"
+                                ></button>
                             </td>
                             <td class="center">
                                 <span>Charisme</span>
@@ -661,7 +701,12 @@
                 <tbody>
                 <tr>
                     <td>
-                        <button title="test d'initiative&#13;Selectionner le personnage avant !" type="roll" value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test d'iniative}} {{test=[[1D20+@{initiative_total} &{tracker}]]}})" name="roll_initiative"></button>
+                        <button
+                            title="test d'initiative&#13;Selectionner le personnage avant !"
+                            type="roll"
+                            value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test d'iniative}} {{test=[[1D20+@{initiative_total} &{tracker}]]}})"
+                            name="roll_initiative"
+                        ></button>
                     </td>
                     <td>
                         <input type="number" name="attr_initiative_total" class="strong" value="(@{initiative_dexterity}+@{initiative_misc})" disabled="disabled"/>
@@ -714,7 +759,12 @@
                 <tbody>
                 <tr>
                     <td>
-                        <button title="test de man&oelig;uvre offensive" type="roll" value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de man&oelig;uvre offensive}} {{test=[[1D20cf<1cs>20+@{battle_move_cmb_total}]]}})" name="roll_reflexes"></button>
+                        <button
+                            title="test de man&oelig;uvre offensive"
+                            type="roll"
+                            value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de man&oelig;uvre offensive}} {{test=[[1D20cf<1cs>20+@{battle_move_cmb_total}]]}})"
+                            name="roll_reflexes"
+                        ></button>
                     </td>
                     <td class="center">
                         <span title="bonus de Man&oelig;uvre offensive">BMO</span>
@@ -785,7 +835,12 @@
                 <div class="attack-content">
                     <div class="flexrow">
                         <div class="flexcol-auto attack-roll">
-                            <button title="test d'attaque" type="roll" value="&{template:roll}{{battle=show}} {{who=@{character_name}}} {{attack_name=@{attack_name}}} {{test=[[1d20cf<1cs>@{attack_critic}+@{attack_total}]]}} {{damage=[[floor(@{attack_dices_count}d@{attack_dices}+@{attack_bonus}+@{character_strength_mod}*@{attack_handler_select})]]}} {{damage_critic=[[floor((@{attack_dices_count}d@{attack_dices}+@{attack_bonus}+@{character_strength_mod}*@{attack_handler_select})*@{attack_critic_multiplier})]]}} {{target_name=@{target|character_name}}} {{target_ca=[[@{target|defense_ca_total}]]}}" name="roll_attack"></button>
+                            <button
+                                title="test d'attaque&#13;= 1d20 ( cs > Critique ) + Total&#13;&#13;dégâts sans critique :&#13;= Dégâts  + Mod. + Tenue de l'arme&#13;&#13;dégâts avec critique :&#13;= ( Dégâts  + Mod. + Tenue de l'arme ) &#215; facteur de Critique"
+                                type="roll"
+                                value="&{template:roll}{{battle=show}} {{who=@{character_name}}} {{attack_name=@{attack_name}}} {{test=[[1d20cf<1cs>@{attack_critic}+@{attack_total}]]}} {{damage=[[floor(@{attack_dices_count}d@{attack_dices}+@{attack_bonus}+@{character_strength_mod}*@{attack_handler_select})]]}} {{damage_critic=[[floor((@{attack_dices_count}d@{attack_dices}+@{attack_bonus}+@{character_strength_mod}*@{attack_handler_select})*@{attack_critic_multiplier})]]}} {{target_name=@{target|character_name}}} {{target_ca=[[@{target|defense_ca_total}]]}}"
+                                name="roll_attack"
+                            ></button>
                         </div>
                         <div class="flexcol">
                             <div class="attack-subcontent">
@@ -811,26 +866,26 @@
                                             <table>
                                                 <thead>
                                                 <tr>
-                                                    <th>
-                                                        <span title="= BBA + Mod. + Taille + Équipement + Autre + Temporaire">Total</span>
+                                                    <th width="12.5%">
+                                                        <span title="= BBA + Mod. + Taille + Éqpmt. + Temp. + Autre">Total</span>
                                                     </th>
-                                                    <th>
+                                                    <th width="14%">
                                                         <span title="Bonus de Base à l'Attaque&#13;1er - première attaque&#13;2eme - attaque à outrance n°1&#13;3eme - attaque à outrance n°2&#13;4eme - attaque à outrance n°3">BBA</span>
                                                     </th>
-                                                    <th>
-                                                        <span title="Modificateur de caractéristique">Mod.</span>
+                                                    <th width="23.5%">
+                                                        <span title="Modificateur de caractéristique&#13;corps à corps = Force&#13;à distance = Dextérité">Mod.</span>
                                                     </th>
-                                                    <th>
+                                                    <th width="12.5%">
                                                         <span>Taille</span>
                                                     </th>
-                                                    <th>
-                                                        <span>Équipement</span>
+                                                    <th width="12.5%">
+                                                        <span title="Équipement">Éqpmt.</span>
                                                     </th>
-                                                    <th>
-                                                        <span>Autre</span>
+                                                    <th width="12.5%">
+                                                        <span title="Temporaire">Temp.</span>
                                                     </th>
-                                                    <th>
-                                                        <span>Temporaire</span>
+                                                    <th width="12.5%">
+                                                        <span>Divers</span>
                                                     </th>
                                                 </tr>
                                                 </thead>
@@ -842,7 +897,7 @@
                                                     <td>
                                                         <div class="input-group">
                                                             <input type="number" name="attr_attack_bba" value="(@{attack_bba_select})" disabled="disabled" />
-                                                            <select name="attr_attack_bba_select">
+                                                            <select class="fixed-small" name="attr_attack_bba_select">
                                                                 <option value="(@{foo_classes_bba1_total})" selected="selected">1er</option>
                                                                 <option value="(@{foo_classes_bba2_total})">2e</option>
                                                                 <option value="(@{foo_classes_bba3_total})">3e</option>
@@ -853,14 +908,10 @@
                                                     <td>
                                                         <div class="input-group">
                                                             <input type="number" name="attr_attack_mod_statistic" value="(@{attack_mod_statistic_select})" disabled="disabled" />
-                                                            <select name="attr_attack_mod_statistic_select">
+                                                            <select class="fixed-medium" name="attr_attack_mod_statistic_select">
                                                                 <option selected="selected"></option>
-                                                                <option value="(@{character_strength_mod})" >For.</option>
-                                                                <option value="(@{character_dexterity_mod})">Dex.</option>
-                                                                <option value="(@{character_constitution_mod})">Con.</option>
-                                                                <option value="(@{character_intelligence_mod})">Int.</option>
-                                                                <option value="(@{character_wisdom_mod})">Sag.</option>
-                                                                <option value="(@{character_charisma_mod})">Cha.</option>
+                                                                <option value="(@{character_strength_mod})">corps à corps.</option>
+                                                                <option value="(@{character_dexterity_mod})">à distance</option>
                                                             </select>
                                                         </div>
                                                     </td>
@@ -871,10 +922,10 @@
                                                         <input type="number" name="attr_attack_mod_equipment" value="0" />
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="attr_attack_mod_misc" value="0" />
+                                                        <input type="number" name="attr_attack_mod_temporary" value="0" />
                                                     </td>
                                                     <td>
-                                                        <input type="number" name="attr_attack_mod_temporary" value="0" />
+                                                        <input type="number" name="attr_attack_mod_misc" value="0" />
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -883,16 +934,16 @@
                                             <table>
                                                 <thead>
                                                 <tr>
-                                                    <th>
+                                                    <th width="25%">
                                                         <span>Dégâts</span>
                                                     </th>
-                                                    <th>
-                                                        <span title="Modificateur de caractéristique">Mod.</span>
+                                                    <th width="15%">
+                                                        <span title="Modificateur de caractéristique de force">Mod.</span>
                                                     </th>
-                                                    <th>
+                                                    <th width="35%">
                                                         <span>Tenue de l'arme</span>
                                                     </th>
-                                                    <th>
+                                                    <th width="25%">
                                                         <span>Critique</span>
                                                     </th>
                                                 </tr>
@@ -905,7 +956,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text">d</span>
                                                             </div>
-                                                            <select name="attr_attack_dices">
+                                                            <select class="fixed-small" name="attr_attack_dices">
                                                                 <option value="4" selected="selected">4</option>
                                                                 <option value="6">6</option>
                                                                 <option value="8">8</option>
@@ -926,16 +977,16 @@
                                                     <td>
                                                         <div class="input-group">
                                                             <input type="number" name="attr_attack_handler" value="(@{attack_handler_select})" disabled="disabled" />
-                                                            <select name="attr_attack_handler_select">
-                                                                <option value="1" selected="selected">1 main</option>
-                                                                <option value="0.5">secondaire</option>
-                                                                <option value="1.5">2 mains</option>
+                                                            <select class="fixed-large" name="attr_attack_handler_select">
+                                                                <option value="1" selected="selected">à une main</option>
+                                                                <option value="0.5">main secondaire</option>
+                                                                <option value="1.5">à deux mains</option>
                                                             </select>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="input-group">
-                                                            <select name="attr_attack_critic">
+                                                            <select class="fixed-small" name="attr_attack_critic">
                                                                 <option value="20" selected="selected">20</option>
                                                                 <option value="19">19-20</option>
                                                                 <option value="18">18-20</option>
@@ -1014,7 +1065,12 @@
                 <tbody>
                 <tr>
                     <td>
-                        <button title="test de réflexe" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de réflexe}} {{test=[[1D20cs>20+@{reflexes_total}]]}} )" name="roll_reflexes"></button>
+                        <button
+                            title="test de réflexe"
+                            type="roll"
+                            value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de réflexe}} {{test=[[1D20cs>20+@{reflexes_total}]]}} )"
+                            name="roll_reflexes"
+                        ></button>
                     </td>
                     <td class="center">
                         <span>Réflexes</span>
@@ -1048,7 +1104,12 @@
                 </tr>
                 <tr>
                     <td>
-                        <button title="test de vigueur" type="roll" value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de vigueur}} {{test=[[1D20cs>20+@{vigor_total}]]}})" name="roll_vigor"></button>
+                        <button
+                            title="test de vigueur"
+                            type="roll"
+                            value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de vigueur}} {{test=[[1D20cs>20+@{vigor_total}]]}})"
+                            name="roll_vigor"
+                        ></button>
                     </td>
                     <td class="center">
                         <span>Vigueur</span>
@@ -1082,7 +1143,12 @@
                 </tr>
                 <tr>
                     <td>
-                        <button title="test de volonté" type="roll" value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de volonté}} {{test=[[1D20cs>20+@{willpower_total}]]}})" name="roll_willpower"></button>
+                        <button
+                            title="test de volonté"
+                            type="roll" 
+                            value="(&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de volonté}} {{test=[[1D20cs>20+@{willpower_total}]]}})"
+                            name="roll_willpower"
+                        ></button>
                     </td>
                     <td class="center">
                         <span>Volonté</span>
@@ -1149,7 +1215,12 @@
                 <tbody>
                 <tr>
                     <td>
-                        <button title="test de résistance magique" type="roll" value="(&{template:roll} {{magic_resistance=show}} {{who=@{character_name}}} {{label=test de résistance magique}} {{test=[[1D20cs>20+@{magic_resistance_total}]]}} {{target_name=@{target|character_name}}} {{target_magic_resistance=[[@{target|magic_resistance_total}]]}} )" name="roll_magic_resistance"></button>
+                        <button
+                            title="test de résistance magique"
+                            type="roll"
+                            value="(&{template:roll} {{magic_resistance=show}} {{who=@{character_name}}} {{label=test de résistance magique}} {{test=[[1D20cs>20+@{magic_resistance_total}]]}} {{target_name=@{target|character_name}}} {{target_magic_resistance=[[@{target|magic_resistance_total}]]}} )"
+                            name="roll_magic_resistance"
+                        ></button>
                     </td>
                     <td>
                         <input type="number" name="attr_magic_resistance_total" class="strong" value="(@{foo_classes_level_total}+@{magic_resistance_racial}+@{magic_resistance_spell}+@{magic_resistance_object}+@{magic_resistance_misc})" disabled="disabled"/>
@@ -1189,7 +1260,7 @@
                         <span title="Bonus d'Armure">Armure</span>
                     </th>
                     <th width="10%">
-                        <span title="Modificateur de Dextérité&#13;Réduit selon l'équipement">Dex.</span>
+                        <span title="Modificateur de Dextérité&#13;peut être réduit par l'équipement">Dex.</span>
                     </th>
                     <th width="10%">
                         <span>Taille</span>
@@ -1277,7 +1348,12 @@
                 <tbody>
                 <tr>
                     <td>
-                        <button title="test de concentration" type="roll" value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de concentration}} {{test=[[1D20cs>20+@{concentration_total}]]}})" name="roll_concentration"></button>
+                        <button
+                            title="test de concentration"
+                            type="roll"
+                            value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de concentration}} {{test=[[1D20cs>20+@{concentration_total}]]}})"
+                            name="roll_concentration"
+                        ></button>
                     </td>
                     <td>
                         <input type="number" name="attr_concentration_total" class="strong" value="(@{foo_classes_level_total}-@{concentration_nls_malus}+@{concentration_statistic}+@{concentration_misc})" disabled="disabled"/>
@@ -1316,7 +1392,7 @@
                         <div class="fake-button-roll"></div>
                     </td>
                     <th>
-                        <span title="= BBA + Mod. + Taille + Équipement + Autre + Temporaire">Total</span>
+                        <span title="= BBA + Mod. + Taille + Équipement + Temporaire + Divers">Total</span>
                     </th>
                     <th>
                         <span title="Bonus de Base à l'Attaque&#13;1er - première attaque&#13;2eme - attaque à outrance n°1&#13;3eme - attaque à outrance n°2&#13;4eme - attaque à outrance n°3">BBA</span>
@@ -1334,14 +1410,19 @@
                         <span>Temporaire</span>
                     </th>
                     <th>
-                        <span>Autre</span>
+                        <span>Divers</span>
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>
-                        <button title="test d'attaque de contact" type="roll" value="&{template:roll}{{battle=show}} {{who=@{character_name}}} {{test=[[1d20cf<20+@{contact_attack_total}]]}} {{target_name=@{target|character_name}}" name="roll_contact_attack"></button>
+                        <button
+                            title="test d'attaque de contact"
+                            type="roll"
+                            value="&{template:roll}{{battle=show}} {{who=@{character_name}}} {{test=[[1d20cf<20+@{contact_attack_total}]]}} {{target_name=@{target|character_name}}"
+                            name="roll_contact_attack"
+                        ></button>
                     </td>
                     <td>
                         <input type="number" name="attr_contact_attack_total" class="strong" value="(@{contact_attack_bba}+@{contact_attack_statistic}+@{character_size}+@{contact_attack_mod_equipment}+@{contact_attack_mod_misc}+@{contact_attack_mod_temporary})" disabled="disabled" />
@@ -1362,8 +1443,8 @@
                             <input type="number" name="attr_contact_attack_statistic" value="(@{contact_attack_statistic_select})" disabled="disabled" />
                             <select class="fixed-medium" name="attr_contact_attack_statistic_select">
                                 <option selected="selected"></option>
-                                <option value="(@{character_strength_mod})">Corps à corps.</option>
-                                <option value="(@{character_dexterity_mod})">&Agrave; distance</option>
+                                <option value="(@{character_strength_mod})">corps à corps.</option>
+                                <option value="(@{character_dexterity_mod})">à distance</option>
                             </select>
                         </div>
                     </td>
@@ -3002,13 +3083,15 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
-                            <input type="checkbox" name="attr_skill_artistry_cc" value="((((3 * @{skill_artistry_ranks}) + 3) - abs((3 * @{skill_artistry_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                <div class="coin">
+                                    <input type="checkbox" name="attr_skill_artistry_cc" value="((((3 * @{skill_artistry_ranks}) + 3) - abs((3 * @{skill_artistry_ranks}) - 3)) / 2)"/>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
-                        <input type="number" name="attr_skill_artistry_class" value="(@{skill_artistry_cc})" disabled="disabled"/>
+                            <input type="number" name="attr_skill_artistry_class" value="(@{skill_artistry_cc})" disabled="disabled"/>
                         </div>
                     </td>
                     <td>
@@ -3054,11 +3137,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_craft1_cc" value="((((3 * @{skill_craft1_ranks}) + 3) - abs((3 * @{skill_craft1_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_craft1_class" value="(@{skill_craft1_cc})" disabled="disabled"/>
                         </div>
@@ -3106,11 +3191,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_craft2_cc" value="((((3 * @{skill_craft2_ranks}) + 3) - abs((3 * @{skill_craft2_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_craft2_class" value="(@{skill_craft2_cc})" disabled="disabled"/>
                         </div>
@@ -3158,11 +3245,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_craft3_cc" value="((((3 * @{skill_craft3_ranks}) + 3) - abs((3 * @{skill_craft3_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_craft3_class" value="(@{skill_craft3_cc})" disabled="disabled"/>
                         </div>
@@ -3206,11 +3295,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_knowledge_geography_cc" value="((((3 * @{skill_knowledge_geography_ranks}) + 3) - abs((3 * @{skill_knowledge_geography_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_knowledge_geography_class" value="(@{skill_knowledge_geography_cc})" disabled="disabled"/>
                         </div>
@@ -3254,11 +3345,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_knowledge_history_cc" value="((((3 * @{skill_knowledge_history_ranks}) + 3) - abs((3 * @{skill_knowledge_history_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_knowledge_history_class" value="(@{skill_knowledge_history_cc})" disabled="disabled"/>
                         </div>
@@ -3302,11 +3395,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_knowledge_engineering_cc" value="((((3 * @{skill_knowledge_engineering_ranks}) + 3) - abs((3 * @{skill_knowledge_engineering_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_knowledge_engineering_class" value="(@{skill_knowledge_engineering_cc})" disabled="disabled"/>
                         </div>
@@ -3350,11 +3445,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_knowledge_nobility_cc" value="((((3 * @{skill_knowledge_nobility_ranks}) + 3) - abs((3 * @{skill_knowledge_nobility_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_knowledge_nobility_class" value="(@{skill_knowledge_nobility_cc})" disabled="disabled"/>
                         </div>
@@ -3398,11 +3495,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_animal_training_cc" value="((((3 * @{skill_animal_training_ranks}) + 3) - abs((3 * @{skill_animal_training_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_animal_training_class" value="(@{skill_animal_training_cc})" disabled="disabled"/>
                         </div>
@@ -3445,11 +3544,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_appraise_cc" value="((((3 * @{skill_appraise_ranks}) + 3) - abs((3 * @{skill_appraise_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_appraise_class" value="(@{skill_appraise_cc})" disabled="disabled"/>
                         </div>
@@ -3493,11 +3594,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_linguistics_cc" value="((((3 * @{skill_linguistics_ranks}) + 3) - abs((3 * @{skill_linguistics_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_linguistics_class" value="(@{skill_linguistics_cc})" disabled="disabled"/>
                         </div>
@@ -3545,11 +3648,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_career1_cc" value="((((3 * @{skill_career1_ranks}) + 3) - abs((3 * @{skill_career1_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_career1_class" value="(@{skill_career1_cc})" disabled="disabled"/>
                         </div>
@@ -3597,11 +3702,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_career2_cc" value="((((3 * @{skill_career2_ranks}) + 3) - abs((3 * @{skill_career2_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_career2_class" value="(@{skill_career2_cc})" disabled="disabled"/>
                         </div>
@@ -3649,11 +3756,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_career3_cc" value="((((3 * @{skill_career3_ranks}) + 3) - abs((3 * @{skill_career3_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_career3_class" value="(@{skill_career3_cc})" disabled="disabled"/>
                         </div>
@@ -3704,11 +3813,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_representation1_cc" value="((((3 * @{skill_representation1_ranks}) + 3) - abs((3 * @{skill_representation1_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_representation1_class" value="(@{skill_representation1_cc})" disabled="disabled"/>
                         </div>
@@ -3759,11 +3870,13 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
+                                <div class="coin">
                             <input type="checkbox" name="attr_skill_representation2_cc" value="((((3 * @{skill_representation2_ranks}) + 3) - abs((3 * @{skill_representation2_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                         <input type="number" name="attr_skill_representation2_class" value="(@{skill_representation2_cc})" disabled="disabled"/>
                         </div>
@@ -3814,13 +3927,15 @@
                     <td>
                         <div class="input-group">
                             <div class="input-group-append">
-                        <div class="swap">
-                            <input type="checkbox" name="attr_skill_representation3_cc" value="((((3 * @{skill_representation3_ranks}) + 3) - abs((3 * @{skill_representation3_ranks}) - 3)) / 2)"/>
-                            <span class="swap-label swap-on">oui</span>
-                            <span class="swap-label swap-off">non</span>
-                        </div>
+                                <div class="coin">
+                                    <input type="checkbox" name="attr_skill_representation3_cc" value="((((3 * @{skill_representation3_ranks}) + 3) - abs((3 * @{skill_representation3_ranks}) - 3)) / 2)"/>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
-                        <input type="number" name="attr_skill_representation3_class" value="(@{skill_representation3_cc})" disabled="disabled"/>
+                            <input type="number" name="attr_skill_representation3_class" value="(@{skill_representation3_cc})" disabled="disabled"/>
                         </div>
                     </td>
                     <td>
@@ -3911,11 +4026,13 @@
                         <td width="8%">
                         <div class="input-group">
                             <div class="input-group-append">
-                            <div class="swap">
-                                <input type="checkbox" name="attr_skill_custom_cc" value="((((3 * @{skill_custom_ranks}) + 3) - abs((3 * @{skill_custom_ranks}) - 3)) / 2)"/>
-                                <span class="swap-label swap-on">oui</span>
-                                <span class="swap-label swap-off">non</span>
-                            </div>
+                                <div class="coin">
+                                    <input type="checkbox" name="attr_skill_custom_cc" value="((((3 * @{skill_custom_ranks}) + 3) - abs((3 * @{skill_custom_ranks}) - 3)) / 2)"/>
+                                    <div class="coin-content">
+                                        <span class="coin-face coin-on">oui</span>
+                                        <span class="coin-face coin-off">non</span>
+                                    </div>
+                                </div>                                
                             </div>
                             <input type="number" name="attr_skill_custom_class" value="(@{skill_custom_cc})" disabled="disabled"/>
                         </div>
