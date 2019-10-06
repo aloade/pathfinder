@@ -479,45 +479,56 @@ button[type="roll"] {
 
 .sheet-tab > label {
     display: block;
-    flex-grow: 1;
     width: auto;
-    height: 3rem;
     text-align: center;
     overflow: hidden;
-    line-height: 3rem;
-    color: rgb(100, 100, 100);
-    font-weight: bold;
-    border: 1px solid transparent;
-    border-bottom: 1px solid rgb(120, 120, 120);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     cursor: pointer;
     transition: color 0.25s ease;
 }
 
+.sheet-tab > label span {
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 0 1.5rem;
+    background-image: url("https://github.com/aloade/pathfinder/raw/master/image/icons.png");
+    background-repeat: no-repeat;
+    background-size: 160px 160px;
+    opacity: 0.6;
+    transition: opacity 0.25s ease;
+}
+
+.sheet-tab-character    { background-position: 0 0;}
+.sheet-tab-attack       { background-position: -40px 0;}
+.sheet-tab-defense      { background-position: -80px 0;}
+.sheet-tab-magic        { background-position: -120px 0;}
+.sheet-tab-skill        { background-position: 0 -40px;}
+.sheet-tab-feat         { background-position: -40px -40px;}
+.sheet-tab-inventory    { background-position: -80px -40px;}
+.sheet-tab-note         { background-position: -120px -40px;}
+
 .sheet-tab-content {
     position: relative;
     flex-grow: 7;
     width: 100%;
-    top:0;
-    left: 0;
-    z-index: 2;
     display: none;
     padding: 1rem;
-    border: 1px solid rgb(120, 120, 120);
     background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
-    border-top: none;
+    box-shadow: 0 6px 5px rgba(0, 0, 0, 0.2);
 }
 
-.sheet-tab > label:hover {
-    color: rgb(50, 50, 50);
+.sheet-tab > label:hover span {
+    opacity: 1;
 }
 
 .sheet-tab > input:checked + label {
-    color: rgb(50, 50, 50);
-    border: 1px solid rgb(120, 120, 120);
-    border-bottom: 1px solid transparent;
     background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
+}
+
+.sheet-tab > input:checked + label span {
+    opacity: 1;
 }
 
 .sheet-tab > input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
@@ -536,7 +547,14 @@ button[type="roll"] {
     min-height: 50rem;
 }
 
-.sheet-tab-content h1 {}
+.sheet-tab-content h1 {
+    font-size: 200%;
+    line-height: 2.5rem;
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+    color: rgb(50, 50, 50);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
 
 .sheet-tab-content h2 {
     font-size: 140%;
