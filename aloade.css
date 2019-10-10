@@ -18,6 +18,7 @@
 .charsheet input, .charsheet select, .charsheet textarea {
     display: inline-block;
     width: 100% !important;
+    height: auto;
     margin: 0;
     padding: 0;
     border-radius: 0;
@@ -45,7 +46,7 @@
 /* --------------------------------------------------- */
 /* grille */
 /* --------------------------------------------------- */
-.sheet-flexrow {
+.sheet-flex-row {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -53,37 +54,37 @@
     margin-right: -0.5rem;
 }
 
-.sheet-flexcol,
-.sheet-flexcol2,
-.sheet-flexcol3,
-.sheet-flexcol4,
-.sheet-flexcol5,
-.sheet-flexcol6,
-.sheet-flexcol7,
-.sheet-flexcol8,
-.sheet-flexcol9,
-.sheet-flexcol10,
-.sheet-flexcol11 {
+.sheet-flex-col,
+.sheet-flex-col2,
+.sheet-flex-col3,
+.sheet-flex-col4,
+.sheet-flex-col5,
+.sheet-flex-col6,
+.sheet-flex-col7,
+.sheet-flex-col8,
+.sheet-flex-col9,
+.sheet-flex-col10,
+.sheet-flex-col11 {
     position: relative;
     width: 100%;
     flex-basis: 0;
     flex-grow: 1;
     padding: 0 0.5rem;
 }
-.sheet-flexcol  { max-width: 100%;}
-.sheet-flexcol1  { max-width: 8.333333%;}
-.sheet-flexcol2  { max-width: 16.666667%;}
-.sheet-flexcol3  { max-width: 25%;}
-.sheet-flexcol4  { max-width: 33.333333%;}
-.sheet-flexcol5  { max-width: 41.666667%;}
-.sheet-flexcol6  { max-width: 50%;}
-.sheet-flexcol7  { max-width: 58.333333%;}
-.sheet-flexcol8  { max-width: 66.666667%;}
-.sheet-flexcol9  { max-width: 75%;}
-.sheet-flexcol10 { max-width: 83.333333%;}
-.sheet-flexcol11 { max-width: 91.666667%;}
+.sheet-flex-col  { max-width: 100%;}
+.sheet-flex-col1  { max-width: 8.333333%;}
+.sheet-flex-col2  { max-width: 16.666667%;}
+.sheet-flex-col3  { max-width: 25%;}
+.sheet-flex-col4  { max-width: 33.333333%;}
+.sheet-flex-col5  { max-width: 41.666667%;}
+.sheet-flex-col6  { max-width: 50%;}
+.sheet-flex-col7  { max-width: 58.333333%;}
+.sheet-flex-col8  { max-width: 66.666667%;}
+.sheet-flex-col9  { max-width: 75%;}
+.sheet-flex-col10 { max-width: 83.333333%;}
+.sheet-flex-col11 { max-width: 91.666667%;}
 
-.sheet-flexcol-auto {
+.sheet-flex-col-auto {
     flex: 0 0 auto;
     width: auto;
     max-width: 100%;
@@ -92,7 +93,7 @@
 /* --------------------------------------------------- */
 /* input group */
 /* --------------------------------------------------- */
-.charsheet .sheet-input-group {
+.sheet-input-group {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -100,30 +101,32 @@
     width: 100%;
 }
 
-.charsheet .sheet-input-group input, .charsheet .sheet-input-group select {
+.sheet-input-group > * + * {
+    margin-left: 0.5rem;
+}
+
+.sheet-input-group input, .charsheet .sheet-input-group select {
     flex: 1 1 auto;
     width: 1% !important;
     height: 2.6rem;
     line-height: 2.6rem;
 }
 
-.charsheet .sheet-input-group-prepend {}
+.sheet-input-group .sheet-input-group-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
 
-.charsheet .sheet-input-group-append {}
+.sheet-input-group-prepend {}
 
-.charsheet .sheet-input-group-text {
+.sheet-input-group-append {}
+
+.sheet-input-group-text {
     text-align: center;
     white-space: nowrap;
     align-items: center;
     line-height: 2.6rem;
-}
-
-.charsheet .sheet-input-group.sheet-disabled {
-    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
-}
-
-.charsheet .sheet-input-group.sheet-disabled input, .charsheet .sheet-input-group.sheet-disabled select {
-    background: none !important;
 }
 
 /* --------------------------------------------------- */
@@ -175,114 +178,74 @@
 }
 
 /* --------------------------------------------------- */
-/* checkbox swap */
+/* checkbox coin */
 /* --------------------------------------------------- */
-.sheet-swap {
+.sheet-coin {
+    perspective: 1000rem;
     position: relative;
     display: inline-block;
 }
 
-.sheet-swap input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 2;
-}
-
-.sheet-swap-label {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 1;
-    transition: opacity 0.25s ease;
-}
-
-.sheet-swap input:checked ~ .sheet-swap-on {
-    opacity: 1;
-}
-
-.sheet-swap input:not(:checked) ~ .sheet-swap-off {
-    opacity: 1;
-}
-
-/* --------------------------------------------------- */
-/* checkbox coin */
-/* --------------------------------------------------- */
-.sheet-coin {
-	perspective: 1000rem;
-	position: relative;
-	display: inline-block;
-}
-
 .sheet-coin input {
-	position: absolute;
-	top: 0;
-	left: 0;
-	display: block;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 3;
 }
 
 .sheet-coin-content {
-	position: relative;
-	transition: 0.25s;
-	transform-style: preserve-3d;
+    position: relative;
+    transition: 0.25s;
+    transform-style: preserve-3d;
 }
 
 .sheet-coin-on, .sheet-coin-off {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-color: lightgray;
-	border-radius: 1.3rem;
-	backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: lightgray;
+    border-radius: 1.3rem;
+    backface-visibility: hidden;
 }
 
 .sheet-coin-on {
-	z-index: 2;
-	transform: rotateY(180deg); /* for firefox 31 */
+    z-index: 2;
+    transform: rotateY(180deg); /* for firefox 31 */
 }
 
 .sheet-coin-off {
-	z-index: 1;
-	transform: rotateY(0deg);
+    z-index: 1;
+    transform: rotateY(0deg);
 }
 
 .sheet-coin input:checked ~ .sheet-coin-content {
-	transform: rotateY(180deg);
-	animation-name: coin-frames;
-	animation-duration: 0.25s;
+    transform: rotateY(180deg);
+    animation-name: coin-frames;
+    animation-duration: 0.25s;
 }
 
 @keyframes coin-frames {
-	0%  	{ transform: scale(1); }
-	50%     { transform: scale(1.2);}
-	100%	{ transform: scale(1); }
+    0%  	{ transform: scale(1); }
+    50%     { transform: scale(1.2);}
+    100%	{ transform: scale(1); }
 }
 
 /* --------------------------------------------------- */
 /* contenu */
 /* --------------------------------------------------- */
 
-/* générique */
 @font-face {
     font-family: "Dancing Script";
-    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/DancingScript.ttf"") format("truetype");
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/DancingScript.ttf") format("truetype");
 }
 
 @font-face {
     font-family: "Julietta Messie";
-    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Julietta-Messie.ttf"") format("truetype");
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Julietta-Messie.ttf") format("truetype");
 }
 
 .charsheet * {
@@ -296,6 +259,43 @@
     background: rgb(201, 183, 126) url("https://github.com/aloade/pathfinder/raw/master/image/noise_dark.jpg") repeat top left;
 }
 
+/* section */
+.sheet-section-header {
+    margin-left: auto;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    padding: 1px 0.75rem;
+}
+
+.sheet-section-header input[disabled] {
+    border-bottom: none;
+}
+
+.sheet-section {
+    margin-bottom: 2rem;
+}
+
+.sheet-section input:disabled {
+    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
+    border: none;
+}
+
+.sheet-section input.sheet-strong:disabled {
+    background: rgba(0, 0, 0, 0.07);
+    border: none;
+}
+
+.sheet-section .sheet-input-group.sheet-disabled {
+    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
+}
+
+.sheet-section .sheet-input-group.sheet-disabled input, .sheet-section  .charsheet .sheet-input-group.sheet-disabled select {
+    background: none !important;
+}
+
+/* générique */
 .sheet-center {
     text-align: center;
 }
@@ -305,6 +305,9 @@
     font-size: 110%;
 }
 
+.sheet-bold {
+    font-weight: bold;
+}
 .sheet-alert {
     font-family: "Pictos";
     color: rgb(220, 53, 69);
@@ -371,56 +374,33 @@ button[type="roll"] {
     background: none;
 }
 
-.sheet-swap {
+.sheet-coin, .sheet-coin-face {
     width: 2.6rem;
     height: 2.6rem;
 }
 
-.sheet-swap-label {
-	background-color: transparent;
-	border: 1px solid rgba(0, 0, 0, 0.15);
-	border-radius: 50%;
-	line-height: calc(2.6rem - 2px);
-	text-align: center;
-	font-size: 75%;
-	font-weight: bold;
-}
-
-.sheet-swap-on {
-    color: rgb(21, 87, 36);
-    background-color: rgb(212, 237, 218);
-}
-
-.sheet-swap-off {
-}
-
-.sheet-coin, .sheet-coin-face {
-	width: 2.6rem;
-	height: 2.6rem;
-}
-
 .sheet-coin-face {
-	display: block;
-	line-height: calc(2.6rem - 4px);
-	font-size: 75%;
-	border-radius: 50%;
-	text-align: center;
-	text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
-	font-weight: bold;
-	background-color: transparent;
-	border: 2px solid transparent;
+    display: block;
+    line-height: calc(2.6rem - 4px);
+    font-size: 75%;
+    border-radius: 50%;
+    text-align: center;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    background-color: transparent;
+    border: 2px solid transparent;
 }
 
 .sheet-coin-on {
-    color: rgb(212, 212, 212);
-	background: rgb(182,182,182) linear-gradient(-45deg, rgb(182,182,182), rgb(212,212,212)); 
-	border-color: rgb(172,172,172);
+    color: rgb(52, 52, 52);
+    background: rgb(182,182,182) linear-gradient(-45deg, rgb(182,182,182), rgb(212,212,212));
+    border-color: rgb(172,172,172);
 }
 
 .sheet-coin-off {
     color: rgb(192, 192, 192);
-	background: rgb(152,152,152) linear-gradient(-45deg, rgb(192,192,192), rgb(152,152,152)); 
-	border-color: rgb(142, 142, 142);
+    background: rgb(152,152,152) linear-gradient(-45deg, rgb(192,192,192), rgb(152,152,152));
+    border-color: rgb(142, 142, 142);
 }
 
 
@@ -482,8 +462,6 @@ button[type="roll"] {
     width: auto;
     text-align: center;
     overflow: hidden;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
     cursor: pointer;
     transition: color 0.25s ease;
 }
@@ -492,7 +470,7 @@ button[type="roll"] {
     display: block;
     width: 40px;
     height: 40px;
-    margin: 0 1.5rem;
+    margin: 0.2rem 1.5rem;
     background-image: url("https://github.com/aloade/pathfinder/raw/master/image/icons_transparent.png");
     background-repeat: no-repeat;
     background-size: 160px 160px;
@@ -501,7 +479,7 @@ button[type="roll"] {
 }
 
 .sheet-tab-character    { background-position: 0 0;}
-.sheet-tab-attack       { background-position: -40px 0;}
+.sheet-tab-battle       { background-position: -40px 0;}
 .sheet-tab-defense      { background-position: -80px 0;}
 .sheet-tab-magic        { background-position: -120px 0;}
 .sheet-tab-skill        { background-position: 0 -40px;}
@@ -509,6 +487,7 @@ button[type="roll"] {
 .sheet-tab-inventory    { background-position: -80px -40px;}
 .sheet-tab-note         { background-position: -120px -40px;}
 
+/* contenu de navigation */
 .sheet-tab-content {
     position: relative;
     flex-grow: 7;
@@ -542,7 +521,6 @@ button[type="roll"] {
     display: block;
 }
 
-/* section */
 .sheet-tab-content {
     min-height: 50rem;
 }
@@ -550,10 +528,10 @@ button[type="roll"] {
 .sheet-tab-content h1 {
     font-size: 200%;
     line-height: 2.5rem;
-    padding-left: 2rem;
+    padding: 1rem 0;
     margin-bottom: 2rem;
+    text-align: center;
     color: rgb(50, 50, 50);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
 }
 
 .sheet-tab-content h2 {
@@ -563,20 +541,6 @@ button[type="roll"] {
     margin-bottom: 1rem;
     color: rgb(50, 50, 50);
     border-bottom: 2px solid rgba(0, 0, 0, 0.15);
-}
-
-.sheet-tab-content input:disabled {
-    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
-    border: none;
-}
-
-.sheet-tab-content input.sheet-strong:disabled {
-    background: rgba(0, 0, 0, 0.07);
-    border: none;
-}
-
-.sheet-tab-content .sheet-section {
-    margin-bottom: 2rem;
 }
 
 .sheet-tab-content table {
@@ -602,11 +566,16 @@ button[type="roll"] {
     padding: 0.25rem;
 }
 
-/* compétences */
-.sheet-skill-summary {}
+.sheet-tab-content-break {
+    height: 2.5rem;
+    margin-bottom: 2rem;
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/break.png") no-repeat center;
+    background-size: contain;
+}
 
-.sheet-skill-summary table {
-    width: 50%;
+/* compétences */
+.sheet-skill-summary {
+    width: 25%;
 }
 
 .sheet-skill {}
@@ -626,7 +595,9 @@ button[type="roll"] {
 
 .sheet-featracial-description-short {}
 
-.sheet-featracial-description {}
+.sheet-featracial-description {
+    height: 15rem;
+}
 
 /* don */
 .sheet-feat {}
@@ -645,7 +616,9 @@ button[type="roll"] {
     margin-top: 0.5rem;
 }
 
-.sheet-feat-description {}
+.sheet-feat-description {
+    height: 15rem;
+}
 
 .sheet-initiative {}
 
@@ -654,18 +627,18 @@ button[type="roll"] {
 }
 
 /* combats */
-.sheet-attack {}
+.sheet-battle {}
 
-.sheet-attack-roll {
+.sheet-battle-roll {
     width: 2.8rem;
     margin-top: 1rem;
 }
 
-.sheet-attack-content {
+.sheet-battle-content {
     margin-bottom: 1rem;
 }
 
-.sheet-attack-subcontent {
+.sheet-battle-subcontent {
     border: 1px solid rgba(0, 0, 0, 0.1);
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
@@ -673,31 +646,59 @@ button[type="roll"] {
     position: relative;
 }
 
-.sheet-accordion-content {
+.sheet-battle-subcontent table {
     margin-top: 1rem;
 }
 
-.sheet-attack-subcontent table:not(:last-child) {
-    margin-bottom: 1rem;
-}
-
-.sheet-attack-label input {
+.sheet-battle-label input {
     text-align: left;
 }
 
-.sheet-attack-name {
-    font-weight: bold;
+.sheet-battle-name {
     border: none;
 }
 
-/* magie - concentration */
-.sheet-concentration {}
-.sheet-concentration > table {
-    width: 60%
+/* magie - nls */
+.sheet-nls {}
+.sheet-nls > table {
+    width: 40%;
+}
+
+/* magie - sortilèges */
+.sheet-spell {}
+
+.sheet-spell-roll {
+    width: 2.8rem;
+    margin-top: 1rem;
+}
+
+.sheet-spell-content {
+    margin-bottom: 1rem;
+}
+
+.sheet-spell-subcontent {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    position: relative;
+}
+
+.sheet-spell-subcontent table {
+    margin-top: 1rem;
+}
+
+.sheet-spell textarea {
+    margin-top: 1rem;
+    min-height: 21.4rem;
 }
 
 /* équipement device */
-.sheet-device {
+.sheet-equipment-purse {
+    width: 40%
+}
+
+.sheet-equipment-purse .sheet-device {
     display: inline-block;
     width: calc(1.5rem - 2px);
     height: calc(1.5rem - 2px);
@@ -705,29 +706,19 @@ button[type="roll"] {
     border-radius: 100%;
 }
 
-.sheet-device-gold {
+.sheet-equipment-purse .sheet-device-gold {
     background-color: rgb(255,223,0);
     border-color: rgb(215,193,0);
 }
 
-.sheet-device-silver {
+.sheet-equipment-purse .sheet-device-silver {
     background-color: rgb(192,192,192);
     border-color: rgb(152,152,152);
 }
 
-.sheet-device-copper {
+.sheet-equipment-purse .sheet-device-copper {
     background-color: rgb(184, 115, 51);
     border-color: rgb(144, 75, 11);
-}
-
-/* équipement bourse */
-.sheet-equipment-purse {
-    width: 50%;
-    margin-left: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 0.25rem;
-    padding: 1rem;
 }
 
 /* èquipement arme */
@@ -776,6 +767,7 @@ button[type="roll"] {
 
 .sheet-note-content {
     min-height: 10rem;
+    height: 15rem;
 }
 
 /* non utilisés */
@@ -789,38 +781,44 @@ button[type="roll"] {
 .sheet-inventory-description {}
 .sheet-inventory-quantity {}
 .sheet-magic-resistance {}
-.sheet-contact_attack {}
-.sheet-spells {}
+.sheet-contact-attack {}
 .sheet-stat {}
 .sheet-saves {}
-.sheet-spell {}
 
+/* --------------------------------------------------- */
 /* rolltemplate */
-.sheet-rolltemplate-roll .sheet-body {
+/* --------------------------------------------------- */
+
+/* generic */
+.sheet-rolltemplate-roll {
     padding: 0.5rem;
     background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.5rem;
 }
 
-.sheet-rolltemplate-roll .sheet-body p {
+.sheet-rolltemplate-roll p {
     margin: 0;
 }
 
-.sheet-rolltemplate-roll .sheet-body .inlinerollresult {
+.sheet-rolltemplate-roll span[title]:not(.inlinerollresult ) {
+    text-decoration: underline dashed rgb(50, 50, 50);
+    cursor: help;
+}
+
+.sheet-rolltemplate-roll .inlinerollresult {
     display: inline-block;
-    border-radius: 2rem;
+    border-radius: 50%;
     width: 2rem;
     height: 2rem;
     padding: 0;
     text-align: center;
-    line-height: 2rem;
+    line-height: calc(2.1rem);
     font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.55);
-    border-color: rgba(255, 255, 255, 0.55);
+    background-color: rgb(230, 230, 230);
 }
 
-.sheet-rolltemplate-roll .sheet-flexrow {
+.sheet-rolltemplate-roll .sheet-flex-row {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -828,7 +826,7 @@ button[type="roll"] {
     margin: 0 -0.5rem;
 }
 
-.sheet-rolltemplate-roll .sheet-flexcol {
+.sheet-rolltemplate-roll .sheet-flex-col {
     position: relative;
     width: 100%;
     flex-basis: 0;
@@ -851,4 +849,23 @@ button[type="roll"] {
 .sheet-rolltemplate-roll .sheet-danger {
     color: rgb(220, 53, 69);
     font-weight: bold;
+}
+
+/* basic */
+.sheet-rolltemplate-roll .sheet-basic {}
+
+/* battle */
+.sheet-rolltemplate-roll .sheet-battle {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/versus.png") no-repeat center;
+    background-size: contain;
+}
+
+.sheet-rolltemplate-roll .sheet-center {
+    margin-top: 1rem;
+}
+
+/* magic */
+.sheet-rolltemplate-roll .sheet-magic-resistance {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/pentacle.png") no-repeat center;
+    background-size: contain;
 }
