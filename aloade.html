@@ -1439,7 +1439,7 @@
                             <button
                                     title="test de concentration"
                                     type="roll"
-                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de concentration ( @{spell_name} )}} {{test=[[1D20cs>20+@{spell_total}]]}})"
+                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de concentration ( @{spell_name} )}} {{test=[[1D20cs>20+@{spell_concentration_total}]]}})"
                                     name="roll_spell"
                             ></button>
                         </div>
@@ -1499,42 +1499,70 @@
                                         <div class="accordion-content">
                                             <div class="flex-row">
                                                 <div class="flex-col7">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th width="33.333333%">
-                                                                <span title="= Niveau + Mod. + Divers">Total</span>
-                                                            </th>
-                                                            <th width="33.333333%">
-                                                                <span title="Modificateur de caractéristique">Mod.</span>
-                                                            </th>
-                                                            <th width="33.333333%">
-                                                                <span>Divers</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="number" name="attr_spell_total" class="strong" value="(@{spell_level}+@{spell_statistic_select}+@{spell_misc})" disabled="disabled" />
-                                                            </td>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <input type="number" name="attr_spell_statistic" value="(@{spell_statistic_select})" disabled="disabled" />
-                                                                    <select class="fixed-small" name="attr_spell_statistic_select">
-                                                                        <option selected="selected"></option>
-                                                                        <option value="(@{character_intelligence_mod})">Int.</option>
-                                                                        <option value="(@{character_wisdom_mod})" >Sag.</option>
-                                                                        <option value="(@{character_charisma_mod})">Cha.</option>
-                                                                    </select>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <input type="number" name="attr_spell_misc" value="0"/>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <div class="flex-row">
+                                                        <div class="flex-col8">
+                                                            <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th width="30%">
+                                                                        <span title="= NLS + Mod. + Divers">Total</span>
+                                                                    </th>
+                                                                    <th width="40%">
+                                                                        <span title="Modificateur de caractéristique">Mod.</span>
+                                                                    </th>
+                                                                    <th width="30%">
+                                                                        <span>Divers</span>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="number" name="attr_spell_concentration_total" class="strong" value="(@{nls_total}+@{spell_statistic_select}+@{spell_concentration_misc})" disabled="disabled" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="input-group">
+                                                                            <input type="number" name="attr_spell_statistic" value="(@{spell_statistic_select})" disabled="disabled" />
+                                                                            <select class="fixed-small" name="attr_spell_statistic_select">
+                                                                                <option selected="selected"></option>
+                                                                                <option value="(@{character_intelligence_mod})">Int.</option>
+                                                                                <option value="(@{character_wisdom_mod})" >Sag.</option>
+                                                                                <option value="(@{character_charisma_mod})">Cha.</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" name="attr_spell_concentration_misc" value="0"/>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="flex-col4">
+                                                             <table>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th width="50%">
+                                                                        <span title="Degré de Difficulté du sortilèges&#13;= Base + Mod. + Niveau du sort">DD</span>
+                                                                    </th>
+                                                                    <th width="50%">
+                                                                        <span>Base</span>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <input type="number" name="attr_spell_dd_total" class="strong" value="(@{spell_base}+@{spell_statistic_select}+@{spell_level})" disabled="disabled" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="number" name="attr_spell_base" value="10" disabled="disabled" />
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>                                                            
+                                                        </div>
+                                                    </div>
 
                                                     <textarea name="attr_spell_description"></textarea>
                                                 </div>
