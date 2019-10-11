@@ -1,5 +1,5 @@
 /* --------------------------------------------------- */
-/* correctifs roll20 */
+/* roll20 fix */
 /* --------------------------------------------------- */
 .charsheet *, .charsheet::after, .charsheet::before {
     box-sizing: border-box;
@@ -44,7 +44,7 @@
     z-index: 999;
 }
 /* --------------------------------------------------- */
-/* grille */
+/* flex */
 /* --------------------------------------------------- */
 .sheet-flex-row {
     width: 100%;
@@ -130,7 +130,7 @@
 }
 
 /* --------------------------------------------------- */
-/* accordéon */
+/* accordion */
 /* --------------------------------------------------- */
 .sheet-accordion {
     position: relative;
@@ -178,6 +178,47 @@
 }
 
 /* --------------------------------------------------- */
+/* checkbox switch */
+/* --------------------------------------------------- */
+.sheet-switch {
+    position: relative;
+    display: inline-block;
+
+}
+
+.sheet-switch input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 1;
+}
+
+.sheet-switch-on, .sheet-switch-off {
+    width: 100%;
+    height: 100%;
+}
+
+.sheet-switch-on {
+    display: none;
+}
+
+.sheet-switch-off {
+    display: none;
+}
+
+.sheet-switch input:checked ~ .sheet-switch-on {
+    display: block;
+}
+
+.sheet-switch input:not(:checked) ~ .sheet-switch-off {
+    display: block;
+}
+
+/* --------------------------------------------------- */
 /* checkbox coin */
 /* --------------------------------------------------- */
 .sheet-coin {
@@ -191,8 +232,8 @@
     top: 0;
     left: 0;
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     opacity: 0;
     z-index: 3;
 }
@@ -235,7 +276,7 @@
 }
 
 /* --------------------------------------------------- */
-/* contenu */
+/* content */
 /* --------------------------------------------------- */
 
 @font-face {
@@ -295,7 +336,7 @@
     background: none !important;
 }
 
-/* générique */
+/* generic */
 .sheet-center {
     text-align: center;
 }
@@ -348,6 +389,11 @@ input[type="number"] {
 input.sheet-text-left {
     text-align: left !important;
     padding-left: 0.25rem;
+}
+
+input.sheet-text-right {
+    text-align: right !important;
+    padding-right: 0.25rem;
 }
 
 textarea {
@@ -404,6 +450,20 @@ button[type="roll"] {
 }
 
 
+.sheet-switch {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    margin-top: 2px;
+}
+
+.sheet-switch-on {
+    border: 2px solid rgb(221, 200, 139);
+    background-color: rgb(50, 50, 50);
+    border-radius: 50%;
+}
+
 /* header */
 .sheet-header {
     margin: 0 0 2rem;
@@ -418,21 +478,17 @@ button[type="roll"] {
 }
 
 .sheet-header-character, .sheet-header-player {
-    margin-bottom: 2rem;
-    height: 4rem;
+    height: 6rem;
 }
 
 .sheet-header-character input {
     font-size: 180%;
-    line-height: 4rem;
-    height: 4rem !important;
+    height: 5rem !important;
     font-family: Dancing Script;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .sheet-header-player input {
-    line-height: 4rem;
-    height: 4rem !important;
 }
 
 .sheet-header span[title] {
@@ -445,7 +501,7 @@ button[type="roll"] {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* barre de navigation */
+/* nav */
 .sheet-tab {
     position: relative;
     max-width: 100%;
@@ -487,7 +543,7 @@ button[type="roll"] {
 .sheet-tab-inventory    { background-position: -80px -40px;}
 .sheet-tab-note         { background-position: -120px -40px;}
 
-/* contenu de navigation */
+/* nav content */
 .sheet-tab-content {
     position: relative;
     flex-grow: 7;
@@ -573,14 +629,14 @@ button[type="roll"] {
     background-size: contain;
 }
 
-/* compétences */
+/* skill */
 .sheet-skill-summary {
     width: 25%;
 }
 
 .sheet-skill {}
 
-/* traits racial */
+/* feat racial */
 .sheet-featracial {}
 
 .sheet-featracial-content {
@@ -599,7 +655,7 @@ button[type="roll"] {
     height: 15rem;
 }
 
-/* don */
+/* feat */
 .sheet-feat {}
 
 .sheet-feat-content {
@@ -626,7 +682,7 @@ button[type="roll"] {
     width: 40%;
 }
 
-/* combats */
+/* battle */
 .sheet-battle {}
 
 .sheet-battle-roll {
@@ -650,21 +706,17 @@ button[type="roll"] {
     margin-top: 1rem;
 }
 
-.sheet-battle-label input {
-    text-align: left;
-}
-
 .sheet-battle-name {
     border: none;
 }
 
-/* magie - nls */
+/* magic - nls */
 .sheet-nls {}
 .sheet-nls > table {
     width: 40%;
 }
 
-/* magie - sortilèges */
+/* magic - spell */
 .sheet-spell {}
 
 .sheet-spell-roll {
@@ -693,7 +745,7 @@ button[type="roll"] {
     min-height: 21.4rem;
 }
 
-/* équipement device */
+/* equipement pruse */
 .sheet-equipment-purse {
     width: 40%
 }
@@ -721,7 +773,7 @@ button[type="roll"] {
     border-color: rgb(144, 75, 11);
 }
 
-/* èquipement arme */
+/* eqipment - weapon */
 .sheet-equipment-weapon {
     margin-bottom: 1rem;
 }
@@ -732,7 +784,7 @@ button[type="roll"] {
     width: 60px !important;
 }
 
-/* équipement armure */
+/* equipment - armor */
 .sheet-equipment-summary {
 
 }
@@ -742,7 +794,7 @@ button[type="roll"] {
     margin-bottom: 1rem;
 }
 
-/* équipement magique */
+/* equipment - magic */
 .sheet-equipment-magic {}
 
 .sheet-equipment-magic table {
@@ -770,7 +822,7 @@ button[type="roll"] {
     height: 15rem;
 }
 
-/* non utilisés */
+/* not used */
 .sheet-battlemoves {}
 .sheet-character {}
 .sheet-class {}
@@ -818,6 +870,7 @@ button[type="roll"] {
     background-color: rgb(230, 230, 230);
 }
 
+/* flex */
 .sheet-rolltemplate-roll .sheet-flex-row {
     width: 100%;
     display: flex;
@@ -838,6 +891,7 @@ button[type="roll"] {
     text-align: left;
 }
 
+/* content */
 .sheet-rolltemplate-roll .sheet-right {
     text-align: right;
 }
@@ -864,8 +918,8 @@ button[type="roll"] {
     margin-top: 1rem;
 }
 
-/* magic */
-.sheet-rolltemplate-roll .sheet-magic-resistance {
+/* NLS */
+.sheet-rolltemplate-roll .sheet-nls {
     background: url("https://github.com/aloade/pathfinder/raw/master/image/pentacle.png") no-repeat center;
     background-size: contain;
 }
