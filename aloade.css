@@ -1,6 +1,10 @@
 /* --------------------------------------------------- */
 /* roll20 fix */
 /* --------------------------------------------------- */
+.charsheet {
+    margin: 0;
+}
+
 .charsheet *, .charsheet::after, .charsheet::before {
     box-sizing: border-box;
 }
@@ -127,6 +131,75 @@
     white-space: nowrap;
     align-items: center;
     line-height: 2.6rem;
+}
+
+/* --------------------------------------------------- */
+/* tab */
+/* --------------------------------------------------- */
+.sheet-tab {
+    position: relative;
+    padding-top: 40px;
+}
+
+.sheet-tab > input {
+    display: block;
+    opacity: 0;
+    z-index: 2;
+}
+
+.sheet-tab > label {
+    z-index: 1;
+}
+
+.sheet-tab > input, .sheet-tab > label {
+    position: absolute;
+    top: 0;
+    height: 40px !important;
+}
+
+.sheet-tab > label span {
+    opacity: 0.6;
+    transition: opacity 0.25s ease;
+}
+
+.sheet-tab > input:hover:nth-of-type(1) ~ label:nth-of-type(1) span,
+.sheet-tab > input:hover:nth-of-type(2) ~ label:nth-of-type(2) span,
+.sheet-tab > input:hover:nth-of-type(3) ~ label:nth-of-type(3) span,
+.sheet-tab > input:hover:nth-of-type(4) ~ label:nth-of-type(4) span,
+.sheet-tab > input:hover:nth-of-type(5) ~ label:nth-of-type(5) span,
+.sheet-tab > input:hover:nth-of-type(6) ~ label:nth-of-type(6) span,
+.sheet-tab > input:hover:nth-of-type(7) ~ label:nth-of-type(7) span,
+.sheet-tab > input:hover:nth-of-type(8) ~ label:nth-of-type(8) span,
+.sheet-tab > input:hover:nth-of-type(9) ~ label:nth-of-type(9) span {
+    opacity: 1;
+}
+
+.sheet-tab > input:checked:nth-of-type(1) ~ label:nth-of-type(1) span,
+.sheet-tab > input:checked:nth-of-type(2) ~ label:nth-of-type(2) span,
+.sheet-tab > input:checked:nth-of-type(3) ~ label:nth-of-type(3) span,
+.sheet-tab > input:checked:nth-of-type(4) ~ label:nth-of-type(4) span,
+.sheet-tab > input:checked:nth-of-type(5) ~ label:nth-of-type(5) span,
+.sheet-tab > input:checked:nth-of-type(6) ~ label:nth-of-type(6) span,
+.sheet-tab > input:checked:nth-of-type(7) ~ label:nth-of-type(7) span,
+.sheet-tab > input:checked:nth-of-type(8) ~ label:nth-of-type(8) span,
+.sheet-tab > input:checked:nth-of-type(9) ~ label:nth-of-type(9) span {
+    opacity: 1;
+}
+.sheet-tab > div {
+    display: none;
+    width: 100%;
+}
+
+.sheet-tab > input:checked:nth-of-type(1) ~ div:nth-of-type(1),
+.sheet-tab > input:checked:nth-of-type(2) ~ div:nth-of-type(2),
+.sheet-tab > input:checked:nth-of-type(3) ~ div:nth-of-type(3),
+.sheet-tab > input:checked:nth-of-type(4) ~ div:nth-of-type(4),
+.sheet-tab > input:checked:nth-of-type(5) ~ div:nth-of-type(5),
+.sheet-tab > input:checked:nth-of-type(6) ~ div:nth-of-type(6),
+.sheet-tab > input:checked:nth-of-type(7) ~ div:nth-of-type(7),
+.sheet-tab > input:checked:nth-of-type(8) ~ div:nth-of-type(8),
+.sheet-tab > input:checked:nth-of-type(9) ~ div:nth-of-type(9) {
+    display: block !important;
 }
 
 /* --------------------------------------------------- */
@@ -370,6 +443,13 @@
     min-width: 18rem;
 }
 
+.sheet-break {
+    height: 2.5rem;
+    margin-bottom: 2rem;
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/break.png") no-repeat center;
+    background-size: contain;
+}
+
 input, select {
     display: inline-block;
     background-color: transparent;
@@ -501,87 +581,61 @@ button[type="roll"] {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* nav */
-.sheet-tab {
-    position: relative;
-    max-width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.sheet-tab > input {
-    display: none;
-}
-
-.sheet-tab > label {
-    display: block;
-    width: auto;
+/* body */
+.sheet-body > label {
     text-align: center;
-    overflow: hidden;
-    cursor: pointer;
-    transition: color 0.25s ease;
 }
 
-.sheet-tab > label span {
-    display: block;
+.sheet-body > input, .sheet-body > label {
+    width: 70px !important;
+}
+
+.sheet-body > label span {
+    display: inline-block;
     width: 40px;
     height: 40px;
-    margin: 0.2rem 1.5rem;
     background-image: url("https://github.com/aloade/pathfinder/raw/master/image/icons_transparent.png");
     background-repeat: no-repeat;
     background-size: 160px 160px;
-    opacity: 0.6;
-    transition: opacity 0.25s ease;
 }
 
-.sheet-tab-character    { background-position: 0 0;}
-.sheet-tab-battle       { background-position: -40px 0;}
-.sheet-tab-defense      { background-position: -80px 0;}
-.sheet-tab-magic        { background-position: -120px 0;}
-.sheet-tab-skill        { background-position: 0 -40px;}
-.sheet-tab-feat         { background-position: -40px -40px;}
-.sheet-tab-inventory    { background-position: -80px -40px;}
-.sheet-tab-note         { background-position: -120px -40px;}
+.sheet-body-character    { background-position: 0 0;}
+.sheet-body-battle       { background-position: -40px 0;}
+.sheet-body-defense      { background-position: -80px 0;}
+.sheet-body-magic        { background-position: -120px 0;}
+.sheet-body-skill        { background-position: 0 -40px;}
+.sheet-body-feat         { background-position: -40px -40px;}
+.sheet-body-inventory    { background-position: -80px -40px;}
+.sheet-body-note         { background-position: -120px -40px;}
 
-/* nav content */
-.sheet-tab-content {
-    position: relative;
-    flex-grow: 7;
-    width: 100%;
-    display: none;
+.sheet-body > input:nth-of-type(1), .sheet-body > label:nth-of-type(1) { left: 0; }
+.sheet-body > input:nth-of-type(2), .sheet-body > label:nth-of-type(2) { left: 70px; }
+.sheet-body > input:nth-of-type(3), .sheet-body > label:nth-of-type(3) { left: 140px; }
+.sheet-body > input:nth-of-type(4), .sheet-body > label:nth-of-type(4) { left: 210px; }
+.sheet-body > input:nth-of-type(5), .sheet-body > label:nth-of-type(5) { left: 280px; }
+.sheet-body > input:nth-of-type(6), .sheet-body > label:nth-of-type(6) { left: 350px; }
+.sheet-body > input:nth-of-type(7), .sheet-body > label:nth-of-type(7) { left: 420px; }
+.sheet-body > input:nth-of-type(8), .sheet-body > label:nth-of-type(8) { left: 490px; }
+
+.sheet-body > input:checked:nth-of-type(1) ~ label:nth-of-type(1),
+.sheet-body > input:checked:nth-of-type(2) ~ label:nth-of-type(2),
+.sheet-body > input:checked:nth-of-type(3) ~ label:nth-of-type(3),
+.sheet-body > input:checked:nth-of-type(4) ~ label:nth-of-type(4),
+.sheet-body > input:checked:nth-of-type(5) ~ label:nth-of-type(5),
+.sheet-body > input:checked:nth-of-type(6) ~ label:nth-of-type(6),
+.sheet-body > input:checked:nth-of-type(7) ~ label:nth-of-type(7),
+.sheet-body > input:checked:nth-of-type(8) ~ label:nth-of-type(8) {
+    background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
+}
+
+.sheet-body > div {
     padding: 1rem;
     background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
     box-shadow: 0 6px 5px rgba(0, 0, 0, 0.2);
-}
-
-.sheet-tab > label:hover span {
-    opacity: 1;
-}
-
-.sheet-tab > input:checked + label {
-    background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
-}
-
-.sheet-tab > input:checked + label span {
-    opacity: 1;
-}
-
-.sheet-tab > input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
-.sheet-tab > input:checked:nth-of-type(2) ~ .sheet-tab-content:nth-of-type(2),
-.sheet-tab > input:checked:nth-of-type(3) ~ .sheet-tab-content:nth-of-type(3),
-.sheet-tab > input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
-.sheet-tab > input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
-.sheet-tab > input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
-.sheet-tab > input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7),
-.sheet-tab > input:checked:nth-of-type(8) ~ .sheet-tab-content:nth-of-type(8) {
-    display: block;
-}
-
-.sheet-tab-content {
     min-height: 50rem;
 }
 
-.sheet-tab-content h1 {
+.sheet-body h1 {
     font-size: 200%;
     line-height: 2.5rem;
     padding: 1rem 0;
@@ -590,7 +644,7 @@ button[type="roll"] {
     color: rgb(50, 50, 50);
 }
 
-.sheet-tab-content h2 {
+.sheet-body h2 {
     font-size: 140%;
     line-height: 2.5rem;
     padding-left: 1rem;
@@ -599,13 +653,13 @@ button[type="roll"] {
     border-bottom: 2px solid rgba(0, 0, 0, 0.15);
 }
 
-.sheet-tab-content table {
+.sheet-body table {
     border-collapse: collapse;
     border: none;
     width: 100%;
 }
 
-.sheet-tab-content table thead th, .sheet-tab-content .sheet-thead {
+.sheet-body table thead th, .sheet-body .sheet-thead {
     background-color: rgba(0, 0, 0, 0.1);
     text-align: center;
     height: 2rem;
@@ -613,20 +667,13 @@ button[type="roll"] {
     font-weight: bold;
 }
 
-.sheet-tab-content span[title]:not(.sheet-alert) {
+.sheet-body span[title]:not(.sheet-alert) {
     text-decoration: underline dashed rgb(50, 50, 50);
     cursor: help;
 }
 
-.sheet-tab-content table td + td {
+.sheet-body table td + td {
     padding: 0.25rem;
-}
-
-.sheet-tab-content-break {
-    height: 2.5rem;
-    margin-bottom: 2rem;
-    background: url("https://github.com/aloade/pathfinder/raw/master/image/break.png") no-repeat center;
-    background-size: contain;
 }
 
 /* skill */
@@ -723,6 +770,32 @@ button[type="roll"] {
 /* magic - spell */
 .sheet-spell {}
 
+
+.sheet-spell.sheet-tab > input, .sheet-spell.sheet-tab > label {
+    width: 11.111111% !important;
+}
+
+.sheet-spell.sheet-tab > input:nth-of-type(1), .sheet-spell.sheet-tab > label:nth-of-type(1) { left: 0; }
+.sheet-spell.sheet-tab > input:nth-of-type(2), .sheet-spell.sheet-tab > label:nth-of-type(2) { left: 11.111111%; }
+.sheet-spell.sheet-tab > input:nth-of-type(3), .sheet-spell.sheet-tab > label:nth-of-type(3) { left: 22.222222%; }
+.sheet-spell.sheet-tab > input:nth-of-type(4), .sheet-spell.sheet-tab > label:nth-of-type(4) { left: 33.333333%; }
+.sheet-spell.sheet-tab > input:nth-of-type(5), .sheet-spell.sheet-tab > label:nth-of-type(5) { left: 44.444444%; }
+.sheet-spell.sheet-tab > input:nth-of-type(6), .sheet-spell.sheet-tab > label:nth-of-type(6) { left: 55.555555%; }
+.sheet-spell.sheet-tab > input:nth-of-type(7), .sheet-spell.sheet-tab > label:nth-of-type(7) { left: 66.666666%; }
+.sheet-spell.sheet-tab > input:nth-of-type(8), .sheet-spell.sheet-tab > label:nth-of-type(8) { left: 77.777777%; }
+.sheet-spell.sheet-tab > input:nth-of-type(9), .sheet-spell.sheet-tab > label:nth-of-type(9) { left: 88.888888%; }
+
+.sheet-spell .sheet-tab > input {
+    
+}
+
+.sheet-spell .sheet-tab > label {
+    
+}
+
+.sheet-spell .sheet-tab > div {
+    
+}
 .sheet-spell-roll {
     width: 2.8rem;
     margin-top: 1rem;

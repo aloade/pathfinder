@@ -1,3 +1,183 @@
+<script type="text/worker">
+    // size
+    on("sheet:opened change:character_size_select remove:character_size_select", () => {
+        getAttrs(["character_size_select"], (user) => {
+            console.log(user);
+            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+            console.log(user);
+
+        // prepare load
+        let load = {};
+        load["character_size"] = user.character_size_select;
+        load["character_size_special"] = -user.character_size_select;
+        delete(user);
+
+        setAttrs(load);
+        });
+    });
+
+    // classes
+    on("sheet:opened change:repeating_classes remove:repeating_classes change:character_intelligence_base remove:character_intelligence_base change:character_intelligence_bonus remove:character_intelligence_bonus change:character_intelligence_malus remove:character_intelligence_malus", () => {
+        getAttrs(["character_intelligence_base", "character_intelligence_bonus", "character_intelligence_malus"], (user) => {
+            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+            let section = "classes";
+            let fields = {
+                "in": {
+                    "name" : "classes_name",
+                    "bba1" : "classes_bba1",
+                    "bba2" : "classes_bba2",
+                    "bba3" : "classes_bba3",
+                    "bba4" : "classes_bba4",
+                    "vigor" : "classes_vigor",
+                    "reflexes" : "classes_reflexes",
+                    "willpower" : "classes_willpower",
+                    "level" : "classes_level"
+                },
+                "out": {
+                    "compniv" : "classes_compniv",
+                    "bba1" : "foo_classes_bba1_total",
+                    "bba2" : "foo_classes_bba2_total",
+                    "bba3" : "foo_classes_bba3_total",
+                    "bba4" : "foo_classes_bba4_total",
+                    "vigor" : "foo_classes_vigor_total",
+                    "reflexes" : "foo_classes_reflexes_total",
+                    "willpower" : "foo_classes_willpower_total",
+                    "level" : "foo_classes_level_total"
+                }
+            }
+
+            getAttrsRepeating(section, Object.values(fields.in), repeating => {
+                let cache = {
+                    "intelligence" : Math.floor( (user.character_intelligence_base + user.character_intelligence_bonus - user.character_intelligence_malus) / 2 - 5),
+                    "bba1" : 0,
+                    "bba2" : 0,
+                    "bba3" : 0,
+                    "bba4" : 0,
+                    "vigor" : 0,
+                    "reflexes" : 0,
+                    "willpower" : 0,
+                    "level" : 0
+                }
+                delete(user);
+
+                // iterate load
+                Object.keys(repeating).forEach( id => {
+                    cache.bba1 += repeating[id][fields.in.bba1];
+                    cache.bba2 += repeating[id][fields.in.bba2];
+                    cache.bba3 += repeating[id][fields.in.bba3];
+                    cache.bba4 += repeating[id][fields.in.bba4];
+                    cache.vigor += repeating[id][fields.in.vigor];
+                    cache.reflexes += repeating[id][fields.in.reflexes];
+                    cache.willpower += repeating[id][fields.in.willpower];
+                    cache.level += repeating[id][fields.in.level];
+                });
+                cache.rank *= cache.level;
+                delete(repeating);
+
+                // prepare load
+                let load = {};
+                load[fields.out.bba1] = cache.bba1;
+                load[fields.out.bba2] = cache.bba2;
+                load[fields.out.bba3] = cache.bba3;
+                load[fields.out.bba4] = cache.bba4;
+                load[fields.out.vigor] = cache.vigor;
+                load[fields.out.reflexes] = cache.reflexes;
+                load[fields.out.willpower] = cache.willpower;
+                load[fields.out.level] = cache.level;
+                delete(cache);
+
+                setAttrs(load);
+            });
+        });
+    });
+
+    // armor
+    on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
+        let section = "equipmentarmor";
+        let fields = {
+            "in": {
+                "armor" : "equipment_armor_bonus",
+                "worn" : "equipment_armor_worn",
+                "dexterity" : "equipment_armor_dexterity_max",
+                "malus" : "equipment_armor_malus"
+            },
+            "out": {
+                "armor" : "foo_defense_ca_bonus",
+                "dexterity": "foo_defense_dexterity",
+                "malus" : "foo_defense_malus"
+            }
+        }
+
+        getAttrsRepeating(section, Object.values(fields.in), (repeating) => {
+            getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
+            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+                let cache = {
+                    "dexterity" : Math.floor( (user.character_dexterity_base + user.character_dexterity_bonus - user.character_dexterity_malus) / 2 - 5),
+                    "armor" : 0,
+                    "malus": 0
+                }
+                if ( cache.dexterity < 0 ) cache.dexterity = 0;
+                delete(user);
+
+                // iterate load
+                Object.keys(repeating).forEach( id => {
+                    if ( repeating[id][fields.in.worn] === 1 ) {
+                        cache.armor += repeating[id][fields.in.armor];
+                        if ( repeating[id][fields.in.dexterity] !== null && cache.dexterity > repeating[id][fields.in.dexterity] ) cache.dexterity = repeating[id][fields.in.dexterity];
+                        cache.malus += repeating[id][fields.in.malus];
+                    }
+                });
+                delete(repeating);
+
+                // prepare load
+                let load = {};
+                load[fields.out.armor] = cache.armor;
+                load[fields.out.dexterity] = cache.dexterity;
+                load[fields.out.malus] = Math.abs(cache.malus);
+                delete(cache);
+
+                setAttrs(load);
+            });
+        });
+    });
+
+    // get all attributes name and their values from a repeating block ordered by Id (roll20 generated)
+    //
+    // section	        string from "repeating_<section>_<field>"
+    // fields           string or array of string from "repeating_<section>_<field>"
+    // callback         returning function after async. )
+    function getAttrsRepeating(section, fields, callback) {
+        section = section.replace(/^repeating_/g, section);
+        if ( !Array.isArray(fields) ) fields = [fields];
+        if ( !(callback instanceof Function) ) callback = () => {};
+
+        getSectionIDs(section, ids => {
+            // prepares attributes name for "getAttrs"
+            let attributeNames = ids.reduce( (m,id) => [...m, ...(fields.map(field => "repeating_"+section+'_'+id+'_'+field))],[]);
+
+            // get data from DOM
+            // note : we working on raw data and not on init. variables
+            // because we don't know what "getAttrs" produce
+            getAttrs(attributeNames, raw => {
+                let load = {}, regex = new RegExp( "repeating_" + section + "_([^_]*)_(.*)"), match;
+                Object.keys(raw).forEach( key => {
+                    match = key.match(regex);
+                    if ( !load.hasOwnProperty( match[1]) ) load[ match[1] ] = {}
+                    load[ match[1] ][ match[2] ] = parseValue( raw[key] );
+                });
+                callback(load);
+            });
+        });
+    }
+
+    // parse values got in DOM and clean it
+    function parseValue(value) {
+        if (value === "") return null
+        // checkbox from roll20 return "on" or 0
+        return parseFloat(value, 10) || (value === "on" ? 1 : 0);
+    }
+</script>
+
 <div class="header">
     <div class="flex-row">
         <div class="flex-col8">
@@ -69,41 +249,12 @@
     </div>
 </div>
 
-<div class="tab">
-    <input type="radio" id="tab1" name="attr_tab" checked="checked">
-    <label for="tab1">
-        <span title="Personnage" class="tab-character"></span>
+<div class="body tab">
+    <input type="radio" name="attr_body_nav" checked="checked">
+    <label>
+        <span class="body-character"></span>
     </label>
-    <input type="radio" id="tab2" name="attr_tab">
-    <label for="tab2">
-        <span title="Combat" class="tab-battle"></span>
-    </label>
-    <input type="radio" id="tab3" name="attr_tab">
-    <label for="tab3">
-        <span title="Magie" class="tab-magic"></span>
-    </label>
-    <input type="radio" id="tab4" name="attr_tab">
-    <label for="tab4">
-        <span title="Défense" class="tab-defense"></span>
-    </label>
-    <input type="radio" id="tab5" name="attr_tab">
-    <label for="tab5">
-        <span title="Compétences" class="tab-skill"></span>
-    </label>
-    <input type="radio" id="tab6" name="attr_tab">
-    <label for="tab6">
-        <span title="Talents" class="tab-feat"></span>
-    </label>
-    <input type="radio" id="tab7" name="attr_tab">
-    <label for="tab7">
-        <span title="Inventaire" class="tab-inventory"></span>
-    </label>
-    <input type="radio" id="tab8" name="attr_tab">
-    <label for="tab8">
-        <span title="Notes" class="tab-note"></span>
-    </label>
-
-    <div class="tab-content">
+    <div>
         <h1>Personnage</h1>
 
         <div class="flex-row">
@@ -594,7 +745,11 @@
         <div class="tab-content-break"></div>
     </div>
 
-    <div class="tab-content">
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-battle"></span>
+    </label>
+    <div>
         <h1>Combats</h1>
 
         <div class="initiative section">
@@ -966,7 +1121,11 @@
         <div class="tab-content-break"></div>
     </div>
 
-    <div class="tab-content">
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-magic"></span>
+    </label>
+    <div>
         <h1>Magie</h1>
 
         <div class="nls section">
@@ -1252,375 +1411,382 @@
         </div>
         <div class="tab-content-break"></div>
 
-            <fieldset class="repeating_spell">
-                <div class="spell-content">
-                    <div class="flex-row">
-                        <div class="flex-col-auto spell-roll">
-                            <button
-                                    title="test de concentration"
-                                    type="roll"
-                                    value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de concentration ( @{spell_name} )}} {{test=[[1D20cs>20+@{spell_concentration_total}]]}})"
-                                    name="roll_spell"
-                            ></button>
-                        </div>
-                        <div class="flex-col">
-                            <div class="spell-subcontent">
-                                <div class="accordion">
-                                    <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                                    <div class="accordion-container">
-                                        <div class="accordion-label spell-label">
-                                            <div class="flex-row">
-                                                <div class="flex-col7">
-                                                    <div class="input-group">
-                                                        <div class="switch">
-                                                            <input title="Préparé ?" type="checkbox" name="attr_spell_prepared" />
-                                                            <span class="switch-face switch-on"></span>
-                                                            <span class="switch-face switch-off"></span>
+        <div class="spell tab">
+            <input type="radio" name="attr_spell_nav" checked="checked">
+            <label>
+                <span>Niveau 1</span>
+            </label>
+            <div>
+                <fieldset class="repeating_spell">
+                    <div class="spell-content">
+                        <div class="flex-row">
+                            <div class="flex-col-auto spell-roll">
+                                <button
+                                        title="test de concentration"
+                                        type="roll"
+                                        value="(&{template:roll} {{basic=show}} {{who=@{character_name}}} {{label=test de concentration ( @{spell_name} )}} {{test=[[1D20cs>20+@{spell_concentration_total}]]}})"
+                                        name="roll_spell"
+                                ></button>
+                            </div>
+                            <div class="flex-col">
+                                <div class="spell-subcontent">
+                                    <div class="accordion">
+                                        <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                                        <div class="accordion-container">
+                                            <div class="accordion-label spell-label">
+                                                <div class="flex-row">
+                                                    <div class="flex-col7">
+                                                        <div class="input-group">
+                                                            <div class="switch">
+                                                                <input title="Préparé ?" type="checkbox" name="attr_spell_prepared" />
+                                                                <span class="switch-face switch-on"></span>
+                                                                <span class="switch-face switch-off"></span>
+                                                            </div>
+                                                            <input class="spell-name text-left bold" type="text" name="attr_spell_name" placeholder="Nom du sortilège" />
+                                                            <div class="input-group-text">
+                                                                <span>Niveau</span>
+                                                            </div>
+                                                            <select class="input-group-auto fixed-small" name="attr_spell_level">
+                                                                <option value="" selected="selected"></option>
+                                                                <option value="0">0</option>
+                                                                <option value="1">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="6">6</option>
+                                                                <option value="7">7</option>
+                                                                <option value="8">8</option>
+                                                                <option value="9">9</option>
+                                                            </select>
                                                         </div>
-                                                        <input class="spell-name text-left bold" type="text" name="attr_spell_name" placeholder="Nom du sortilège" />
-                                                        <div class="input-group-text">
-                                                            <span>Niveau</span>
-                                                        </div>
-                                                        <select class="input-group-auto fixed-small" name="attr_spell_level">
-                                                            <option value="" selected="selected"></option>
-                                                            <option value="0">0</option>
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                        </select>
                                                     </div>
-                                                </div>
-
-                                                <div class="flex-col5">
-                                                    <div class="input-group">
-                                                        <div class="input-group-text">
-                                                            <span>Portée</span>
+        
+                                                    <div class="flex-col5">
+                                                        <div class="input-group">
+                                                            <div class="input-group-text">
+                                                                <span>Portée</span>
+                                                            </div>
+                                                            <select name="attr_spell_range" class="fixed-medium input-group-auto">
+                                                                <option value="0" selected="selected"></option>
+                                                                <option value="1">personnelle</option>
+                                                                <option value="2">contact</option>
+                                                                <option value="3">courte</option>
+                                                                <option value="4">moyenne</option>
+                                                                <option value="5">longue</option>
+                                                                <option value="6">illimité</option>
+                                                            </select>
+                                                            <input type="text" name="attr_spell_range_description" />
                                                         </div>
-                                                        <select name="attr_spell_range" class="fixed-medium input-group-auto">
-                                                            <option value="0" selected="selected"></option>
-                                                            <option value="1">personnelle</option>
-                                                            <option value="2">contact</option>
-                                                            <option value="3">courte</option>
-                                                            <option value="4">moyenne</option>
-                                                            <option value="5">longue</option>
-                                                            <option value="6">illimité</option>
-                                                        </select>
-                                                        <input type="text" name="attr_spell_range_description" />
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="accordion-content">
-                                            <div class="flex-row">
-                                                <div class="flex-col7">
-                                                    <div class="flex-row">
-                                                        <div class="flex-col8">
-                                                            <table>
-                                                                <thead>
-                                                                <tr>
-                                                                    <th width="30%">
-                                                                        <span title="= NLS + Mod. + Divers">Total</span>
-                                                                    </th>
-                                                                    <th width="40%">
-                                                                        <span title="Modificateur de caractéristique">Mod.</span>
-                                                                    </th>
-                                                                    <th width="30%">
-                                                                        <span>Divers</span>
-                                                                    </th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="number" name="attr_spell_concentration_total" class="strong" value="(@{nls_total}+@{spell_statistic_select}+@{spell_concentration_misc})" disabled="disabled" />
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="input-group">
-                                                                            <input type="number" name="attr_spell_statistic" value="(@{spell_statistic_select})" disabled="disabled" />
-                                                                            <select class="fixed-small" name="attr_spell_statistic_select">
-                                                                                <option selected="selected"></option>
-                                                                                <option value="(@{character_intelligence_mod})">Int.</option>
-                                                                                <option value="(@{character_wisdom_mod})" >Sag.</option>
-                                                                                <option value="(@{character_charisma_mod})">Cha.</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" name="attr_spell_concentration_misc" value="0"/>
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
+                                            <div class="accordion-content">
+                                                <div class="flex-row">
+                                                    <div class="flex-col7">
+                                                        <div class="flex-row">
+                                                            <div class="flex-col8">
+                                                                <table>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th width="30%">
+                                                                            <span title="= NLS + Mod. + Divers">Total</span>
+                                                                        </th>
+                                                                        <th width="40%">
+                                                                            <span title="Modificateur de caractéristique">Mod.</span>
+                                                                        </th>
+                                                                        <th width="30%">
+                                                                            <span>Divers</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" name="attr_spell_concentration_total" class="strong" value="(@{nls_total}+@{spell_statistic_select}+@{spell_concentration_misc})" disabled="disabled" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="input-group">
+                                                                                <input type="number" name="attr_spell_statistic" value="(@{spell_statistic_select})" disabled="disabled" />
+                                                                                <select class="fixed-small" name="attr_spell_statistic_select">
+                                                                                    <option selected="selected"></option>
+                                                                                    <option value="(@{character_intelligence_mod})">Int.</option>
+                                                                                    <option value="(@{character_wisdom_mod})" >Sag.</option>
+                                                                                    <option value="(@{character_charisma_mod})">Cha.</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" name="attr_spell_concentration_misc" value="0"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="flex-col4">
+                                                                 <table>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th width="50%">
+                                                                            <span title="Degré de Difficulté du sortilèges&#13;= Base + Mod. + Niveau du sort">DD</span>
+                                                                        </th>
+                                                                        <th width="50%">
+                                                                            <span>Base</span>
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="number" name="attr_spell_dd_total" class="strong" value="(@{spell_base}+@{spell_statistic_select}+@{spell_level})" disabled="disabled" />
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="number" name="attr_spell_base" value="10" disabled="disabled" />
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>                                                            
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-col4">
-                                                             <table>
-                                                                <thead>
-                                                                <tr>
-                                                                    <th width="50%">
-                                                                        <span title="Degré de Difficulté du sortilèges&#13;= Base + Mod. + Niveau du sort">DD</span>
-                                                                    </th>
-                                                                    <th width="50%">
-                                                                        <span>Base</span>
-                                                                    </th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="number" name="attr_spell_dd_total" class="strong" value="(@{spell_base}+@{spell_statistic_select}+@{spell_level})" disabled="disabled" />
-                                                                    </td>
-                                                                    <td>
-                                                                        <input type="number" name="attr_spell_base" value="10" disabled="disabled" />
-                                                                    </td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>                                                            
-                                                        </div>
+        
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <span>École</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="input-group">
+                                                                        <select name="attr_spell_school">
+                                                                            <option value="0" selected="selected"></option>
+                                                                            <optgroup label="Abjuration">
+                                                                                <option value="1.1">Abjuration</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Divination">
+                                                                                <option value="2.1">Divination</option>
+                                                                                <option value="2.2">Scrutation</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Enchantement">
+                                                                                <option value="3.1">Enchantement</option>
+                                                                                <option value="3.2">Charme</option>
+                                                                                <option value="3.3">Coercition</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Évocation">
+                                                                                <option value="4.1">Évocation</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Illusion">
+                                                                                <option value="5.1">illusion</option>
+                                                                                <option value="5.2">Fantasme</option>
+                                                                                <option value="5.3">Hallucination</option>
+                                                                                <option value="5.4">Mirage</option>
+                                                                                <option value="5.5">Ombre</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Invocation">
+                                                                                <option value="6.1">Appel</option>
+                                                                                <option value="6.2">Convocation</option>
+                                                                                <option value="6.3">Création</option>
+                                                                                <option value="6.4">Guérison</option>
+                                                                                <option value="6.5">Invocation</option>
+                                                                                <option value="6.6">Téléportation</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Nécromancie">
+                                                                                <option value="7.1">Nécromancie</option>
+                                                                            </optgroup>
+                                                                            <optgroup label="Transmutation">
+                                                                                <option value="8.1">Métamorphose</option>
+                                                                                <option value="8.2">Transmutation</option>
+                                                                            </optgroup>
+                                                                        </select>
+                                                                        <select name="attr_spell_register">
+                                                                            <option value="0" selected="selected"></option>
+                                                                            <option value="1">acide</option>
+                                                                            <option value="2">air</option>
+                                                                            <option value="3">bien</option>
+                                                                            <option value="4">chaos</option>
+                                                                            <option value="5">douleur</option>
+                                                                            <option value="6">eau</option>
+                                                                            <option value="7">électricité</option>
+                                                                            <option value="8">émotion</option>
+                                                                            <option value="9">feu</option>
+                                                                            <option value="10">force</option>
+                                                                            <option value="11">froid</option>
+                                                                            <option value="12">langage</option>
+                                                                            <option value="13">loi</option>
+                                                                            <option value="14">lumière</option>
+                                                                            <option value="15">mal</option>
+                                                                            <option value="16">maladie</option>
+                                                                            <option value="17">malédiction</option>
+                                                                            <option value="18">mental</option>
+                                                                            <option value="19">mort</option>
+                                                                            <option value="20">ombre</option>
+                                                                            <option value="21">poison</option>
+                                                                            <option value="22">son</option>
+                                                                            <option value="23">terre</option>
+                                                                            <option value="24">terreur</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                        <textarea name="attr_spell_description"></textarea>
                                                     </div>
-
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th>
-                                                                <span>École</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <select name="attr_spell_school">
-                                                                        <option value="0" selected="selected"></option>
-                                                                        <optgroup label="Abjuration">
-                                                                            <option value="1.1">Abjuration</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Divination">
-                                                                            <option value="2.1">Divination</option>
-                                                                            <option value="2.2">Scrutation</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Enchantement">
-                                                                            <option value="3.1">Enchantement</option>
-                                                                            <option value="3.2">Charme</option>
-                                                                            <option value="3.3">Coercition</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Évocation">
-                                                                            <option value="4.1">Évocation</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Illusion">
-                                                                            <option value="5.1">illusion</option>
-                                                                            <option value="5.2">Fantasme</option>
-                                                                            <option value="5.3">Hallucination</option>
-                                                                            <option value="5.4">Mirage</option>
-                                                                            <option value="5.5">Ombre</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Invocation">
-                                                                            <option value="6.1">Appel</option>
-                                                                            <option value="6.2">Convocation</option>
-                                                                            <option value="6.3">Création</option>
-                                                                            <option value="6.4">Guérison</option>
-                                                                            <option value="6.5">Invocation</option>
-                                                                            <option value="6.6">Téléportation</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Nécromancie">
-                                                                            <option value="7.1">Nécromancie</option>
-                                                                        </optgroup>
-                                                                        <optgroup label="Transmutation">
-                                                                            <option value="8.1">Métamorphose</option>
-                                                                            <option value="8.2">Transmutation</option>
-                                                                        </optgroup>
-                                                                    </select>
-                                                                    <select name="attr_spell_register">
-                                                                        <option value="0" selected="selected"></option>
-                                                                        <option value="1">acide</option>
-                                                                        <option value="2">air</option>
-                                                                        <option value="3">bien</option>
-                                                                        <option value="4">chaos</option>
-                                                                        <option value="5">douleur</option>
-                                                                        <option value="6">eau</option>
-                                                                        <option value="7">électricité</option>
-                                                                        <option value="8">émotion</option>
-                                                                        <option value="9">feu</option>
-                                                                        <option value="10">force</option>
-                                                                        <option value="11">froid</option>
-                                                                        <option value="12">langage</option>
-                                                                        <option value="13">loi</option>
-                                                                        <option value="14">lumière</option>
-                                                                        <option value="15">mal</option>
-                                                                        <option value="16">maladie</option>
-                                                                        <option value="17">malédiction</option>
-                                                                        <option value="18">mental</option>
-                                                                        <option value="19">mort</option>
-                                                                        <option value="20">ombre</option>
-                                                                        <option value="21">poison</option>
-                                                                        <option value="22">son</option>
-                                                                        <option value="23">terre</option>
-                                                                        <option value="24">terreur</option>
-                                                                    </select>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    
-                                                    <textarea name="attr_spell_description"></textarea>
-                                                </div>
-
-                                                <div class="flex-col5">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th>
-                                                                <span>Composantes</span>
-                                                            </th>
-                                                            <th width="1%">
-                                                                <span title="Résistance Magique ?">RM</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="coin">
-                                                                    <input title="Verbale" type="checkbox" name="attr_spell_components_verbal" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">V</span>
-                                                                        <span class="coin-face coin-off">V</span>
+        
+                                                    <div class="flex-col5">
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <span>Composantes</span>
+                                                                </th>
+                                                                <th width="1%">
+                                                                    <span title="Résistance Magique ?">RM</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="coin">
+                                                                        <input title="Verbale" type="checkbox" name="attr_spell_components_verbal" />
+                                                                        <div class="coin-content">
+                                                                            <span class="coin-face coin-on">V</span>
+                                                                            <span class="coin-face coin-off">V</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Gestuelle" type="checkbox" name="attr_spell_components_gestural" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">G</span>
-                                                                        <span class="coin-face coin-off">G</span>
+                                                                    <div class="coin">
+                                                                        <input title="Gestuelle" type="checkbox" name="attr_spell_components_gestural" />
+                                                                        <div class="coin-content">
+                                                                            <span class="coin-face coin-on">G</span>
+                                                                            <span class="coin-face coin-off">G</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Matérielle" type="checkbox" name="attr_spell_components_material" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">M</span>
-                                                                        <span class="coin-face coin-off">M</span>
+                                                                    <div class="coin">
+                                                                        <input title="Matérielle" type="checkbox" name="attr_spell_components_material" />
+                                                                        <div class="coin-content">
+                                                                            <span class="coin-face coin-on">M</span>
+                                                                            <span class="coin-face coin-off">M</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Focaliseur" type="checkbox" name="attr_spell_components_focalizing" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">F</span>
-                                                                        <span class="coin-face coin-off">F</span>
+                                                                    <div class="coin">
+                                                                        <input title="Focaliseur" type="checkbox" name="attr_spell_components_focalizing" />
+                                                                        <div class="coin-content">
+                                                                            <span class="coin-face coin-on">F</span>
+                                                                            <span class="coin-face coin-off">F</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Focaliseur Divin" type="checkbox" name="attr_spell_components_divine_focalizing" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">FD</span>
-                                                                        <span class="coin-face coin-off">FD</span>
+                                                                    <div class="coin">
+                                                                        <input title="Focaliseur Divin" type="checkbox" name="attr_spell_components_divine_focalizing" />
+                                                                        <div class="coin-content">
+                                                                            <span class="coin-face coin-on">FD</span>
+                                                                            <span class="coin-face coin-off">FD</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="coin">
-                                                                    <input type="checkbox" name="attr_spell_magic_resistance" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">oui</span>
-                                                                        <span class="coin-face coin-off">non</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="coin">
+                                                                        <input type="checkbox" name="attr_spell_magic_resistance" />
+                                                                        <div class="coin-content">
+                                                                            <span class="coin-face coin-on">oui</span>
+                                                                            <span class="coin-face coin-off">non</span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th colspan="2">
-                                                                <span>Temps d'incantation</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="text" name="attr_spell_incantation" />
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th colspan="2">
-                                                                <span>Cible / Zone</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <input type="text" name="attr_spell_area" />
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th>
-                                                                <span>Durée</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <select name="attr_spell_duration" class="fixed-medium input-group-auto">
-                                                                        <option value="0" selected="selected">instantanée</option>
-                                                                        <option value="1">permanente</option>
-                                                                        <option value="2">concentration</option>
-                                                                        <option value="3">sujets</option>
-                                                                    </select>
-                                                                    <input type="text" name="attr_spell_duration_description" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th colspan="2">
-                                                                <span>Jet de sauvegarde</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="input-group">
-                                                                    <select name="attr_spell_save" class="fixed-large input-group-auto">
-                                                                        <option value="0" selected="selected">Aucun</option>
-                                                                        <option value="1">annule</option>
-                                                                        <option value="2">partiel</option>
-                                                                        <option value="3">1/2 des dégâts</option>
-                                                                        <option value="4">dévoile</option>
-                                                                        <option value="5">inoffensif</option>
-                                                                    </select>
-                                                                    <input type="text" name="attr_spell_save_description" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+        
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th colspan="2">
+                                                                    <span>Temps d'incantation</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" name="attr_spell_incantation" />
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th colspan="2">
+                                                                    <span>Cible / Zone</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text" name="attr_spell_area" />
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+        
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    <span>Durée</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="input-group">
+                                                                        <select name="attr_spell_duration" class="fixed-medium input-group-auto">
+                                                                            <option value="0" selected="selected">instantanée</option>
+                                                                            <option value="1">permanente</option>
+                                                                            <option value="2">concentration</option>
+                                                                            <option value="3">sujets</option>
+                                                                        </select>
+                                                                        <input type="text" name="attr_spell_duration_description" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+        
+                                                        <table>
+                                                            <thead>
+                                                            <tr>
+                                                                <th colspan="2">
+                                                                    <span>Jet de sauvegarde</span>
+                                                                </th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="input-group">
+                                                                        <select name="attr_spell_save" class="fixed-large input-group-auto">
+                                                                            <option value="0" selected="selected">Aucun</option>
+                                                                            <option value="1">annule</option>
+                                                                            <option value="2">partiel</option>
+                                                                            <option value="3">1/2 des dégâts</option>
+                                                                            <option value="4">dévoile</option>
+                                                                            <option value="5">inoffensif</option>
+                                                                        </select>
+                                                                        <input type="text" name="attr_spell_save_description" />
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1629,143 +1795,81 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </fieldset>
-            
-        <div class="spell section">
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 0</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
+                </fieldset>
             </div>
-            <div class="tab-content-break"></div>
-
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 1</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content-break"></div>
             
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 2</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 2</span>
+            </label>
+            <div>
+                contenu niveau 2
+            </div>
+            
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 3</span>
+            </label>
+            <div>
+                contenu niveau 3
+            </div>
 
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 3</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 4</span>
+            </label>
+            <div>
+                contenu niveau 4
+            </div>
 
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 4</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 5</span>
+            </label>
+            <div>
+                contenu niveau 5
+            </div>
 
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 5</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 6</span>
+            </label>
+            <div>
+                contenu niveau 6
+            </div>
 
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 6</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 7</span>
+            </label>
+            <div>
+                contenu niveau 7
+            </div>
 
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 7</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 8</span>
+            </label>
+            <div>
+                contenu niveau 8
+            </div>
 
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 8</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
-            <div class="tab-content-break"></div>
-
-            <div class="accordion">
-                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
-                <div class="accordion-container">
-                    <div class="accordion-label spell-label">
-                        <h2>Sorts de niveau 9</h2>
-                    </div>
-                    <div class="accordion-content">
-                        contenu
-                    </div>
-                </div>
-            </div>            
+            <input type="radio" name="attr_spell_nav">
+            <label>
+                <span>Niveau 9</span>
+            </label>
+            <div>
+                contenu niveau 9
+            </div>
         </div>
         <div class="tab-content-break"></div>
     </div>
 
-    <div class="tab-content">
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-defense"></span>
+    </label>
+    <div>
         <h1>Défense</h1>
 
         <div class="saves section">
@@ -2048,8 +2152,12 @@
         </div>
         <div class="tab-content-break"></div>
     </div>
-
-    <div class="tab-content">
+    
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-skill"></span>
+    </label>
+    <div>
         <h1>Compétences</h1>
 
         <div class="skill-summary section-header">
@@ -2057,49 +2165,7 @@
                 <div class="input-group-text">
                     <span>Rangs</span>
                 </div>
-                <input title="Rangs dépensés" type="number" name="attr_skill_sum" value="(
-                @{skill_acrobatics_ranks}
-                +@{skill_animal_training_ranks}
-                +@{skill_artistry_ranks}
-                +@{skill_appraise_ranks}
-                +@{skill_bluff_ranks}
-                +@{skill_climbing_ranks}
-                +@{skill_career1_ranks}
-                +@{skill_career2_ranks}
-                +@{skill_career3_ranks}
-                +@{skill_craft1_ranks}
-                +@{skill_craft2_ranks}
-                +@{skill_craft3_ranks}
-                +@{skill_disguise_ranks}
-                +@{skill_diplomacy_ranks}
-                +@{skill_first_aid_ranks}
-                +@{skill_fly_ranks}
-                +@{skill_knowledge_arcana_ranks}
-                +@{skill_knowledge_dungeon_ranks}
-                +@{skill_knowledge_engineering_ranks}
-                +@{skill_knowledge_geography_ranks}
-                +@{skill_knowledge_history_ranks}
-                +@{skill_knowledge_local_ranks}
-                +@{skill_knowledge_nature_ranks}
-                +@{skill_knowledge_plans_ranks}
-                +@{skill_knowledge_religion_ranks}
-                +@{skill_knowledge_nobility_ranks}
-                +@{skill_horseback_riding_ranks}
-                +@{skill_escape_ranks}
-                +@{skill_intimidate_ranks}
-                +@{skill_linguistics_ranks}
-                +@{skill_swimming_ranks}
-                +@{skill_perception_ranks}
-                +@{skill_pickpocketing_ranks}
-                +@{skill_psychology_ranks}
-                +@{skill_representation1_ranks}
-                +@{skill_representation2_ranks}
-                +@{skill_representation3_ranks}
-                +@{skill_sabotage_ranks}
-                +@{skill_stealth_ranks}
-                +@{skill_survival_ranks}
-                +@{skill_spellcraft_ranks}
-                +@{skill_use_of_magic_objects_ranks})" disabled="disabled" />
+                <input title="Rangs dépensés" type="number" name="attr_skill_sum" value="(@{skill_acrobatics_ranks}+@{skill_animal_training_ranks}+@{skill_artistry_ranks}+@{skill_appraise_ranks}+@{skill_bluff_ranks}+@{skill_climbing_ranks}+@{skill_career1_ranks}+@{skill_career2_ranks}+@{skill_career3_ranks}+@{skill_craft1_ranks}+@{skill_craft2_ranks}+@{skill_craft3_ranks}+@{skill_disguise_ranks}+@{skill_diplomacy_ranks}+@{skill_first_aid_ranks}+@{skill_fly_ranks}+@{skill_knowledge_arcana_ranks}+@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_engineering_ranks}+@{skill_knowledge_geography_ranks}+@{skill_knowledge_history_ranks}+@{skill_knowledge_local_ranks}+@{skill_knowledge_nature_ranks}+@{skill_knowledge_plans_ranks}+@{skill_knowledge_religion_ranks}+@{skill_knowledge_nobility_ranks}+@{skill_horseback_riding_ranks}+@{skill_escape_ranks}+@{skill_intimidate_ranks}+@{skill_linguistics_ranks}+@{skill_swimming_ranks}+@{skill_perception_ranks}+@{skill_pickpocketing_ranks}+@{skill_psychology_ranks}+@{skill_representation1_ranks}+@{skill_representation2_ranks}+@{skill_representation3_ranks}+@{skill_sabotage_ranks}+@{skill_stealth_ranks}+@{skill_survival_ranks}+@{skill_spellcraft_ranks}+@{skill_use_of_magic_objects_ranks})" disabled="disabled" />
                 <div class="input-group-text">
                     <span>/</span>
                 </div>
@@ -4648,16 +4714,20 @@
         </div>
         <div class="tab-content-break"></div>
     </div>
-
-    <div class="tab-content">
+    
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-feat"></span>
+    </label>
+    <div>
         <h1>Talents</h1>
 
         <div class="flex-row">
             <div class="flex-col">
-                <div class="feat-racial section">
+                <div class="feat-racial">
                     <h2>Traits racial</h2>
                     <fieldset class="repeating_featracial">
-                        <div class="featracial-content">
+                        <div class="featracial-content section">
                             <input class="featracial-label text-left bold" type="text" placeholder="Nom du trait racial" name="attr_featracial_label">
                             <textarea class="featracial-description" name="attr_featracial_description" placeholder="Description complète du trait racial"></textarea>
                         </div>
@@ -4665,10 +4735,10 @@
                 </div>
             </div>
             <div class="flex-col">
-                <div class="feat section">
+                <div class="feat">
                     <h2>Dons</h2>
                     <fieldset class="repeating_feat">
-                        <div class="feat-content">
+                        <div class="feat-content section">
                             <div class="flex-row">
                                 <div class="flex-col">
                                     <input type="text" class="text-left bold" name="attr_feat_name" placeholder="Nom du don">
@@ -4695,8 +4765,12 @@
         </div>
         <div class="tab-content-break"></div>
     </div>
-
-    <div class="tab-content">
+    
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-inventory"></span>
+    </label>
+    <div>
         <h1>Inventaire</h1>
 
         <div class="equipment-purse section-header">
@@ -5067,7 +5141,11 @@
         <div class="tab-content-break"></div>
     </div>
 
-    <div class="tab-content">
+    <input type="radio" name="attr_body_nav">
+    <label>
+        <span class="body-note"></span>
+    </label>
+    <div>
         <h1>Notes</h1>
 
         <fieldset class="repeating_note">
@@ -5239,185 +5317,4 @@
         </div>
     </div>
     {{/nls}}
-</rolltemplate
-
-<script type="text/worker">
-    // size
-    on("sheet:opened change:character_size_select remove:character_size_select", () => {
-        getAttrs(["character_size_select"], (user) => {
-            console.log(user);
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-            console.log(user);
-
-        // prepare load
-        let load = {};
-        load["character_size"] = user.character_size_select;
-        load["character_size_special"] = -user.character_size_select;
-        delete(user);
-
-        setAttrs(load);
-        });
-    });
-
-    // classes
-    on("sheet:opened change:repeating_classes remove:repeating_classes change:character_intelligence_base remove:character_intelligence_base change:character_intelligence_bonus remove:character_intelligence_bonus change:character_intelligence_malus remove:character_intelligence_malus", () => {
-        getAttrs(["character_intelligence_base", "character_intelligence_bonus", "character_intelligence_malus"], (user) => {
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-            let section = "classes";
-            let fields = {
-                "in": {
-                    "name" : "classes_name",
-                    "bba1" : "classes_bba1",
-                    "bba2" : "classes_bba2",
-                    "bba3" : "classes_bba3",
-                    "bba4" : "classes_bba4",
-                    "vigor" : "classes_vigor",
-                    "reflexes" : "classes_reflexes",
-                    "willpower" : "classes_willpower",
-                    "level" : "classes_level"
-                },
-                "out": {
-                    "compniv" : "classes_compniv",
-                    "bba1" : "foo_classes_bba1_total",
-                    "bba2" : "foo_classes_bba2_total",
-                    "bba3" : "foo_classes_bba3_total",
-                    "bba4" : "foo_classes_bba4_total",
-                    "vigor" : "foo_classes_vigor_total",
-                    "reflexes" : "foo_classes_reflexes_total",
-                    "willpower" : "foo_classes_willpower_total",
-                    "level" : "foo_classes_level_total"
-                }
-            }
-
-            getAttrsRepeating(section, Object.values(fields.in), repeating => {
-                let cache = {
-                    "intelligence" : Math.floor( (user.character_intelligence_base + user.character_intelligence_bonus - user.character_intelligence_malus) / 2 - 5),
-                    "bba1" : 0,
-                    "bba2" : 0,
-                    "bba3" : 0,
-                    "bba4" : 0,
-                    "vigor" : 0,
-                    "reflexes" : 0,
-                    "willpower" : 0,
-                    "level" : 0
-                }
-                delete(user);
-
-                // iterate load
-                Object.keys(repeating).forEach( id => {
-                    cache.bba1 += repeating[id][fields.in.bba1];
-                    cache.bba2 += repeating[id][fields.in.bba2];
-                    cache.bba3 += repeating[id][fields.in.bba3];
-                    cache.bba4 += repeating[id][fields.in.bba4];
-                    cache.vigor += repeating[id][fields.in.vigor];
-                    cache.reflexes += repeating[id][fields.in.reflexes];
-                    cache.willpower += repeating[id][fields.in.willpower];
-                    cache.level += repeating[id][fields.in.level];
-                });
-                cache.rank *= cache.level;
-                delete(repeating);
-
-                // prepare load
-                let load = {};
-                load[fields.out.bba1] = cache.bba1;
-                load[fields.out.bba2] = cache.bba2;
-                load[fields.out.bba3] = cache.bba3;
-                load[fields.out.bba4] = cache.bba4;
-                load[fields.out.vigor] = cache.vigor;
-                load[fields.out.reflexes] = cache.reflexes;
-                load[fields.out.willpower] = cache.willpower;
-                load[fields.out.level] = cache.level;
-                delete(cache);
-
-                setAttrs(load);
-            });
-        });
-    });
-
-    // armor
-    on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
-        let section = "equipmentarmor";
-        let fields = {
-            "in": {
-                "armor" : "equipment_armor_bonus",
-                "worn" : "equipment_armor_worn",
-                "dexterity" : "equipment_armor_dexterity_max",
-                "malus" : "equipment_armor_malus"
-            },
-            "out": {
-                "armor" : "foo_defense_ca_bonus",
-                "dexterity": "foo_defense_dexterity",
-                "malus" : "foo_defense_malus"
-            }
-        }
-
-        getAttrsRepeating(section, Object.values(fields.in), (repeating) => {
-            getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-                let cache = {
-                    "dexterity" : Math.floor( (user.character_dexterity_base + user.character_dexterity_bonus - user.character_dexterity_malus) / 2 - 5),
-                    "armor" : 0,
-                    "malus": 0
-                }
-                if ( cache.dexterity < 0 ) cache.dexterity = 0;
-                delete(user);
-
-                // iterate load
-                Object.keys(repeating).forEach( id => {
-                    if ( repeating[id][fields.in.worn] === 1 ) {
-                        cache.armor += repeating[id][fields.in.armor];
-                        if ( repeating[id][fields.in.dexterity] !== null && cache.dexterity > repeating[id][fields.in.dexterity] ) cache.dexterity = repeating[id][fields.in.dexterity];
-                        cache.malus += repeating[id][fields.in.malus];
-                    }
-                });
-                delete(repeating);
-
-                // prepare load
-                let load = {};
-                load[fields.out.armor] = cache.armor;
-                load[fields.out.dexterity] = cache.dexterity;
-                load[fields.out.malus] = Math.abs(cache.malus);
-                delete(cache);
-
-                setAttrs(load);
-            });
-        });
-    });
-
-    // get all attributes name and their values from a repeating block ordered by Id (roll20 generated)
-    //
-    // section	        string from "repeating_<section>_<field>"
-    // fields           string or array of string from "repeating_<section>_<field>"
-    // callback         returning function after async. )
-    function getAttrsRepeating(section, fields, callback) {
-        section = section.replace(/^repeating_/g, section);
-        if ( !Array.isArray(fields) ) fields = [fields];
-        if ( !(callback instanceof Function) ) callback = () => {};
-
-        getSectionIDs(section, ids => {
-            // prepares attributes name for "getAttrs"
-            let attributeNames = ids.reduce( (m,id) => [...m, ...(fields.map(field => "repeating_"+section+'_'+id+'_'+field))],[]);
-
-            // get data from DOM
-            // note : we working on raw data and not on init. variables
-            // because we don't know what "getAttrs" produce
-            getAttrs(attributeNames, raw => {
-                let load = {}, regex = new RegExp( "repeating_" + section + "_([^_]*)_(.*)"), match;
-                Object.keys(raw).forEach( key => {
-                    match = key.match(regex);
-                    if ( !load.hasOwnProperty( match[1]) ) load[ match[1] ] = {}
-                    load[ match[1] ][ match[2] ] = parseValue( raw[key] );
-                });
-                callback(load);
-            });
-        });
-    }
-
-    // parse values got in DOM and clean it
-    function parseValue(value) {
-        if (value === "") return null
-        // checkbox from roll20 return "on" or 0
-        return parseFloat(value, 10) || (value === "on" ? 1 : 0);
-    }
-
-</script>
+</rolltemplate>
