@@ -702,12 +702,16 @@ button[type="roll"] {
     position: relative;
 }
 
-.sheet-battle-subcontent table {
+.sheet-battle-subcontent table, .sheet-battle-subcontent textarea,{
     margin-top: 1rem;
 }
 
 .sheet-battle-name {
     border: none;
+}
+
+.sheet-battle-subcontent textarea {
+    min-height: 6rem;
 }
 
 /* magic - nls */
@@ -742,7 +746,7 @@ button[type="roll"] {
 
 .sheet-spell textarea {
     margin-top: 1rem;
-    min-height: 21.4rem;
+    min-height: 15.8rem;
 }
 
 /* equipement pruse */

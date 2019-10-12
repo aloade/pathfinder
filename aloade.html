@@ -1,184 +1,3 @@
-<script type="text/worker">
-    // size
-    on("sheet:opened change:character_size_select remove:character_size_select", () => {
-        getAttrs(["character_size_select"], (user) => {
-            console.log(user);
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-            console.log(user);
-
-        // prepare load
-        let load = {};
-        load["character_size"] = user.character_size_select;
-        load["character_size_special"] = -user.character_size_select;
-        delete(user);
-
-        setAttrs(load);
-        });
-    });
-
-    // classes
-    on("sheet:opened change:repeating_classes remove:repeating_classes change:character_intelligence_base remove:character_intelligence_base change:character_intelligence_bonus remove:character_intelligence_bonus change:character_intelligence_malus remove:character_intelligence_malus", () => {
-        getAttrs(["character_intelligence_base", "character_intelligence_bonus", "character_intelligence_malus"], (user) => {
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-            let section = "classes";
-            let fields = {
-                "in": {
-                    "name" : "classes_name",
-                    "bba1" : "classes_bba1",
-                    "bba2" : "classes_bba2",
-                    "bba3" : "classes_bba3",
-                    "bba4" : "classes_bba4",
-                    "vigor" : "classes_vigor",
-                    "reflexes" : "classes_reflexes",
-                    "willpower" : "classes_willpower",
-                    "level" : "classes_level"
-                },
-                "out": {
-                    "compniv" : "classes_compniv",
-                    "bba1" : "foo_classes_bba1_total",
-                    "bba2" : "foo_classes_bba2_total",
-                    "bba3" : "foo_classes_bba3_total",
-                    "bba4" : "foo_classes_bba4_total",
-                    "vigor" : "foo_classes_vigor_total",
-                    "reflexes" : "foo_classes_reflexes_total",
-                    "willpower" : "foo_classes_willpower_total",
-                    "level" : "foo_classes_level_total"
-                }
-            }
-
-            getAttrsRepeating(section, Object.values(fields.in), repeating => {
-                let cache = {
-                    "intelligence" : Math.floor( (user.character_intelligence_base + user.character_intelligence_bonus - user.character_intelligence_malus) / 2 - 5),
-                    "bba1" : 0,
-                    "bba2" : 0,
-                    "bba3" : 0,
-                    "bba4" : 0,
-                    "vigor" : 0,
-                    "reflexes" : 0,
-                    "willpower" : 0,
-                    "level" : 0
-                }
-                delete(user);
-
-                // iterate load
-                Object.keys(repeating).forEach( id => {
-                    cache.bba1 += repeating[id][fields.in.bba1];
-                    cache.bba2 += repeating[id][fields.in.bba2];
-                    cache.bba3 += repeating[id][fields.in.bba3];
-                    cache.bba4 += repeating[id][fields.in.bba4];
-                    cache.vigor += repeating[id][fields.in.vigor];
-                    cache.reflexes += repeating[id][fields.in.reflexes];
-                    cache.willpower += repeating[id][fields.in.willpower];
-                    cache.level += repeating[id][fields.in.level];
-                });
-                cache.rank *= cache.level;
-                delete(repeating);
-
-                // prepare load
-                let load = {};
-                load[fields.out.bba1] = cache.bba1;
-                load[fields.out.bba2] = cache.bba2;
-                load[fields.out.bba3] = cache.bba3;
-                load[fields.out.bba4] = cache.bba4;
-                load[fields.out.vigor] = cache.vigor;
-                load[fields.out.reflexes] = cache.reflexes;
-                load[fields.out.willpower] = cache.willpower;
-                load[fields.out.level] = cache.level;
-                delete(cache);
-
-                setAttrs(load);
-            });
-        });
-    });
-
-    // armor
-    on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
-        let section = "equipmentarmor";
-        let fields = {
-            "in": {
-                "armor" : "equipment_armor_bonus",
-                "worn" : "equipment_armor_worn",
-                "dexterity" : "equipment_armor_dexterity_max",
-                "malus" : "equipment_armor_malus"
-            },
-            "out": {
-                "armor" : "foo_defense_ca_bonus",
-                "dexterity": "foo_defense_dexterity",
-                "malus" : "foo_defense_malus"
-            }
-        }
-
-        getAttrsRepeating(section, Object.values(fields.in), (repeating) => {
-            getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-                let cache = {
-                    "dexterity" : Math.floor( (user.character_dexterity_base + user.character_dexterity_bonus - user.character_dexterity_malus) / 2 - 5),
-                    "armor" : 0,
-                    "malus": 0
-                }
-                if ( cache.dexterity < 0 ) cache.dexterity = 0;
-                delete(user);
-
-                // iterate load
-                Object.keys(repeating).forEach( id => {
-                    if ( repeating[id][fields.in.worn] === 1 ) {
-                        cache.armor += repeating[id][fields.in.armor];
-                        if ( repeating[id][fields.in.dexterity] !== null && cache.dexterity > repeating[id][fields.in.dexterity] ) cache.dexterity = repeating[id][fields.in.dexterity];
-                        cache.malus += repeating[id][fields.in.malus];
-                    }
-                });
-                delete(repeating);
-
-                // prepare load
-                let load = {};
-                load[fields.out.armor] = cache.armor;
-                load[fields.out.dexterity] = cache.dexterity;
-                load[fields.out.malus] = Math.abs(cache.malus);
-                delete(cache);
-
-                setAttrs(load);
-            });
-        });
-    });
-
-    // get all attributes name and their values from a repeating block ordered by Id (roll20 generated)
-    //
-    // section	        string from "repeating_<section>_<field>"
-    // fields           string or array of string from "repeating_<section>_<field>"
-    // callback         returning function after async. )
-    function getAttrsRepeating(section, fields, callback) {
-        section = section.replace(/^repeating_/g, section);
-        if ( !Array.isArray(fields) ) fields = [fields];
-        if ( !(callback instanceof Function) ) callback = () => {};
-
-        getSectionIDs(section, ids => {
-            // prepares attributes name for "getAttrs"
-            let attributeNames = ids.reduce( (m,id) => [...m, ...(fields.map(field => "repeating_"+section+'_'+id+'_'+field))],[]);
-
-            // get data from DOM
-            // note : we working on raw data and not on init. variables
-            // because we don't know what "getAttrs" produce
-            getAttrs(attributeNames, raw => {
-                let load = {}, regex = new RegExp( "repeating_" + section + "_([^_]*)_(.*)"), match;
-                Object.keys(raw).forEach( key => {
-                    match = key.match(regex);
-                    if ( !load.hasOwnProperty( match[1]) ) load[ match[1] ] = {}
-                    load[ match[1] ][ match[2] ] = parseValue( raw[key] );
-                });
-                callback(load);
-            });
-        });
-    }
-
-    // parse values got in DOM and clean it
-    function parseValue(value) {
-        if (value === "") return null
-        // checkbox from roll20 return "on" or 0
-        return parseFloat(value, 10) || (value === "on" ? 1 : 0);
-    }
-
-</script>
-
 <div class="header">
     <div class="flex-row">
         <div class="flex-col8">
@@ -1133,6 +952,8 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
+                                            
+                                            <textarea name="attr_battle_description"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -1431,7 +1252,6 @@
         </div>
         <div class="tab-content-break"></div>
 
-        <div class="spell section">
             <fieldset class="repeating_spell">
                 <div class="spell-content">
                     <div class="flex-row">
@@ -1564,73 +1384,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <textarea name="attr_spell_description"></textarea>
-                                                </div>
-
-                                                <div class="flex-col5">
-                                                    <table>
-                                                        <thead>
-                                                        <tr>
-                                                            <th>
-                                                                <span>Composantes</span>
-                                                            </th>
-                                                            <th width="1%">
-                                                                <span title="Résistance Magique ?">RM</span>
-                                                            </th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="coin">
-                                                                    <input title="Verbale" type="checkbox" name="attr_spell_components_verbal" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">V</span>
-                                                                        <span class="coin-face coin-off">V</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Gestuelle" type="checkbox" name="attr_spell_components_gestural" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">G</span>
-                                                                        <span class="coin-face coin-off">G</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Matérielle" type="checkbox" name="attr_spell_components_material" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">M</span>
-                                                                        <span class="coin-face coin-off">M</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Focaliseur" type="checkbox" name="attr_spell_components_focalizing" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">F</span>
-                                                                        <span class="coin-face coin-off">F</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="coin">
-                                                                    <input title="Focaliseur Divin" type="checkbox" name="attr_spell_components_divine_focalizing" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">FD</span>
-                                                                        <span class="coin-face coin-off">FD</span>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="coin">
-                                                                    <input type="checkbox" name="attr_spell_magic_resistance" />
-                                                                    <div class="coin-content">
-                                                                        <span class="coin-face coin-on">oui</span>
-                                                                        <span class="coin-face coin-off">non</span>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-
                                                     <table>
                                                         <thead>
                                                         <tr>
@@ -1715,7 +1468,91 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
+                                                    
+                                                    <textarea name="attr_spell_description"></textarea>
+                                                </div>
 
+                                                <div class="flex-col5">
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <span>Composantes</span>
+                                                            </th>
+                                                            <th width="1%">
+                                                                <span title="Résistance Magique ?">RM</span>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="coin">
+                                                                    <input title="Verbale" type="checkbox" name="attr_spell_components_verbal" />
+                                                                    <div class="coin-content">
+                                                                        <span class="coin-face coin-on">V</span>
+                                                                        <span class="coin-face coin-off">V</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="coin">
+                                                                    <input title="Gestuelle" type="checkbox" name="attr_spell_components_gestural" />
+                                                                    <div class="coin-content">
+                                                                        <span class="coin-face coin-on">G</span>
+                                                                        <span class="coin-face coin-off">G</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="coin">
+                                                                    <input title="Matérielle" type="checkbox" name="attr_spell_components_material" />
+                                                                    <div class="coin-content">
+                                                                        <span class="coin-face coin-on">M</span>
+                                                                        <span class="coin-face coin-off">M</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="coin">
+                                                                    <input title="Focaliseur" type="checkbox" name="attr_spell_components_focalizing" />
+                                                                    <div class="coin-content">
+                                                                        <span class="coin-face coin-on">F</span>
+                                                                        <span class="coin-face coin-off">F</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="coin">
+                                                                    <input title="Focaliseur Divin" type="checkbox" name="attr_spell_components_divine_focalizing" />
+                                                                    <div class="coin-content">
+                                                                        <span class="coin-face coin-on">FD</span>
+                                                                        <span class="coin-face coin-off">FD</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="coin">
+                                                                    <input type="checkbox" name="attr_spell_magic_resistance" />
+                                                                    <div class="coin-content">
+                                                                        <span class="coin-face coin-on">oui</span>
+                                                                        <span class="coin-face coin-off">non</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th colspan="2">
+                                                                <span>Temps d'incantation</span>
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="text" name="attr_spell_incantation" />
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    
                                                     <table>
                                                         <thead>
                                                         <tr>
@@ -1794,6 +1631,136 @@
                     </div>
                 </div>
             </fieldset>
+            
+        <div class="spell section">
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 0</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 1</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content-break"></div>
+            
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 2</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 3</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 4</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 5</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 6</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 7</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 8</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
+            <div class="tab-content-break"></div>
+
+            <div class="accordion">
+                <input class="accordion-checkbox" type="checkbox" name="spell-checkbox"  Title="Afficher / Masquer" />
+                <div class="accordion-container">
+                    <div class="accordion-label spell-label">
+                        <h2>Sorts de niveau 9</h2>
+                    </div>
+                    <div class="accordion-content">
+                        contenu
+                    </div>
+                </div>
+            </div>            
         </div>
         <div class="tab-content-break"></div>
     </div>
@@ -5272,4 +5239,185 @@
         </div>
     </div>
     {{/nls}}
-</rolltemplate>
+</rolltemplate
+
+<script type="text/worker">
+    // size
+    on("sheet:opened change:character_size_select remove:character_size_select", () => {
+        getAttrs(["character_size_select"], (user) => {
+            console.log(user);
+            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+            console.log(user);
+
+        // prepare load
+        let load = {};
+        load["character_size"] = user.character_size_select;
+        load["character_size_special"] = -user.character_size_select;
+        delete(user);
+
+        setAttrs(load);
+        });
+    });
+
+    // classes
+    on("sheet:opened change:repeating_classes remove:repeating_classes change:character_intelligence_base remove:character_intelligence_base change:character_intelligence_bonus remove:character_intelligence_bonus change:character_intelligence_malus remove:character_intelligence_malus", () => {
+        getAttrs(["character_intelligence_base", "character_intelligence_bonus", "character_intelligence_malus"], (user) => {
+            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+            let section = "classes";
+            let fields = {
+                "in": {
+                    "name" : "classes_name",
+                    "bba1" : "classes_bba1",
+                    "bba2" : "classes_bba2",
+                    "bba3" : "classes_bba3",
+                    "bba4" : "classes_bba4",
+                    "vigor" : "classes_vigor",
+                    "reflexes" : "classes_reflexes",
+                    "willpower" : "classes_willpower",
+                    "level" : "classes_level"
+                },
+                "out": {
+                    "compniv" : "classes_compniv",
+                    "bba1" : "foo_classes_bba1_total",
+                    "bba2" : "foo_classes_bba2_total",
+                    "bba3" : "foo_classes_bba3_total",
+                    "bba4" : "foo_classes_bba4_total",
+                    "vigor" : "foo_classes_vigor_total",
+                    "reflexes" : "foo_classes_reflexes_total",
+                    "willpower" : "foo_classes_willpower_total",
+                    "level" : "foo_classes_level_total"
+                }
+            }
+
+            getAttrsRepeating(section, Object.values(fields.in), repeating => {
+                let cache = {
+                    "intelligence" : Math.floor( (user.character_intelligence_base + user.character_intelligence_bonus - user.character_intelligence_malus) / 2 - 5),
+                    "bba1" : 0,
+                    "bba2" : 0,
+                    "bba3" : 0,
+                    "bba4" : 0,
+                    "vigor" : 0,
+                    "reflexes" : 0,
+                    "willpower" : 0,
+                    "level" : 0
+                }
+                delete(user);
+
+                // iterate load
+                Object.keys(repeating).forEach( id => {
+                    cache.bba1 += repeating[id][fields.in.bba1];
+                    cache.bba2 += repeating[id][fields.in.bba2];
+                    cache.bba3 += repeating[id][fields.in.bba3];
+                    cache.bba4 += repeating[id][fields.in.bba4];
+                    cache.vigor += repeating[id][fields.in.vigor];
+                    cache.reflexes += repeating[id][fields.in.reflexes];
+                    cache.willpower += repeating[id][fields.in.willpower];
+                    cache.level += repeating[id][fields.in.level];
+                });
+                cache.rank *= cache.level;
+                delete(repeating);
+
+                // prepare load
+                let load = {};
+                load[fields.out.bba1] = cache.bba1;
+                load[fields.out.bba2] = cache.bba2;
+                load[fields.out.bba3] = cache.bba3;
+                load[fields.out.bba4] = cache.bba4;
+                load[fields.out.vigor] = cache.vigor;
+                load[fields.out.reflexes] = cache.reflexes;
+                load[fields.out.willpower] = cache.willpower;
+                load[fields.out.level] = cache.level;
+                delete(cache);
+
+                setAttrs(load);
+            });
+        });
+    });
+
+    // armor
+    on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
+        let section = "equipmentarmor";
+        let fields = {
+            "in": {
+                "armor" : "equipment_armor_bonus",
+                "worn" : "equipment_armor_worn",
+                "dexterity" : "equipment_armor_dexterity_max",
+                "malus" : "equipment_armor_malus"
+            },
+            "out": {
+                "armor" : "foo_defense_ca_bonus",
+                "dexterity": "foo_defense_dexterity",
+                "malus" : "foo_defense_malus"
+            }
+        }
+
+        getAttrsRepeating(section, Object.values(fields.in), (repeating) => {
+            getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
+            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+                let cache = {
+                    "dexterity" : Math.floor( (user.character_dexterity_base + user.character_dexterity_bonus - user.character_dexterity_malus) / 2 - 5),
+                    "armor" : 0,
+                    "malus": 0
+                }
+                if ( cache.dexterity < 0 ) cache.dexterity = 0;
+                delete(user);
+
+                // iterate load
+                Object.keys(repeating).forEach( id => {
+                    if ( repeating[id][fields.in.worn] === 1 ) {
+                        cache.armor += repeating[id][fields.in.armor];
+                        if ( repeating[id][fields.in.dexterity] !== null && cache.dexterity > repeating[id][fields.in.dexterity] ) cache.dexterity = repeating[id][fields.in.dexterity];
+                        cache.malus += repeating[id][fields.in.malus];
+                    }
+                });
+                delete(repeating);
+
+                // prepare load
+                let load = {};
+                load[fields.out.armor] = cache.armor;
+                load[fields.out.dexterity] = cache.dexterity;
+                load[fields.out.malus] = Math.abs(cache.malus);
+                delete(cache);
+
+                setAttrs(load);
+            });
+        });
+    });
+
+    // get all attributes name and their values from a repeating block ordered by Id (roll20 generated)
+    //
+    // section	        string from "repeating_<section>_<field>"
+    // fields           string or array of string from "repeating_<section>_<field>"
+    // callback         returning function after async. )
+    function getAttrsRepeating(section, fields, callback) {
+        section = section.replace(/^repeating_/g, section);
+        if ( !Array.isArray(fields) ) fields = [fields];
+        if ( !(callback instanceof Function) ) callback = () => {};
+
+        getSectionIDs(section, ids => {
+            // prepares attributes name for "getAttrs"
+            let attributeNames = ids.reduce( (m,id) => [...m, ...(fields.map(field => "repeating_"+section+'_'+id+'_'+field))],[]);
+
+            // get data from DOM
+            // note : we working on raw data and not on init. variables
+            // because we don't know what "getAttrs" produce
+            getAttrs(attributeNames, raw => {
+                let load = {}, regex = new RegExp( "repeating_" + section + "_([^_]*)_(.*)"), match;
+                Object.keys(raw).forEach( key => {
+                    match = key.match(regex);
+                    if ( !load.hasOwnProperty( match[1]) ) load[ match[1] ] = {}
+                    load[ match[1] ][ match[2] ] = parseValue( raw[key] );
+                });
+                callback(load);
+            });
+        });
+    }
+
+    // parse values got in DOM and clean it
+    function parseValue(value) {
+        if (value === "") return null
+        // checkbox from roll20 return "on" or 0
+        return parseFloat(value, 10) || (value === "on" ? 1 : 0);
+    }
+
+</script>
