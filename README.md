@@ -11,6 +11,7 @@ Remarques concernant roll20 et la création du "character sheet" :
     - si un input avec l'attribut "disabled" a un calcul incluant un négatif d'un négatif, le résultat échoue silencieusement ?!
     
 - html
+    - pour un "radio" les input DOIVENT se suivre dans le code et DOIVENT avoir l'attribute value
     - les balises html5 dans leur majorité ne sont pas autorisés
     - les attributes "data" pour les balises ne sont pas autorisées
 
