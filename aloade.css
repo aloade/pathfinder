@@ -138,7 +138,6 @@
 /* --------------------------------------------------- */
 .sheet-tab {
     position: relative;
-    padding-top: 40px;
 }
 
 .sheet-tab > input {
@@ -154,7 +153,6 @@
 .sheet-tab > input, .sheet-tab > label {
     position: absolute;
     top: 0;
-    height: 40px !important;
 }
 
 .sheet-tab > label span {
@@ -170,7 +168,8 @@
 .sheet-tab > input:hover:nth-of-type(6) ~ label:nth-of-type(6) span,
 .sheet-tab > input:hover:nth-of-type(7) ~ label:nth-of-type(7) span,
 .sheet-tab > input:hover:nth-of-type(8) ~ label:nth-of-type(8) span,
-.sheet-tab > input:hover:nth-of-type(9) ~ label:nth-of-type(9) span {
+.sheet-tab > input:hover:nth-of-type(9) ~ label:nth-of-type(9) span,
+.sheet-tab > input:hover:nth-of-type(10) ~ label:nth-of-type(10) span {
     opacity: 1;
 }
 
@@ -182,9 +181,11 @@
 .sheet-tab > input:checked:nth-of-type(6) ~ label:nth-of-type(6) span,
 .sheet-tab > input:checked:nth-of-type(7) ~ label:nth-of-type(7) span,
 .sheet-tab > input:checked:nth-of-type(8) ~ label:nth-of-type(8) span,
-.sheet-tab > input:checked:nth-of-type(9) ~ label:nth-of-type(9) span {
+.sheet-tab > input:checked:nth-of-type(9) ~ label:nth-of-type(9) span,
+.sheet-tab > input:checked:nth-of-type(10) ~ label:nth-of-type(10) span {
     opacity: 1;
 }
+
 .sheet-tab > div {
     display: none;
     width: 100%;
@@ -198,7 +199,8 @@
 .sheet-tab > input:checked:nth-of-type(6) ~ div:nth-of-type(6),
 .sheet-tab > input:checked:nth-of-type(7) ~ div:nth-of-type(7),
 .sheet-tab > input:checked:nth-of-type(8) ~ div:nth-of-type(8),
-.sheet-tab > input:checked:nth-of-type(9) ~ div:nth-of-type(9) {
+.sheet-tab > input:checked:nth-of-type(9) ~ div:nth-of-type(9),
+.sheet-tab > input:checked:nth-of-type(10) ~ div:nth-of-type(10){
     display: block !important;
 }
 
@@ -391,23 +393,6 @@
     margin-bottom: 2rem;
 }
 
-.sheet-section input:disabled {
-    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
-    border: none;
-}
-
-.sheet-section input.sheet-strong:disabled {
-    background: rgba(0, 0, 0, 0.07);
-    border: none;
-}
-
-.sheet-section .sheet-input-group.sheet-disabled {
-    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
-}
-
-.sheet-section .sheet-input-group.sheet-disabled input, .sheet-section  .charsheet .sheet-input-group.sheet-disabled select {
-    background: none !important;
-}
 
 /* generic */
 .sheet-center {
@@ -429,6 +414,11 @@
 
 .sheet-alert::after {
     content : "!";
+}
+
+small {
+    color: rgb(108, 117, 125);
+    font-size: 80%;
 }
 
 .sheet-fixed-small {
@@ -474,6 +464,24 @@ input.sheet-text-left {
 input.sheet-text-right {
     text-align: right !important;
     padding-right: 0.25rem;
+}
+
+.sheet-body input:disabled {
+    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
+    border: none;
+}
+
+.sheet-body input.sheet-strong:disabled {
+    background: rgba(0, 0, 0, 0.07);
+    border: none;
+}
+
+.sheet-body .sheet-input-group.sheet-disabled {
+    background: transparent repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.07) 5px, transparent 5px, transparent 7px);
+}
+
+.sheet-body .sheet-input-group.sheet-disabled input, .sheet-body  .charsheet .sheet-input-group.sheet-disabled select {
+    background: none !important;
 }
 
 textarea {
@@ -586,8 +594,13 @@ button[type="roll"] {
     text-align: center;
 }
 
+.sheet-body.sheet-tab {
+    padding-top: 40px;
+}
+
 .sheet-body > input, .sheet-body > label {
     width: 70px !important;
+    height: 40px !important;
 }
 
 .sheet-body > label span {
@@ -749,7 +762,7 @@ button[type="roll"] {
     position: relative;
 }
 
-.sheet-battle-subcontent table, .sheet-battle-subcontent textarea,{
+.sheet-battle-subcontent table, .sheet-battle-subcontent textarea {
     margin-top: 1rem;
 }
 
@@ -770,32 +783,72 @@ button[type="roll"] {
 /* magic - spell */
 .sheet-spell {}
 
+.sheet-spell-color0 { }
+.sheet-spell-color1 { color: rgb(0, 0, 0) !important; text-shadow: 0 0 5px rgb(255, 255, 255);}
+.sheet-spell-color2 { color: rgb(170, 100, 100) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color3 { color: rgb(255, 255, 255) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color4 { color: rgb(0, 230, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color5 { color: rgb(0, 150, 255) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color6 { color: rgb(255, 255, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color7 { color: rgb(255, 165, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color8 { color: rgb(255, 0, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color9 { color: rgb(228, 0, 228) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+
+.sheet-spell.sheet-tab {
+    padding-top: calc(3rem - 1px);
+}
 
 .sheet-spell.sheet-tab > input, .sheet-spell.sheet-tab > label {
-    width: 11.111111% !important;
+    width: 10% !important;
+    height: 3rem !important;
 }
 
 .sheet-spell.sheet-tab > input:nth-of-type(1), .sheet-spell.sheet-tab > label:nth-of-type(1) { left: 0; }
-.sheet-spell.sheet-tab > input:nth-of-type(2), .sheet-spell.sheet-tab > label:nth-of-type(2) { left: 11.111111%; }
-.sheet-spell.sheet-tab > input:nth-of-type(3), .sheet-spell.sheet-tab > label:nth-of-type(3) { left: 22.222222%; }
-.sheet-spell.sheet-tab > input:nth-of-type(4), .sheet-spell.sheet-tab > label:nth-of-type(4) { left: 33.333333%; }
-.sheet-spell.sheet-tab > input:nth-of-type(5), .sheet-spell.sheet-tab > label:nth-of-type(5) { left: 44.444444%; }
-.sheet-spell.sheet-tab > input:nth-of-type(6), .sheet-spell.sheet-tab > label:nth-of-type(6) { left: 55.555555%; }
-.sheet-spell.sheet-tab > input:nth-of-type(7), .sheet-spell.sheet-tab > label:nth-of-type(7) { left: 66.666666%; }
-.sheet-spell.sheet-tab > input:nth-of-type(8), .sheet-spell.sheet-tab > label:nth-of-type(8) { left: 77.777777%; }
-.sheet-spell.sheet-tab > input:nth-of-type(9), .sheet-spell.sheet-tab > label:nth-of-type(9) { left: 88.888888%; }
+.sheet-spell.sheet-tab > input:nth-of-type(2), .sheet-spell.sheet-tab > label:nth-of-type(2) { left: 10%; }
+.sheet-spell.sheet-tab > input:nth-of-type(3), .sheet-spell.sheet-tab > label:nth-of-type(3) { left: 20%; }
+.sheet-spell.sheet-tab > input:nth-of-type(4), .sheet-spell.sheet-tab > label:nth-of-type(4) { left: 30%; }
+.sheet-spell.sheet-tab > input:nth-of-type(5), .sheet-spell.sheet-tab > label:nth-of-type(5) { left: 40%; }
+.sheet-spell.sheet-tab > input:nth-of-type(6), .sheet-spell.sheet-tab > label:nth-of-type(6) { left: 50%; }
+.sheet-spell.sheet-tab > input:nth-of-type(7), .sheet-spell.sheet-tab > label:nth-of-type(7) { left: 60%; }
+.sheet-spell.sheet-tab > input:nth-of-type(8), .sheet-spell.sheet-tab > label:nth-of-type(8) { left: 70%; }
+.sheet-spell.sheet-tab > input:nth-of-type(9), .sheet-spell.sheet-tab > label:nth-of-type(9) { left: 80%; }
+.sheet-spell.sheet-tab > input:nth-of-type(10), .sheet-spell.sheet-tab > label:nth-of-type(10) { left: 90%; }
 
-.sheet-spell .sheet-tab > input {
-    
+.sheet-spell.sheet-tab > label {
+    border: 1px solid transparent;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    text-align: center;
 }
 
-.sheet-spell .sheet-tab > label {
-    
+.sheet-spell.sheet-tab > label span {
+    line-height: 3rem;
 }
 
-.sheet-spell .sheet-tab > div {
-    
+.sheet-spell.sheet-tab > input:checked:nth-of-type(1) ~ label:nth-of-type(1),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(2) ~ label:nth-of-type(2),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(3) ~ label:nth-of-type(3),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(4) ~ label:nth-of-type(4),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(5) ~ label:nth-of-type(5),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(6) ~ label:nth-of-type(6),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(7) ~ label:nth-of-type(7),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(8) ~ label:nth-of-type(8),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(9) ~ label:nth-of-type(9),
+.sheet-spell.sheet-tab > input:checked:nth-of-type(10) ~ label:nth-of-type(10){
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgb(221, 200, 139);
+    abackground-color: rgba(255, 255, 255, 0.1);
 }
+
+.sheet-spell.sheet-tab > div {
+    min-height: 37rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    abackground-color: rgba(255, 255, 255, 0.1);
+}
+
 .sheet-spell-roll {
     width: 2.8rem;
     margin-top: 1rem;
