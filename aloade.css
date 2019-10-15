@@ -784,15 +784,15 @@ button[type="roll"] {
 .sheet-spell {}
 
 .sheet-spell-color0 { }
-.sheet-spell-color1 { color: rgb(0, 0, 0) !important; text-shadow: 0 0 5px rgb(255, 255, 255);}
-.sheet-spell-color2 { color: rgb(170, 100, 100) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color3 { color: rgb(255, 255, 255) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color4 { color: rgb(0, 230, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color5 { color: rgb(0, 150, 255) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color6 { color: rgb(255, 255, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color7 { color: rgb(255, 165, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color8 { color: rgb(255, 0, 0) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
-.sheet-spell-color9 { color: rgb(228, 0, 228) !important; text-shadow: 0 0 5px rgb(0, 0, 0);}
+.sheet-spell-color1 { text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color2 { text-shadow: 0 0 10px rgb(170, 100, 100);}
+.sheet-spell-color3 { text-shadow: 0 0 10px rgb(255, 255, 255);}
+.sheet-spell-color4 { text-shadow: 0 0 10px rgb(0, 230, 0);}
+.sheet-spell-color5 { text-shadow: 0 0 10px rgb(0, 150, 255);}
+.sheet-spell-color6 { text-shadow: 0 0 10px rgb(255, 255, 0);}
+.sheet-spell-color7 { text-shadow: 0 0 10px rgb(255, 165, 0);}
+.sheet-spell-color8 { text-shadow: 0 0 10px rgb(255, 0, 0);}
+.sheet-spell-color9 { text-shadow: 0 0 10px rgb(228, 0, 228);}
 
 .sheet-spell.sheet-tab {
     padding-top: calc(3rem - 1px);
