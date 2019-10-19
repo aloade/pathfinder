@@ -1,15 +1,25 @@
 <script type="text/worker">
     // size
     on("sheet:opened change:character_size_select remove:character_size_select", () => {
-        getAttrs(["character_size_select"], (user) => {
+        let input = {
+            "in": {
+                "size":  "character_size_select"
+            },
+            "out": {
+                "size": "character_size",
+                "size_special": "character_size_special"
+            }
+        }
+        getAttrs([input.in.size], (user) => {
             Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
 
             // prepare load
             let load = {};
-            load["character_size"] = user.character_size_select;
-            load["character_size_special"] = -user.character_size_select;
+            load[input.out.size] = user.character_size_select;
+            load[input.out.size_special] = -user.character_size_select;
             delete(user);
 
+            // send load
             setAttrs(load);
         });
     });
@@ -19,7 +29,7 @@
         getAttrs(["character_intelligence_base", "character_intelligence_bonus", "character_intelligence_malus"], (user) => {
             Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
             let section = "classes";
-            let fields = {
+            let field = {
                 "in": {
                     "name" : "classes_name",
                     "bba1" : "classes_bba1",
@@ -44,7 +54,7 @@
                 }
             }
 
-            getAttrsRepeating(section, Object.values(fields.in), repeating => {
+            getAttrsRepeating(section, Object.values(field.in), repeating => {
                 let cache = {
                     "intelligence" : Math.floor( (user.character_intelligence_base + user.character_intelligence_bonus - user.character_intelligence_malus) / 2 - 5),
                     "bba1" : 0,
@@ -60,30 +70,31 @@
 
                 // iterate load
                 Object.keys(repeating).forEach( id => {
-                    cache.bba1 += repeating[id][fields.in.bba1];
-                    cache.bba2 += repeating[id][fields.in.bba2];
-                    cache.bba3 += repeating[id][fields.in.bba3];
-                    cache.bba4 += repeating[id][fields.in.bba4];
-                    cache.vigor += repeating[id][fields.in.vigor];
-                    cache.reflexes += repeating[id][fields.in.reflexes];
-                    cache.willpower += repeating[id][fields.in.willpower];
-                    cache.level += repeating[id][fields.in.level];
+                    cache.bba1 += repeating[id][field.in.bba1];
+                    cache.bba2 += repeating[id][field.in.bba2];
+                    cache.bba3 += repeating[id][field.in.bba3];
+                    cache.bba4 += repeating[id][field.in.bba4];
+                    cache.vigor += repeating[id][field.in.vigor];
+                    cache.reflexes += repeating[id][field.in.reflexes];
+                    cache.willpower += repeating[id][field.in.willpower];
+                    cache.level += repeating[id][field.in.level];
                 });
                 cache.rank *= cache.level;
                 delete(repeating);
 
                 // prepare load
                 let load = {};
-                load[fields.out.bba1] = cache.bba1;
-                load[fields.out.bba2] = cache.bba2;
-                load[fields.out.bba3] = cache.bba3;
-                load[fields.out.bba4] = cache.bba4;
-                load[fields.out.vigor] = cache.vigor;
-                load[fields.out.reflexes] = cache.reflexes;
-                load[fields.out.willpower] = cache.willpower;
-                load[fields.out.level] = cache.level;
+                load[field.out.bba1] = cache.bba1;
+                load[field.out.bba2] = cache.bba2;
+                load[field.out.bba3] = cache.bba3;
+                load[field.out.bba4] = cache.bba4;
+                load[field.out.vigor] = cache.vigor;
+                load[field.out.reflexes] = cache.reflexes;
+                load[field.out.willpower] = cache.willpower;
+                load[field.out.level] = cache.level;
                 delete(cache);
 
+                // send load
                 setAttrs(load);
             });
         });
@@ -92,7 +103,7 @@
     // armor
     on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
         let section = "equipmentarmor";
-        let fields = {
+        let field = {
             "in": {
                 "armor" : "equipment_armor_bonus",
                 "worn" : "equipment_armor_worn",
@@ -106,7 +117,7 @@
             }
         }
 
-        getAttrsRepeating(section, Object.values(fields.in), (repeating) => {
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
             getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
             Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
                 let cache = {
@@ -119,23 +130,115 @@
 
                 // iterate load
                 Object.keys(repeating).forEach( id => {
-                    if ( repeating[id][fields.in.worn] === 1 ) {
-                        cache.armor += repeating[id][fields.in.armor];
-                        if ( repeating[id][fields.in.dexterity] !== null && cache.dexterity > repeating[id][fields.in.dexterity] ) cache.dexterity = repeating[id][fields.in.dexterity];
-                        cache.malus += repeating[id][fields.in.malus];
+                    if ( repeating[id][field.in.worn] === 1 ) {
+                        cache.armor += repeating[id][field.in.armor];
+                        if ( repeating[id][field.in.dexterity] !== null && cache.dexterity > repeating[id][field.in.dexterity] ) cache.dexterity = repeating[id][field.in.dexterity];
+                        cache.malus += repeating[id][field.in.malus];
                     }
                 });
                 delete(repeating);
 
                 // prepare load
                 let load = {};
-                load[fields.out.armor] = cache.armor;
-                load[fields.out.dexterity] = cache.dexterity;
-                load[fields.out.malus] = Math.abs(cache.malus);
+                load[field.out.armor] = cache.armor;
+                load[field.out.dexterity] = cache.dexterity;
+                load[field.out.malus] = Math.abs(cache.malus);
                 delete(cache);
 
+                // send load
                 setAttrs(load);
             });
+        });
+    });
+
+    // skill craft
+    on("sheet:opened change:repeating_skillcraft remove:repeating_skillcraft", () => {
+        let section = "skillcraft";
+        let field = {
+            "in": {
+                "rank":  "skill_craft_ranks"
+            },
+            "out": {
+                "sum": "foo_skill_craft_ranks_sum"
+            }
+        }
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
+            // prepare load
+            let load = {};
+            load[field.out.sum] = 0;
+
+            // iterate load
+            Object.keys(repeating).forEach( id => {
+                load[field.out.sum] += repeating[id][field.in.rank];
+            });
+console.log("-------------------------- craft");
+console.log(repeating);
+console.log(load);
+            delete(repeating);
+
+            // send load
+            setAttrs(load);
+        });
+    });
+
+    // skill career
+    on("sheet:opened change:repeating_skillcareer remove:repeating_skillcareer", () => {
+        let section = "skillcareer";
+        let field = {
+            "in": {
+                "rank":  "skill_career_ranks"
+            },
+            "out": {
+                "sum": "foo_skill_career_ranks_sum"
+            }
+        }
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
+            // prepare load
+            let load = {};
+            load[field.out.sum] = 0;
+
+            // iterate load
+            Object.keys(repeating).forEach( id => {
+                load[field.out.sum] += repeating[id][field.in.rank];
+            });
+console.log("-------------------------- career");
+console.log(repeating);
+console.log(load);
+            delete(repeating);
+
+            // send load
+            setAttrs(load);
+        });
+    });
+
+    // skill representation
+    on("sheet:opened change:repeating_skillrepresentation remove:repeating_skillrepresentation", () => {
+        let section = "skillrepresentation";
+        let field = {
+            "in": {
+                "rank":  "skill_representation_ranks"
+            },
+            "out": {
+                "sum": "foo_skill_representation_ranks_sum"
+            }
+        }
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
+            // prepare load
+            let load = {};
+            load[field.out.sum] = 0;
+
+            // iterate load
+            Object.keys(repeating).forEach( id => {
+                load[field.out.sum] += repeating[id][field.in.rank];
+            });
+console.log("-------------------------- representation");
+console.log(repeating);
+console.log(load);
+
+            delete(repeating);
+
+            // send load
+            setAttrs(load);
         });
     });
 
@@ -262,7 +365,6 @@
     </label>
     <div>
         <h1>Personnage</h1>
-
         <div class="flex-row">
             <div class="flex-col8">
                 <div class="stat section">
@@ -550,7 +652,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="class section">
             <h2>Classes</h2>
@@ -748,7 +850,7 @@
                 </table>
             </fieldset>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
     </div>
 
     <label>
@@ -756,7 +858,6 @@
     </label>
     <div>
         <h1>Combats</h1>
-
         <div class="initiative section">
             <h2>Initiative</h2>
             <table>
@@ -807,7 +908,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="battlemoves section">
             <h2>Man&oelig;uvres de combat</h2>
@@ -921,7 +1022,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="battle section">
             <h2>Attaques</h2>
@@ -1131,7 +1232,7 @@
                 </div>
             </fieldset>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
     </div>
 
     <label>
@@ -1139,7 +1240,6 @@
     </label>
     <div>
         <h1>Magie</h1>
-
         <div class="nls section">
             <h2>Niveau de lanceur de sorts</h2>
             <table>
@@ -1202,7 +1302,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="contact-attack section">
             <h2>Attaque de contact</h2>
@@ -1285,7 +1385,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="spell-summary section">
             <h2>Sortilèges</h2>
@@ -1420,7 +1520,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <input type="hidden" name="attr_foo_spell_base" value="10" disabled="disabled" />
         <div class="spell tab">
@@ -5195,7 +5295,7 @@
                 </fieldset>
             </div>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
     </div>
 
     <label>
@@ -5203,7 +5303,6 @@
     </label>
     <div>
         <h1>Défense</h1>
-
         <div class="saves section">
             <h2>Sauvegardes</h2>
             <table>
@@ -5359,7 +5458,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="equipment-summary section">
             <h2>Classe d'armure</h2>
@@ -5431,7 +5530,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="magic-resistance section">
             <h2>Résistance magique</h2>
@@ -5482,7 +5581,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
     </div>
 
     <label>
@@ -5490,13 +5589,15 @@
     </label>
     <div>
         <h1>Compétences</h1>
-
         <div class="skill-summary section-header">
             <div class="input-group">
                 <div class="input-group-text">
                     <span>Rangs</span>
                 </div>
-                <input title="Rangs dépensés" type="number" name="attr_skill_sum" value="(@{skill_acrobatics_ranks}+@{skill_animal_training_ranks}+@{skill_artistry_ranks}+@{skill_appraise_ranks}+@{skill_bluff_ranks}+@{skill_climbing_ranks}+@{skill_career1_ranks}+@{skill_career2_ranks}+@{skill_career3_ranks}+@{skill_craft1_ranks}+@{skill_craft2_ranks}+@{skill_craft3_ranks}+@{skill_disguise_ranks}+@{skill_diplomacy_ranks}+@{skill_first_aid_ranks}+@{skill_fly_ranks}+@{skill_knowledge_arcana_ranks}+@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_engineering_ranks}+@{skill_knowledge_geography_ranks}+@{skill_knowledge_history_ranks}+@{skill_knowledge_local_ranks}+@{skill_knowledge_nature_ranks}+@{skill_knowledge_plans_ranks}+@{skill_knowledge_religion_ranks}+@{skill_knowledge_nobility_ranks}+@{skill_horseback_riding_ranks}+@{skill_escape_ranks}+@{skill_intimidate_ranks}+@{skill_linguistics_ranks}+@{skill_swimming_ranks}+@{skill_perception_ranks}+@{skill_pickpocketing_ranks}+@{skill_psychology_ranks}+@{skill_representation1_ranks}+@{skill_representation2_ranks}+@{skill_representation3_ranks}+@{skill_sabotage_ranks}+@{skill_stealth_ranks}+@{skill_survival_ranks}+@{skill_spellcraft_ranks}+@{skill_use_of_magic_objects_ranks})" disabled="disabled" />
+                <input type="hidden" name="attr_foo_skill_craft_ranks_sum" value ="0" />
+                <input type="hidden" name="attr_foo_skill_career_ranks_sum" value ="0" />
+                <input type="hidden" name="attr_foo_skill_representation_ranks_sum" value ="0" />
+                <input title="Rangs dépensés" type="number" name="attr_skill_sum" value="(@{skill_acrobatics_ranks}+@{skill_animal_training_ranks}+@{skill_artistry_ranks}+@{skill_appraise_ranks}+@{skill_bluff_ranks}+@{skill_climbing_ranks}+@{foo_skill_craft_ranks_sum}+@{foo_skill_career_ranks_sum}+@{skill_disguise_ranks}+@{skill_diplomacy_ranks}+@{skill_first_aid_ranks}+@{skill_fly_ranks}+@{skill_knowledge_arcana_ranks}+@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_engineering_ranks}+@{skill_knowledge_geography_ranks}+@{skill_knowledge_history_ranks}+@{skill_knowledge_local_ranks}+@{skill_knowledge_nature_ranks}+@{skill_knowledge_plans_ranks}+@{skill_knowledge_religion_ranks}+@{skill_knowledge_nobility_ranks}+@{skill_horseback_riding_ranks}+@{skill_escape_ranks}+@{skill_intimidate_ranks}+@{skill_linguistics_ranks}+@{skill_swimming_ranks}+@{skill_perception_ranks}+@{skill_pickpocketing_ranks}+@{skill_psychology_ranks}+@{foo_skill_representation_ranks_sum}+@{skill_sabotage_ranks}+@{skill_stealth_ranks}+@{skill_survival_ranks}+@{skill_spellcraft_ranks}+@{skill_use_of_magic_objects_ranks})" disabled="disabled" />
                 <div class="input-group-text">
                     <span>/</span>
                 </div>
@@ -5505,6 +5606,7 @@
         </div>
 
         <div class="skill section">
+            <h2>Action</h2>
             <table>
                 <thead>
                 <tr>
@@ -5702,336 +5804,6 @@
                     </td>
                     <td>
                         <input type="number" name="attr_skill_bluff_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- knowledge_dungeon -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de connaissances (&nbsp;exploration souterraine&nbsp;)&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissance (&nbsp;exploration souterraine&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_dungeon_total}]])]]}}"
-                                name="roll_skill_knowledge_dungeon"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_knowledge_dungeon_cc" value="((((3 * @{skill_knowledge_dungeon_ranks}) + 3) - abs((3 * @{skill_knowledge_dungeon_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span title="formation requise !" class="alert"></span>
-                        <span>Connaissances (&nbsp;exploration souterraine&nbsp;)</span>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_total" disabled="disabled" class="strong" value="(@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_dungeon_class}+@{skill_knowledge_dungeon_stat}+@{skill_knowledge_dungeon_trait}+@{skill_knowledge_dungeon_gift}+@{skill_knowledge_dungeon_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_class" value="(@{skill_knowledge_dungeon_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_knowledge_dungeon_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_dungeon_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- knowledge_local -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de connaissances (&nbsp;folklore local&nbsp;)&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;folklore local&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_local_total}]])]]}}"
-                                name="roll_skill_knowledge_local"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_knowledge_local_cc" value="((((3 * @{skill_knowledge_local_ranks}) + 3) - abs((3 * @{skill_knowledge_local_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span title="formation requise !" class="alert"></span>
-                        <span>Connaissances (&nbsp;folklore local&nbsp;)</span>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_total" disabled="disabled" class="strong" value="(@{skill_knowledge_local_ranks}+@{skill_knowledge_local_class}+@{skill_knowledge_local_stat}+@{skill_knowledge_local_trait}+@{skill_knowledge_local_gift}+@{skill_knowledge_local_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_class" value="(@{skill_knowledge_local_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_knowledge_local_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_local_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- knowledge_arcana -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de connaissances (&nbsp;mystères&nbsp;)&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;mystères&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_arcana_total}]])]]}}"
-                                name="roll_skill_knowledge_arcana"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_knowledge_arcana_cc" value="((((3 * @{skill_knowledge_arcana_ranks}) + 3) - abs((3 * @{skill_knowledge_arcana_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span title="formation requise !" class="alert"></span>
-                        <span>Connaissances (&nbsp;mystères&nbsp;)</span>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_total" disabled="disabled" class="strong" value="(@{skill_knowledge_arcana_ranks}+@{skill_knowledge_arcana_class}+@{skill_knowledge_arcana_stat}+@{skill_knowledge_arcana_trait}+@{skill_knowledge_arcana_gift}+@{skill_knowledge_arcana_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_class" value="(@{skill_knowledge_arcana_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_knowledge_arcana_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_arcana_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- knowledge_nature -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de connaissances (&nbsp;nature&nbsp;)&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;nature&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_nature_total}]])]]}}"
-                                name="roll_skill_knowledge_nature"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_knowledge_nature_cc" value="((((3 * @{skill_knowledge_nature_ranks}) + 3) - abs((3 * @{skill_knowledge_nature_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span title="formation requise !" class="alert"></span>
-                        <span>Connaissances (&nbsp;nature&nbsp;)</span>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_total" disabled="disabled" class="strong" value="(@{skill_knowledge_nature_ranks}+@{skill_knowledge_nature_class}+@{skill_knowledge_nature_stat}+@{skill_knowledge_nature_trait}+@{skill_knowledge_nature_gift}+@{skill_knowledge_nature_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_class" value="(@{skill_knowledge_nature_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_knowledge_nature_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_nature_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- knowledge_plans -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de connaissances (&nbsp;plans&nbsp;)&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;plans&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_plans_total}]])]]}}"
-                                name="roll_skill_knowledge_plans"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_knowledge_plans_cc" value="((((3 * @{skill_knowledge_plans_ranks}) + 3) - abs((3 * @{skill_knowledge_plans_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span title="formation requise !" class="alert"></span>
-                        <span>Connaissances (&nbsp;plans&nbsp;)</span>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_total" disabled="disabled" class="strong" value="(@{skill_knowledge_plans_ranks}+@{skill_knowledge_plans_class}+@{skill_knowledge_plans_stat}+@{skill_knowledge_plans_trait}+@{skill_knowledge_plans_gift}+@{skill_knowledge_plans_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_class" value="(@{skill_knowledge_plans_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_knowledge_plans_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_plans_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- knowledge_religion -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de connaissances (&nbsp;religion&nbsp;)&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;religion&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_religion_total}]])]]}}"
-                                name="roll_skill_knowledge_religion"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_knowledge_religion_cc" value="((((3 * @{skill_knowledge_religion_ranks}) + 3) - abs((3 * @{skill_knowledge_religion_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span title="formation requise !" class="alert"></span>
-                        <span>Connaissances (&nbsp;religion&nbsp;)</span>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_total" disabled="disabled" class="strong" value="(@{skill_knowledge_religion_ranks}+@{skill_knowledge_religion_class}+@{skill_knowledge_religion_stat}+@{skill_knowledge_religion_trait}+@{skill_knowledge_religion_gift}+@{skill_knowledge_religion_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_class" value="(@{skill_knowledge_religion_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_knowledge_religion_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_knowledge_religion_temporary" value="0" />
                     </td>
                 </tr>
                 <!-- disguise  -->
@@ -6905,9 +6677,116 @@
             </table>
 
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="skill section">
+            <h2>Artisanat</h2>
+            <table>
+                <thead>
+                <tr>
+                    <td width="1%">
+                        <div class="fake-button-roll"></div>
+                    </td>
+                    <th width="1%">
+                        <span title="Compétence de Classe ?">CC</span>
+                    </th>
+                    <th>
+                        <span>Compétence</span>
+                    </th>
+                    <th width="8%">
+                        <span>Rang</span>
+                    </th>
+                    <th width="8%">
+                        <span title="= Rang + CC + Mod. - Malus + Trait + Don + Temp.">Total</span>
+                    </th>
+                    <th width="8%">
+                        <span title="bonus de Compétence de Classe">CC</span>
+                    </th>
+                    <th width="8%">
+                        <span title="Modificateur de caractéristique">Mod.</span>
+                    </th>
+                    <th width="8%">
+                        <span title="Malus d'armure">Malus</span>
+                    </th>
+                    <th width="8%">
+                        <span>Trait</span>
+                    </th>
+                    <th width="8%">
+                        <span>Don</span>
+                    </th>
+                    <th width="8%">
+                        <span title="Temporaire">Temp.</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+	        <fieldset class="repeating_skillcraft">
+	            <table>
+	                <tbody>
+	               	   <tr>
+                            <td width="1%">
+                                <button
+                                        title="test d'artisanat&#13;= 1d20 + Total"
+                                        type="roll"
+                                        value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test d'artisanat ( @{skill_craft_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_craft_total}]])]]}}"
+                                        name="roll_skill_craft"
+                                ></button>
+                            </td>
+                            <td width="1%">
+                                <div class="input-group-append">
+                                    <div class="coin">
+                                        <input type="checkbox" name="attr_skill_craft_cc" value="((((3 * @{skill_craft_ranks}) + 3) - abs((3 * @{skill_craft_ranks}) - 3)) / 2)"/>
+                                        <div class="coin-content">
+                                            <span class="coin-face coin-on">oui</span>
+                                            <span class="coin-face coin-off">non</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <input class="text-left" name="attr_skill_craft_label" type="text">
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_ranks" value="0"/>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_total" disabled="disabled" class="strong" value="(@{skill_craft_ranks}+@{skill_craft_cc}+@{skill_craft_stat}+@{skill_craft_trait}+@{skill_craft_gift}+@{skill_craft_temporary})"/>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_class" value="(@{skill_craft_cc})" disabled="disabled"/>
+                            </td>
+                            <td width="8%">
+                                <div class="input-group disabled">
+                                    <input type="number" name="attr_skill_craft_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Int.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_malus" value="0" disabled="disabled" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_trait" value="0" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_gift" value="0" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_craft_temporary" value="0" />
+                            </td>
+                        </tr>     
+	                </tbody>
+	            </table>
+		    </fieldset>
+        </div>
+        <div class="break"></div>
+        
+        <div class="skill section">
+            <h2>Culture générale</h2>
             <table>
                 <thead>
                 <tr>
@@ -7006,20 +6885,20 @@
                         <input type="number" name="attr_skill_artistry_temporary" value="0" />
                     </td>
                 </tr>
-                <!-- craft1 -->
+                <!-- knowledge_dungeon -->
                 <tr>
                     <td>
                         <button
-                                title="test d'artisanat&#13;= 1d20 + Total"
+                                title="test de connaissances (&nbsp;exploration souterraine&nbsp;)&#13;= 1d20 + Total"
                                 type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test d'artisanat ( @{skill_craft1_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_craft1_total}]])]]}}"
-                                name="roll_skill_craft1"
+                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissance (&nbsp;exploration souterraine&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_dungeon_total}]])]]}}"
+                                name="roll_skill_knowledge_dungeon"
                         ></button>
                     </td>
                     <td>
                         <div class="input-group-append">
                             <div class="coin">
-                                <input type="checkbox" name="attr_skill_craft1_cc" value="((((3 * @{skill_craft1_ranks}) + 3) - abs((3 * @{skill_craft1_ranks}) - 3)) / 2)"/>
+                                <input type="checkbox" name="attr_skill_knowledge_dungeon_cc" value="((((3 * @{skill_knowledge_dungeon_ranks}) + 3) - abs((3 * @{skill_knowledge_dungeon_ranks}) - 3)) / 2)"/>
                                 <div class="coin-content">
                                     <span class="coin-face coin-on">oui</span>
                                     <span class="coin-face coin-off">non</span>
@@ -7028,57 +6907,53 @@
                         </div>
                     </td>
                     <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span>Artisanat :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_craft1_label" type="text">
-                        </div>
+                        <span title="formation requise !" class="alert"></span>
+                        <span>Connaissances (&nbsp;exploration souterraine&nbsp;)</span>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_ranks" value="0"/>
+                        <input type="number" name="attr_skill_knowledge_dungeon_ranks" value="0"/>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_total" disabled="disabled" class="strong" value="(@{skill_craft1_ranks}+@{skill_craft1_cc}+@{skill_craft1_stat}+@{skill_craft1_trait}+@{skill_craft1_gift}+@{skill_craft1_temporary})"/>
+                        <input type="number" name="attr_skill_knowledge_dungeon_total" disabled="disabled" class="strong" value="(@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_dungeon_class}+@{skill_knowledge_dungeon_stat}+@{skill_knowledge_dungeon_trait}+@{skill_knowledge_dungeon_gift}+@{skill_knowledge_dungeon_temporary})"/>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_class" value="(@{skill_craft1_cc})" disabled="disabled"/>
+                        <input type="number" name="attr_skill_knowledge_dungeon_class" value="(@{skill_knowledge_dungeon_cc})" disabled="disabled"/>
                     </td>
                     <td>
                         <div class="input-group disabled">
-                            <input type="number" name="attr_skill_craft1_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                            <input type="number" name="attr_skill_knowledge_dungeon_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
                             <div class="input-group-append">
                                 <span class="input-group-text">Int.</span>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_malus" value="0" disabled="disabled" />
+                        <input type="number" name="attr_skill_knowledge_dungeon_malus" value="0" disabled="disabled" />
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_trait" value="0" />
+                        <input type="number" name="attr_skill_knowledge_dungeon_trait" value="0" />
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_gift" value="0" />
+                        <input type="number" name="attr_skill_knowledge_dungeon_gift" value="0" />
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft1_temporary" value="0" />
+                        <input type="number" name="attr_skill_knowledge_dungeon_temporary" value="0" />
                     </td>
                 </tr>
-                <!-- craft2 -->
+                <!-- knowledge_local -->
                 <tr>
                     <td>
                         <button
-                                title="test d'artisanat&#13;= 1d20 + Total"
+                                title="test de connaissances (&nbsp;folklore local&nbsp;)&#13;= 1d20 + Total"
                                 type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test d'artisanat ( @{skill_craft2_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_craft2_total}]])]]}}"
-                                name="roll_skill_craft2"
+                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;folklore local&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_local_total}]])]]}}"
+                                name="roll_skill_knowledge_local"
                         ></button>
                     </td>
                     <td>
                         <div class="input-group-append">
                             <div class="coin">
-                                <input type="checkbox" name="attr_skill_craft2_cc" value="((((3 * @{skill_craft2_ranks}) + 3) - abs((3 * @{skill_craft2_ranks}) - 3)) / 2)"/>
+                                <input type="checkbox" name="attr_skill_knowledge_local_cc" value="((((3 * @{skill_knowledge_local_ranks}) + 3) - abs((3 * @{skill_knowledge_local_ranks}) - 3)) / 2)"/>
                                 <div class="coin-content">
                                     <span class="coin-face coin-on">oui</span>
                                     <span class="coin-face coin-off">non</span>
@@ -7087,100 +6962,37 @@
                         </div>
                     </td>
                     <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span>Artisanat :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_craft2_label" type="text">
-                        </div>
+                        <span title="formation requise !" class="alert"></span>
+                        <span>Connaissances (&nbsp;folklore local&nbsp;)</span>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_ranks" value="0"/>
+                        <input type="number" name="attr_skill_knowledge_local_ranks" value="0"/>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_total" disabled="disabled" class="strong" value="(@{skill_craft2_ranks}+@{skill_craft2_cc}+@{skill_craft2_stat}+@{skill_craft2_trait}+@{skill_craft2_gift}+@{skill_craft2_temporary})"/>
+                        <input type="number" name="attr_skill_knowledge_local_total" disabled="disabled" class="strong" value="(@{skill_knowledge_local_ranks}+@{skill_knowledge_local_class}+@{skill_knowledge_local_stat}+@{skill_knowledge_local_trait}+@{skill_knowledge_local_gift}+@{skill_knowledge_local_temporary})"/>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_class" value="(@{skill_craft2_cc})" disabled="disabled"/>
+                        <input type="number" name="attr_skill_knowledge_local_class" value="(@{skill_knowledge_local_cc})" disabled="disabled"/>
                     </td>
                     <td>
                         <div class="input-group disabled">
-                            <input type="number" name="attr_skill_craft2_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                            <input type="number" name="attr_skill_knowledge_local_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
                             <div class="input-group-append">
                                 <span class="input-group-text">Int.</span>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_malus" value="0" disabled="disabled" />
+                        <input type="number" name="attr_skill_knowledge_local_malus" value="0" disabled="disabled" />
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_trait" value="0" />
+                        <input type="number" name="attr_skill_knowledge_local_trait" value="0" />
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_gift" value="0" />
+                        <input type="number" name="attr_skill_knowledge_local_gift" value="0" />
                     </td>
                     <td>
-                        <input type="number" name="attr_skill_craft2_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- craft3 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test d'artisanat&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test d'artisanat ( @{skill_craft3_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_craft3_total}]])]]}}"
-                                name="roll_skill_craft3"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_craft3_cc" value="((((3 * @{skill_craft3_ranks}) + 3) - abs((3 * @{skill_craft3_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span>Artisanat :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_craft3_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_total" disabled="disabled" class="strong" value="(@{skill_craft3_ranks}+@{skill_craft3_cc}+@{skill_craft3_stat}+@{skill_craft3_trait}+@{skill_craft3_gift}+@{skill_craft3_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_class" value="(@{skill_craft3_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_craft3_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Int.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_craft3_temporary" value="0" />
+                        <input type="number" name="attr_skill_knowledge_local_temporary" value="0" />
                     </td>
                 </tr>
                 <!-- knowledge_geography -->
@@ -7348,6 +7160,116 @@
                         <input type="number" name="attr_skill_knowledge_engineering_temporary" value="0" />
                     </td>
                 </tr>
+                <!-- knowledge_arcana -->
+                <tr>
+                    <td>
+                        <button
+                                title="test de connaissances (&nbsp;mystères&nbsp;)&#13;= 1d20 + Total"
+                                type="roll"
+                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;mystères&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_arcana_total}]])]]}}"
+                                name="roll_skill_knowledge_arcana"
+                        ></button>
+                    </td>
+                    <td>
+                        <div class="input-group-append">
+                            <div class="coin">
+                                <input type="checkbox" name="attr_skill_knowledge_arcana_cc" value="((((3 * @{skill_knowledge_arcana_ranks}) + 3) - abs((3 * @{skill_knowledge_arcana_ranks}) - 3)) / 2)"/>
+                                <div class="coin-content">
+                                    <span class="coin-face coin-on">oui</span>
+                                    <span class="coin-face coin-off">non</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span title="formation requise !" class="alert"></span>
+                        <span>Connaissances (&nbsp;mystères&nbsp;)</span>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_ranks" value="0"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_total" disabled="disabled" class="strong" value="(@{skill_knowledge_arcana_ranks}+@{skill_knowledge_arcana_class}+@{skill_knowledge_arcana_stat}+@{skill_knowledge_arcana_trait}+@{skill_knowledge_arcana_gift}+@{skill_knowledge_arcana_temporary})"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_class" value="(@{skill_knowledge_arcana_cc})" disabled="disabled"/>
+                    </td>
+                    <td>
+                        <div class="input-group disabled">
+                            <input type="number" name="attr_skill_knowledge_arcana_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">Int.</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_malus" value="0" disabled="disabled" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_trait" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_gift" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_arcana_temporary" value="0" />
+                    </td>
+                </tr>
+                <!-- knowledge_nature -->
+                <tr>
+                    <td>
+                        <button
+                                title="test de connaissances (&nbsp;nature&nbsp;)&#13;= 1d20 + Total"
+                                type="roll"
+                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;nature&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_nature_total}]])]]}}"
+                                name="roll_skill_knowledge_nature"
+                        ></button>
+                    </td>
+                    <td>
+                        <div class="input-group-append">
+                            <div class="coin">
+                                <input type="checkbox" name="attr_skill_knowledge_nature_cc" value="((((3 * @{skill_knowledge_nature_ranks}) + 3) - abs((3 * @{skill_knowledge_nature_ranks}) - 3)) / 2)"/>
+                                <div class="coin-content">
+                                    <span class="coin-face coin-on">oui</span>
+                                    <span class="coin-face coin-off">non</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span title="formation requise !" class="alert"></span>
+                        <span>Connaissances (&nbsp;nature&nbsp;)</span>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_ranks" value="0"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_total" disabled="disabled" class="strong" value="(@{skill_knowledge_nature_ranks}+@{skill_knowledge_nature_class}+@{skill_knowledge_nature_stat}+@{skill_knowledge_nature_trait}+@{skill_knowledge_nature_gift}+@{skill_knowledge_nature_temporary})"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_class" value="(@{skill_knowledge_nature_cc})" disabled="disabled"/>
+                    </td>
+                    <td>
+                        <div class="input-group disabled">
+                            <input type="number" name="attr_skill_knowledge_nature_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">Int.</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_malus" value="0" disabled="disabled" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_trait" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_gift" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_nature_temporary" value="0" />
+                    </td>
+                </tr>
                 <!-- knowledge_nobility -->
                 <tr>
                     <td>
@@ -7401,6 +7323,116 @@
                     </td>
                     <td>
                         <input type="number" name="attr_skill_knowledge_nobility_temporary" value="0" />
+                    </td>
+                </tr>
+                <!-- knowledge_plans -->
+                <tr>
+                    <td>
+                        <button
+                                title="test de connaissances (&nbsp;plans&nbsp;)&#13;= 1d20 + Total"
+                                type="roll"
+                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;plans&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_plans_total}]])]]}}"
+                                name="roll_skill_knowledge_plans"
+                        ></button>
+                    </td>
+                    <td>
+                        <div class="input-group-append">
+                            <div class="coin">
+                                <input type="checkbox" name="attr_skill_knowledge_plans_cc" value="((((3 * @{skill_knowledge_plans_ranks}) + 3) - abs((3 * @{skill_knowledge_plans_ranks}) - 3)) / 2)"/>
+                                <div class="coin-content">
+                                    <span class="coin-face coin-on">oui</span>
+                                    <span class="coin-face coin-off">non</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span title="formation requise !" class="alert"></span>
+                        <span>Connaissances (&nbsp;plans&nbsp;)</span>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_ranks" value="0"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_total" disabled="disabled" class="strong" value="(@{skill_knowledge_plans_ranks}+@{skill_knowledge_plans_class}+@{skill_knowledge_plans_stat}+@{skill_knowledge_plans_trait}+@{skill_knowledge_plans_gift}+@{skill_knowledge_plans_temporary})"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_class" value="(@{skill_knowledge_plans_cc})" disabled="disabled"/>
+                    </td>
+                    <td>
+                        <div class="input-group disabled">
+                            <input type="number" name="attr_skill_knowledge_plans_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">Int.</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_malus" value="0" disabled="disabled" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_trait" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_gift" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_plans_temporary" value="0" />
+                    </td>
+                </tr>
+                <!-- knowledge_religion -->
+                <tr>
+                    <td>
+                        <button
+                                title="test de connaissances (&nbsp;religion&nbsp;)&#13;= 1d20 + Total"
+                                type="roll"
+                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de connaissances (&nbsp;religion&nbsp;)}} {{test=[[1D20cf<1cs>20+([[@{skill_knowledge_religion_total}]])]]}}"
+                                name="roll_skill_knowledge_religion"
+                        ></button>
+                    </td>
+                    <td>
+                        <div class="input-group-append">
+                            <div class="coin">
+                                <input type="checkbox" name="attr_skill_knowledge_religion_cc" value="((((3 * @{skill_knowledge_religion_ranks}) + 3) - abs((3 * @{skill_knowledge_religion_ranks}) - 3)) / 2)"/>
+                                <div class="coin-content">
+                                    <span class="coin-face coin-on">oui</span>
+                                    <span class="coin-face coin-off">non</span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span title="formation requise !" class="alert"></span>
+                        <span>Connaissances (&nbsp;religion&nbsp;)</span>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_ranks" value="0"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_total" disabled="disabled" class="strong" value="(@{skill_knowledge_religion_ranks}+@{skill_knowledge_religion_class}+@{skill_knowledge_religion_stat}+@{skill_knowledge_religion_trait}+@{skill_knowledge_religion_gift}+@{skill_knowledge_religion_temporary})"/>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_class" value="(@{skill_knowledge_religion_cc})" disabled="disabled"/>
+                    </td>
+                    <td>
+                        <div class="input-group disabled">
+                            <input type="number" name="attr_skill_knowledge_religion_stat" value="(@{character_intelligence_mod})" disabled="disabled" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">Int.</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_malus" value="0" disabled="disabled" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_trait" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_gift" value="0" />
+                    </td>
+                    <td>
+                        <input type="number" name="attr_skill_knowledge_religion_temporary" value="0" />
                     </td>
                 </tr>
                 <!-- animal_training -->
@@ -7567,374 +7599,13 @@
                         <input type="number" name="attr_skill_linguistics_temporary" value="0" />
                     </td>
                 </tr>
-                <!-- career1 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de profession&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de profession ( @{skill_career1_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_career1_total}]])]]}}"
-                                name="roll_skill_career1"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_career1_cc" value="((((3 * @{skill_career1_ranks}) + 3) - abs((3 * @{skill_career1_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span>Profession&nbsp;:</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_career1_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_total" disabled="disabled" class="strong" value="(@{skill_career1_ranks}+@{skill_career1_cc}+@{skill_career1_stat}+@{skill_career1_trait}+@{skill_career1_gift}+@{skill_career1_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_class" value="(@{skill_career1_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_career1_stat" value="(@{character_wisdom_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Sag.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career1_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- career2 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de profession&#13;= 1d20 + Total"
-                                type="roll" value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de profession ( @{skill_career2_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_career2_total}]])]]}}"
-                                name="roll_skill_career2"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_career2_cc" value="((((3 * @{skill_career2_ranks}) + 3) - abs((3 * @{skill_career2_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span>Profession&nbsp;:</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_career2_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_total" disabled="disabled" class="strong" value="(@{skill_career2_ranks}+@{skill_career2_cc}+@{skill_career2_stat}+@{skill_career2_trait}+@{skill_career2_gift}+@{skill_career2_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_class" value="(@{skill_career2_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_career2_stat" value="(@{character_wisdom_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Sag.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career2_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- career3 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de profession&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de profession ( @{skill_career3_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_career3_total}]])]]}}"
-                                name="roll_skill_career3"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_career3_cc" value="((((3 * @{skill_career3_ranks}) + 3) - abs((3 * @{skill_career3_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span>Profession :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_career3_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_total" disabled="disabled" class="strong" value="(@{skill_career3_ranks}+@{skill_career3_cc}+@{skill_career3_stat}+@{skill_career3_trait}+@{skill_career3_gift}+@{skill_career3_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_class" value="(@{skill_career3_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_career3_stat" value="(@{character_wisdom_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Sag.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_career3_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- representation1 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de représentation&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de représentation ( @{skill_representation1_label} )}}{{test=[[1D20cf<1cs>20+([[@{skill_representation1_total}]])]]}}"
-                                name="roll_skill_representation1"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_representation1_cc" value="((((3 * @{skill_representation1_ranks}) + 3) - abs((3 * @{skill_representation1_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span title="formation requise !" class="alert"></span>
-                            </div>
-                            <div class="input-group-text">
-                                <span>Représentation :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_representation1_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_total" disabled="disabled" class="strong" value="(@{skill_representation1_ranks}+@{skill_representation1_cc}+@{skill_representation1_stat}+@{skill_representation1_trait}+@{skill_representation1_gift}+@{skill_representation1_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_class" value="(@{skill_representation1_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_representation1_stat" value="(@{character_charisma_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Cha.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation1_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- representation2 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de représentation&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de représentation ( @{skill_representation2_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_representation2_total}]])]]}}"
-                                name="roll_skill_representation2"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_representation2_cc" value="((((3 * @{skill_representation2_ranks}) + 3) - abs((3 * @{skill_representation2_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span title="formation requise !" class="alert"></span>
-                            </div>
-                            <div class="input-group-text">
-                                <span>Répresentation :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_representation2_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_total" disabled="disabled" class="strong" value="(@{skill_representation2_ranks}+@{skill_representation2_cc}+@{skill_representation2_stat}+@{skill_representation2_trait}+@{skill_representation2_gift}+@{skill_representation2_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_class" value="(@{skill_representation2_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_representation2_stat" value="(@{character_charisma_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Cha.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation2_temporary" value="0" />
-                    </td>
-                </tr>
-                <!-- representation3 -->
-                <tr>
-                    <td>
-                        <button
-                                title="test de représentation&#13;= 1d20 + Total"
-                                type="roll"
-                                value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de représentation ( @{skill_representation3_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_representation3_total}]])]]}}"
-                                name="roll_skill_representation3"
-                        ></button>
-                    </td>
-                    <td>
-                        <div class="input-group-append">
-                            <div class="coin">
-                                <input type="checkbox" name="attr_skill_representation3_cc" value="((((3 * @{skill_representation3_ranks}) + 3) - abs((3 * @{skill_representation3_ranks}) - 3)) / 2)"/>
-                                <div class="coin-content">
-                                    <span class="coin-face coin-on">oui</span>
-                                    <span class="coin-face coin-off">non</span>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <div class="input-group-text">
-                                <span title="formation requise !" class="alert"></span>
-                            </div>
-                            <div class="input-group-text">
-                                <span>Représentation :</span>
-                            </div>
-                            <input class="text-left" name="attr_skill_representation3_label" type="text">
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_ranks" value="0"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_total" disabled="disabled" class="strong" value="(@{skill_representation3_ranks}+@{skill_representation3_cc}+@{skill_representation3_stat}+@{skill_representation3_trait}+@{skill_representation3_gift}+@{skill_representation3_temporary})"/>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_class" value="(@{skill_representation3_cc})" disabled="disabled"/>
-                    </td>
-                    <td>
-                        <div class="input-group disabled">
-                            <input type="number" name="attr_skill_representation3_stat" value="(@{character_charisma_mod})" disabled="disabled" />
-                            <div class="input-group-append">
-                                <span class="input-group-text">Cha.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_malus" value="0" disabled="disabled" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_trait" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_gift" value="0" />
-                    </td>
-                    <td>
-                        <input type="number" name="attr_skill_representation3_temporary" value="0" />
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="skill section">
+            <h2>Profession</h2>
             <table>
                 <thead>
                 <tr>
@@ -7977,73 +7648,179 @@
                 </tbody>
             </table>
 
-            <fieldset class="repeating_skill">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td width="1%">
-                            <button
-                                    title="test de lore&#13;= 1d20 + Total"
-                                    type="roll"
-                                    value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de compétence ( @{skill_custom_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_custom_total}]])]]}}"
-                                    name="roll_skill_custom"
-                            ></button>
-                        </td>
-                        <td width="1%">
-                            <div class="input-group">
-                                <div class="coin">
-                                    <input type="checkbox" name="attr_skill_custom_cc" value="((((3 * @{skill_custom_ranks}) + 3) - abs((3 * @{skill_custom_ranks}) - 3)) / 2)"/>
-                                    <div class="coin-content">
-                                        <span class="coin-face coin-on">oui</span>
-                                        <span class="coin-face coin-off">non</span>
+	        <fieldset class="repeating_skillcareer">
+	            <table>
+	                <tbody>
+	               	   <tr>
+                            <td width="1%">
+                                <button
+                                        title="test de profession&#13;= 1d20 + Total"
+                                        type="roll"
+                                        value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de profession ( @{skill_career_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_career_total}]])]]}}"
+                                        name="roll_skill_career"
+                                ></button>
+                            </td>
+                            <td width="1%">
+                                <div class="input-group-append">
+                                    <div class="coin">
+                                        <input type="checkbox" name="attr_skill_career_cc" value="((((3 * @{skill_career_ranks}) + 3) - abs((3 * @{skill_career_ranks}) - 3)) / 2)"/>
+                                        <div class="coin-content">
+                                            <span class="coin-face coin-on">oui</span>
+                                            <span class="coin-face coin-off">non</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td width="1%"></td>
-                        <td>
-                            <input class="text-left" name="attr_skill_custom_label" type="text">
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_ranks" value="0"/>
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_total" disabled="disabled" class="strong" value="(@{skill_custom_ranks}+@{skill_custom_cc}+@{skill_custom_stat}+@{skill_custom_trait}+@{skill_custom_gift}+@{skill_custom_temporary})"/>
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_class" value="(@{skill_custom_cc})" disabled="disabled"/>
-                        </td>
-                        <td width="8%">
-                            <div class="input-group">
-                                <input type="number" name="attr_skill_custom_stat" value="(@{skill_custom_stat_select})" disabled="disabled" />
-                                <select class="fixed-small" name="attr_skill_custom_stat_select">
-                                    <option value="(@{character_strength_mod})">For.</option>
-                                    <option value="(@{character_dexterity_mod})">Dex.</option>
-                                    <option value="(@{character_constitution_mod})">Con.</option>
-                                    <option value="(@{character_intelligence_mod})" selected>Int.</option>
-                                    <option value="(@{character_wisdom_mod})">Sag.</option>
-                                    <option value="(@{character_charisma_mod})">Cha.</option>
-                                </select>
-                            </div>
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_malus" value="0" disabled="disabled" />
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_trait" value="0" />
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_gift" value="0" />
-                        </td>
-                        <td width="8%">
-                            <input type="number" name="attr_skill_custom_temporary" value="0" />
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </fieldset>
+                            </td>
+                            <td>
+                                <input class="text-left" name="attr_skill_career_label" type="text">
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_ranks" value="0"/>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_total" disabled="disabled" class="strong" value="(@{skill_career_ranks}+@{skill_career_cc}+@{skill_career_stat}+@{skill_career_trait}+@{skill_career_gift}+@{skill_career_temporary})"/>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_class" value="(@{skill_career_cc})" disabled="disabled"/>
+                            </td>
+                            <td width="8%">
+                                <div class="input-group disabled">
+                                    <input type="number" name="attr_skill_career_stat" value="(@{character_wisdom_mod})" disabled="disabled" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Sag.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_malus" value="0" disabled="disabled" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_trait" value="0" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_gift" value="0" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_career_temporary" value="0" />
+                            </td>
+                        </tr>     
+	                </tbody>
+	            </table>
+		    </fieldset>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
+        
+        <div class="skill section">
+            <h2>Représentation</h2>
+            <table>
+                <thead>
+                <tr>
+                    <td width="1%">
+                        <div class="fake-button-roll"></div>
+                    </td>
+                    <th width="1%">
+                        <span title="Compétence de Classe ?">CC</span>
+                    </th>
+                    <th>
+                        <span>Compétence</span>
+                    </th>
+                    <th width="8%">
+                        <span>Rang</span>
+                    </th>
+                    <th width="8%">
+                        <span title="= Rang + CC + Mod. - Malus + Trait + Don + Temp.">Total</span>
+                    </th>
+                    <th width="8%">
+                        <span title="bonus de Compétence de Classe">CC</span>
+                    </th>
+                    <th width="8%">
+                        <span title="Modificateur de caractéristique">Mod.</span>
+                    </th>
+                    <th width="8%">
+                        <span title="Malus d'armure">Malus</span>
+                    </th>
+                    <th width="8%">
+                        <span>Trait</span>
+                    </th>
+                    <th width="8%">
+                        <span>Don</span>
+                    </th>
+                    <th width="8%">
+                        <span title="Temporaire">Temp.</span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+	        <fieldset class="repeating_skillrepresentation">
+	            <table>
+	                <tbody>
+	               	   <tr>
+                            <td width="1%">
+                                <button
+                                        title="test de représentation&#13;= 1d20 + Total"
+                                        type="roll"
+                                        value="&{template:roll}{{basic=show}} {{who=@{character_name}}} {{label=test de représentation ( @{skill_representation_label} )}} {{test=[[1D20cf<1cs>20+([[@{skill_representation_total}]])]]}}"
+                                        name="roll_skill_representation"
+                                ></button>
+                            </td>
+                            <td width="1%">
+                                <div class="input-group-append">
+                                    <div class="coin">
+                                        <input type="checkbox" name="attr_skill_representation_cc" value="((((3 * @{skill_representation_ranks}) + 3) - abs((3 * @{skill_representation_ranks}) - 3)) / 2)"/>
+                                        <div class="coin-content">
+                                            <span class="coin-face coin-on">oui</span>
+                                            <span class="coin-face coin-off">non</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <div class="input-group-text">
+                                        <span title="formation requise !" class="alert"></span>
+                                    </div>
+                                    <input class="text-left" name="attr_skill_representation_label" type="text">
+                                </div>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_ranks" value="0"/>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_total" disabled="disabled" class="strong" value="(@{skill_representation_ranks}+@{skill_representation_cc}+@{skill_representation_stat}+@{skill_representation_trait}+@{skill_representation_gift}+@{skill_representation_temporary})"/>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_class" value="(@{skill_representation_cc})" disabled="disabled"/>
+                            </td>
+                            <td width="8%">
+                                <div class="input-group disabled">
+                                    <input type="number" name="attr_skill_representation_stat" value="(@{character_charisma_mod})" disabled="disabled" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Cha.</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_malus" value="0" disabled="disabled" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_trait" value="0" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_gift" value="0" />
+                            </td>
+                            <td width="8%">
+                                <input type="number" name="attr_skill_representation_temporary" value="0" />
+                            </td>
+                        </tr>     
+	                </tbody>
+	            </table>
+		    </fieldset>
+        </div>
+        <div class="break"></div>
+
     </div>
 
     <label>
@@ -8093,7 +7870,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
     </div>
 
     <label>
@@ -8213,7 +7990,7 @@
                 </div>
             </fieldset>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="equipment-armor section">
             <h2>Armure</h2>
@@ -8284,7 +8061,7 @@
                 </table>
             </fieldset>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
 
         <div class="flex-row">
             <div class="flex-col">
@@ -8467,7 +8244,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-content-break"></div>
+        <div class="break"></div>
     </div>
 
     <label>
@@ -8481,7 +8258,7 @@
                 <input class="note-label text-left bold" type="text" name="attr_note-label" placeholder="Titre de la note" />
                 <textarea class="note-content" name="attr_notes-content" placeholder="Contenu de la note"></textarea>
             </div>
-            <div class="tab-content-break"></div>
+            <div class="break"></div>
         </fieldset>
     </div>
 </div>

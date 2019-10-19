@@ -433,13 +433,6 @@ small {
     min-width: 18rem;
 }
 
-.sheet-break {
-    height: 2.5rem;
-    margin-bottom: 2rem;
-    background: url("https://github.com/aloade/pathfinder/raw/master/image/break.png") no-repeat center;
-    background-size: contain;
-}
-
 input, select {
     display: inline-block;
     background-color: transparent;
@@ -689,6 +682,12 @@ button[type="roll"] {
     padding: 0.25rem;
 }
 
+.sheet-body .sheet-break {
+    height: 2.5rem;
+    margin-bottom: 2rem;
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/break.png") no-repeat center;
+    background-size: contain;
+}
 /* skill */
 .sheet-skill-summary {
     width: 25%;
@@ -785,14 +784,14 @@ button[type="roll"] {
 
 .sheet-spell-color0 { }
 .sheet-spell-color1 { text-shadow: 0 0 10px rgb(0, 0, 0);}
-.sheet-spell-color2 { text-shadow: 0 0 10px rgb(170, 100, 100);}
-.sheet-spell-color3 { text-shadow: 0 0 10px rgb(255, 255, 255);}
-.sheet-spell-color4 { text-shadow: 0 0 10px rgb(0, 230, 0);}
-.sheet-spell-color5 { text-shadow: 0 0 10px rgb(0, 150, 255);}
-.sheet-spell-color6 { text-shadow: 0 0 10px rgb(255, 255, 0);}
-.sheet-spell-color7 { text-shadow: 0 0 10px rgb(255, 165, 0);}
-.sheet-spell-color8 { text-shadow: 0 0 10px rgb(255, 0, 0);}
-.sheet-spell-color9 { text-shadow: 0 0 10px rgb(228, 0, 228);}
+.sheet-spell-color2 { color: rgb(170, 100, 100) !important; text-shadow: 0 0 10px rgb(0, 0, 0); }
+.sheet-spell-color3 { color: rgb(255, 255, 255) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color4 { color: rgb(60, 230, 60) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color5 { color: rgb(60, 100, 255) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color6 { color: rgb(255, 255, 60) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color7 { color: rgb(255, 165, 60) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color8 { color: rgb(255, 30, 30) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
+.sheet-spell-color9 { color: rgb(228, 60, 228) !important; text-shadow: 0 0 10px rgb(0, 0, 0);}
 
 .sheet-spell.sheet-tab {
     padding-top: calc(3rem - 1px);
