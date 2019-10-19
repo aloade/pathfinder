@@ -360,12 +360,12 @@
 }
 
 @font-face {
-    font-family: "Julietta Messie";
-    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Julietta-Messie.ttf") format("truetype");
+    font-family: "Formal436";
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Forml436.ttf") format("truetype");
 }
 
 .charsheet * {
-    font-family: Julietta Messie, Patrick Hand, Arial, Sans;
+    font-family: Formal436, Patrick Hand, Arial, Sans;
     /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
     font-size: 1.6rem;
     color: rgb(56, 61, 65);
@@ -565,7 +565,7 @@ button[type="roll"] {
 .sheet-header-character input {
     font-size: 180%;
     height: 5rem !important;
-    font-family: Dancing Script;
+    font-family: Dancing Script, Patrick Hand, Arial, Sans;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
