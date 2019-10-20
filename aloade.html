@@ -100,57 +100,6 @@
         });
     });
 
-    // armor
-    on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
-        let section = "equipmentarmor";
-        let field = {
-            "in": {
-                "armor" : "equipment_armor_bonus",
-                "worn" : "equipment_armor_worn",
-                "dexterity" : "equipment_armor_dexterity_max",
-                "malus" : "equipment_armor_malus"
-            },
-            "out": {
-                "armor" : "foo_defense_ca_bonus",
-                "dexterity": "foo_defense_dexterity",
-                "malus" : "foo_defense_malus"
-            }
-        }
-
-        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
-            getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
-            Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
-                let cache = {
-                    "dexterity" : Math.floor( (user.character_dexterity_base + user.character_dexterity_bonus - Math.abs(user.character_dexterity_malus) ) / 2 - 5),
-                    "armor" : 0,
-                    "malus": 0
-                }
-                if ( cache.dexterity < 0 ) cache.dexterity = 0;
-                delete(user);
-
-                // iterate load
-                Object.keys(repeating).forEach( id => {
-                    if ( repeating[id][field.in.worn] === 1 ) {
-                        cache.armor += repeating[id][field.in.armor];
-                        if ( repeating[id][field.in.dexterity] !== null && cache.dexterity > repeating[id][field.in.dexterity] ) cache.dexterity = repeating[id][field.in.dexterity];
-                        cache.malus += repeating[id][field.in.malus];
-                    }
-                });
-                delete(repeating);
-
-                // prepare load
-                let load = {};
-                load[field.out.armor] = cache.armor;
-                load[field.out.dexterity] = cache.dexterity;
-                load[field.out.malus] = Math.abs(cache.malus);
-                delete(cache);
-
-                // send load
-                setAttrs(load);
-            });
-        });
-    });
-
     // skill craft
     on("sheet:opened change:repeating_skillcraft remove:repeating_skillcraft", () => {
         let section = "skillcraft";
@@ -159,7 +108,7 @@
                 "rank":  "skill_craft_ranks"
             },
             "out": {
-                "sum": "foo_skill_craft_ranks_sum"
+                "sum": "foo_skill_craft_ranks_total"
             }
         }
         getAttrsRepeating(section, Object.values(field.in), (repeating) => {
@@ -171,9 +120,6 @@
             Object.keys(repeating).forEach( id => {
                 load[field.out.sum] += repeating[id][field.in.rank];
             });
-console.log("-------------------------- craft");
-console.log(repeating);
-console.log(load);
             delete(repeating);
 
             // send load
@@ -189,7 +135,7 @@ console.log(load);
                 "rank":  "skill_career_ranks"
             },
             "out": {
-                "sum": "foo_skill_career_ranks_sum"
+                "sum": "foo_skill_career_ranks_total"
             }
         }
         getAttrsRepeating(section, Object.values(field.in), (repeating) => {
@@ -201,9 +147,6 @@ console.log(load);
             Object.keys(repeating).forEach( id => {
                 load[field.out.sum] += repeating[id][field.in.rank];
             });
-console.log("-------------------------- career");
-console.log(repeating);
-console.log(load);
             delete(repeating);
 
             // send load
@@ -219,7 +162,7 @@ console.log(load);
                 "rank":  "skill_representation_ranks"
             },
             "out": {
-                "sum": "foo_skill_representation_ranks_sum"
+                "sum": "foo_skill_representation_ranks_total"
             }
         }
         getAttrsRepeating(section, Object.values(field.in), (repeating) => {
@@ -231,17 +174,136 @@ console.log(load);
             Object.keys(repeating).forEach( id => {
                 load[field.out.sum] += repeating[id][field.in.rank];
             });
-console.log("-------------------------- representation");
-console.log(repeating);
-console.log(load);
-
             delete(repeating);
 
             // send load
             setAttrs(load);
         });
     });
+    
+    // weapon
+    on("sheet:opened change:repeating_equipmentweapon remove:repeating_equipmentweapon", () => {
+        let section = "equipmentweapon";
+        let field = {
+            "in": {
+                "weight" : "equipment_weapon_weight"
+            },
+            "out": {
+                "weight" : "foo_equipment_weapon_weight_total"
+            }
+        }
 
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
+            let cache = {
+                "weight": 0
+            }
+
+            // iterate load
+            Object.keys(repeating).forEach( id => {
+                cache.weight += repeating[id][field.in.weight];
+            });
+            delete(repeating);
+
+            // prepare load
+            let load = {};
+            load[field.out.weight] = Math.round(cache.weight * 100) / 100;
+            delete(cache);
+
+            // send load
+            setAttrs(load);
+        });
+    });
+    
+    // armor
+    on("sheet:opened change:repeating_equipmentarmor remove:repeating_equipmentarmor change:character_dexterity_base remove:character_dexterity_base change:character_dexterity_bonus remove:character_dexterity_bonus change:character_dexterity_malus remove:character_dexterity_malus", () => {
+        let section = "equipmentarmor";
+        let field = {
+            "in": {
+                "armor" : "equipment_armor_bonus",
+                "worn" : "equipment_armor_worn",
+                "dexterity" : "equipment_armor_dexterity_max",
+                "malus" : "equipment_armor_malus",
+                "weight" : "equipment_armor_weight"
+            },
+            "out": {
+                "armor" : "foo_defense_ca_bonus",
+                "dexterity": "foo_defense_dexterity",
+                "malus" : "foo_defense_malus",
+                "weight" : "foo_equipment_armor_weight_total"
+            }
+        }
+
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
+            getAttrs(["character_dexterity_base", "character_dexterity_bonus", "character_dexterity_malus"], (user) => {
+                Object.keys(user).forEach( key => { user[key] = parseValue(user[key]) });
+                let cache = {
+                    "dexterity" : Math.floor( (user.character_dexterity_base + user.character_dexterity_bonus - Math.abs(user.character_dexterity_malus) ) / 2 - 5),
+                    "armor" : 0,
+                    "malus": 0,
+                    "weight": 0
+                }
+                if ( cache.dexterity < 0 ) cache.dexterity = 0;
+                delete(user);
+
+                // iterate load
+                Object.keys(repeating).forEach( id => {
+                    if ( repeating[id][field.in.worn] === 1 ) {
+                        cache.armor += repeating[id][field.in.armor];
+                        if ( repeating[id][field.in.dexterity] !== null && cache.dexterity > repeating[id][field.in.dexterity] ) cache.dexterity = repeating[id][field.in.dexterity];
+                        cache.malus += repeating[id][field.in.malus];
+                        cache.weight += repeating[id][field.in.weight];
+                    }
+                });
+                delete(repeating);
+
+                // prepare load
+                let load = {};
+                load[field.out.armor] = cache.armor;
+                load[field.out.dexterity] = cache.dexterity;
+                load[field.out.malus] = Math.abs(cache.malus);
+                load[field.out.weight] = Math.round(cache.weight * 100) / 100;
+                delete(cache);
+
+                // send load
+                setAttrs(load);
+            });
+        });
+    });
+
+    // inventory
+    on("sheet:opened change:repeating_inventory remove:repeating_inventory", () => {
+        let section = "inventory";
+        let field = {
+            "in": {
+                "quantity" : "inventory_quantity",
+                "weight" : "inventory_weight"
+            },
+            "out": {
+                "weight" : "foo_inventory_weight_total"
+            }
+        }
+
+        getAttrsRepeating(section, Object.values(field.in), (repeating) => {
+            let cache = {
+                "weight": 0
+            }
+
+            // iterate load
+            Object.keys(repeating).forEach( id => {
+                cache.weight += repeating[id][field.in.quantity] * repeating[id][field.in.weight];
+            });
+            delete(repeating);
+
+            // prepare load
+            let load = {};
+            load[field.out.weight] = Math.round(cache.weight * 100) / 100;
+            delete(cache);
+
+            // send load
+            setAttrs(load);
+        });
+    });
+    
     // get all attributes name and their values from a repeating block ordered by Id (roll20 generated)
     //
     // section	        string from "repeating_<section>_<field>"
@@ -5589,19 +5651,21 @@ console.log(load);
     </label>
     <div>
         <h1>Compétences</h1>
-        <div class="skill-summary section-header">
-            <div class="input-group">
-                <div class="input-group-text">
-                    <span>Rangs</span>
+        <div class="section-header">
+            <div class="skill-summary">
+                <div class="input-group">
+                    <div class="input-group-text">
+                        <span>Rangs :</span>
+                    </div>
+                    <input type="hidden" name="attr_foo_skill_craft_ranks_total" value ="0" />
+                    <input type="hidden" name="attr_foo_skill_career_ranks_total" value ="0" />
+                    <input type="hidden" name="attr_foo_skill_representation_ranks_total" value ="0" />
+                    <input title="Rangs dépensés" type="number" name="attr_skill_total" value="(@{skill_acrobatics_ranks}+@{skill_animal_training_ranks}+@{skill_artistry_ranks}+@{skill_appraise_ranks}+@{skill_bluff_ranks}+@{skill_climbing_ranks}+@{foo_skill_craft_ranks_total}+@{foo_skill_career_ranks_total}+@{skill_disguise_ranks}+@{skill_diplomacy_ranks}+@{skill_first_aid_ranks}+@{skill_fly_ranks}+@{skill_knowledge_arcana_ranks}+@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_engineering_ranks}+@{skill_knowledge_geography_ranks}+@{skill_knowledge_history_ranks}+@{skill_knowledge_local_ranks}+@{skill_knowledge_nature_ranks}+@{skill_knowledge_plans_ranks}+@{skill_knowledge_religion_ranks}+@{skill_knowledge_nobility_ranks}+@{skill_horseback_riding_ranks}+@{skill_escape_ranks}+@{skill_intimidate_ranks}+@{skill_linguistics_ranks}+@{skill_swimming_ranks}+@{skill_perception_ranks}+@{skill_pickpocketing_ranks}+@{skill_psychology_ranks}+@{foo_skill_representation_ranks_total}+@{skill_sabotage_ranks}+@{skill_stealth_ranks}+@{skill_survival_ranks}+@{skill_spellcraft_ranks}+@{skill_use_of_magic_objects_ranks})" disabled="disabled" />
+                    <div class="input-group-text">
+                        <span>/</span>
+                    </div>
+                    <input type="number" name="attr_skill_remaining" />
                 </div>
-                <input type="hidden" name="attr_foo_skill_craft_ranks_sum" value ="0" />
-                <input type="hidden" name="attr_foo_skill_career_ranks_sum" value ="0" />
-                <input type="hidden" name="attr_foo_skill_representation_ranks_sum" value ="0" />
-                <input title="Rangs dépensés" type="number" name="attr_skill_sum" value="(@{skill_acrobatics_ranks}+@{skill_animal_training_ranks}+@{skill_artistry_ranks}+@{skill_appraise_ranks}+@{skill_bluff_ranks}+@{skill_climbing_ranks}+@{foo_skill_craft_ranks_sum}+@{foo_skill_career_ranks_sum}+@{skill_disguise_ranks}+@{skill_diplomacy_ranks}+@{skill_first_aid_ranks}+@{skill_fly_ranks}+@{skill_knowledge_arcana_ranks}+@{skill_knowledge_dungeon_ranks}+@{skill_knowledge_engineering_ranks}+@{skill_knowledge_geography_ranks}+@{skill_knowledge_history_ranks}+@{skill_knowledge_local_ranks}+@{skill_knowledge_nature_ranks}+@{skill_knowledge_plans_ranks}+@{skill_knowledge_religion_ranks}+@{skill_knowledge_nobility_ranks}+@{skill_horseback_riding_ranks}+@{skill_escape_ranks}+@{skill_intimidate_ranks}+@{skill_linguistics_ranks}+@{skill_swimming_ranks}+@{skill_perception_ranks}+@{skill_pickpocketing_ranks}+@{skill_psychology_ranks}+@{foo_skill_representation_ranks_sum}+@{skill_sabotage_ranks}+@{skill_stealth_ranks}+@{skill_survival_ranks}+@{skill_spellcraft_ranks}+@{skill_use_of_magic_objects_ranks})" disabled="disabled" />
-                <div class="input-group-text">
-                    <span>/</span>
-                </div>
-                <input title="Rangs disponibles" type="number" name="attr_skill_remaining" value="(@{skill_total}-@{skill_sum}-@{skill_misc})" />
             </div>
         </div>
 
@@ -7828,7 +7892,6 @@ console.log(load);
     </label>
     <div>
         <h1>Talents</h1>
-
         <div class="flex-row">
             <div class="flex-col">
                 <div class="feat-racial">
@@ -7878,23 +7941,33 @@ console.log(load);
     </label>
     <div>
         <h1>Inventaire</h1>
+        <div class="section-header">
+            <div class="equipment-purse">
+                <div class="input-group">
+                    <input type="number" name="attr_currency_gold" value="0" min="0" step="1" />
+                    <div class="input-group-text">
+                        <span title="pièces d'or&#13;1 po = 10 pa" class="currency currency-gold"></span>
+                    </div>
+                    <input type="number" name="attr_currency_silver" value="0" min="0" step="1" />
+                    <div class="input-group-text">
+                        <span title="pièces d'argent&#13;1 pa = 10 pc" class="currency currency-silver"></span>
+                    </div>
+                    <input type="number" name="attr_currency_copper" value="0" min="0" step="1" />
+                    <div class="input-group-text">
+                        <span title="pièces de cuivre" class="currency currency-copper"></span>
+                    </div>
+                </div>
+            </div>
 
-        <div class="equipment-purse section-header">
-            <div class="input-group">
-                <div class="input-group-text">
-                    <span>Bourse :</span>
-                </div>
-                <input type="number" name="attr_devise_gold" value="0" min="0" />
-                <div class="input-group-text">
-                    <span title="pièces d'or&#13;1 po = 10 pa" class="device device-gold"></span>
-                </div>
-                <input type="number" name="attr_devise_silver" value="0" min="0" />
-                <div class="input-group-text">
-                    <span title="pièces d'argent&#13;1 pa = 10 pc" class=" device device-silver"></span>
-                </div>
-                <input type="number" name="attr_devise_copper" value="0" min="0" />
-                <div class="input-group-text">
-                    <span title="pièces de cuivre" class="device device-copper"></span>
+            <div class="equipement-weight">
+                <input type="hidden" name="attr_foo_equipment_weapon_weight_total" value="0" />
+                <input type="hidden" name="attr_foo_equipment_armor_weight_total" value="0" />
+                <input type="hidden" name="attr_foo_inventory_weight_total" value="0" />
+                <div class="input-group">
+                    <input type="number" name="attr_weight_total" class="size-fixed" value="(@{foo_equipment_weapon_weight_total}+@{foo_equipment_armor_weight_total}+@{foo_inventory_weight_total}+(@{currency_gold}+@{currency_silver}+@{currency_copper})*0.01)" min="0" disabled="disabled" />
+                    <div class="input-group-text">
+                        <span>kg</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -7910,16 +7983,19 @@ console.log(load);
                     <th width="10%">
                         <span title="1d6, 2d8, ...">Dégâts</span>
                     </th>
-                    <th width="120px">
+                    <th width="15%">
                         <span title="facteur de Critiques">Crit.</span>
                     </th>
                     <th width="10%">
                         <span title="facteur de portée">Portée</span>
                     </th>
                     <th width="10%">
+                        <span title="poids en kg">Poids</span>
+                    </th>
+                    <th width="10%">
                         <span>Type</span>
                     </th>
-                    <th>
+                    <th width="25%">
                         <span>Spécial</span>
                     </th>
                 </tr>
@@ -7927,7 +8003,7 @@ console.log(load);
                 <tbody>
                 </tbody>
             </table>
-            <fieldset class="repeating_equipementweapon">
+            <fieldset class="repeating_equipmentweapon">
                 <div class="equipment-weapon-content">
                     <table>
                         <tbody>
@@ -7938,7 +8014,7 @@ console.log(load);
                             <td width="10%">
                                 <input type="text" name="attr_equipment_weapon_damage" />
                             </td>
-                            <td width="130px">
+                            <td width="15%">
                                 <div class="input-group">
                                     <select class="fixed-small" name="attr_equipment_weapon_critic">
                                         <option value="20" selected="selected">20</option>
@@ -7971,6 +8047,9 @@ console.log(load);
                                 <input type="text" name="attr_equipment_weapon_range" value="CaC" />
                             </td>
                             <td width="10%">
+                                <input type="text" name="attr_equipment_weapon_weight" value="0" />
+                            </td>
+                            <td width="10%">
                                 <select class="fixed-small" name="attr_equipment_weapon_type">
                                     <option value="1" selected="selected">-</option>
                                     <option value="2">C</option>
@@ -7981,7 +8060,7 @@ console.log(load);
                                     <option value="7">P/T</option>
                                 </select>
                             </td>
-                            <td>
+                            <td width="25%">
                                 <input type="text" name="attr_equipment_weapon_special" />
                             </td>
                         </tr>
@@ -8000,7 +8079,7 @@ console.log(load);
                     <th width="4%">
                         <span title="Équipé ?">Éqp.</span>
                     </th>
-                    <th width="26%">
+                    <th width="21%">
                         <span>Nom</span>
                     </th>
                     <th width="10%">
@@ -8015,7 +8094,10 @@ console.log(load);
                     <th width="10%">
                         <span title="Risque d'Échec des sorts profanes">Échec</span>
                     </th>
-                    <th width="30%">
+                    <th width="10%">
+                        <span title="poids en kg">Poids</span>
+                    </th>
+                    <th width="25%">
                         <span>Spécial</span>
                     </th>
                 </tr>
@@ -8036,22 +8118,25 @@ console.log(load);
                                 </div>
                             </div>
                         </td>
-                        <td width="26%">
+                        <td width="21%">
                             <input type="text" name="attr_equipment_armor_name"/>
                         </td>
                         <td width="10%">
-                            <input type="text" name="attr_equipment_armor_bonus"/>
+                            <input type="number" name="attr_equipment_armor_bonus" value="1" step="1" />
                         </td>
                         <td width="10%">
-                            <input type="text" name="attr_equipment_armor_dexterity_max"/>
+                            <input type="number" name="attr_equipment_armor_dexterity_max" step="1" />
                         </td>
                         <td width="10%">
-                            <input type="text" name="attr_equipment_armor_malus"/>
+                            <input type="number" name="attr_equipment_armor_malus" step="1" />
                         </td>
                         <td width="10%">
-                            <input type="text" name="attr_equipment_armor_spell_failure"/>
+                            <input type="text" name="attr_equipment_armor_spell_failure" />
                         </td>
-                        <td width="30%">
+                        <td width="10%">
+                            <input type="number" name="attr_equipment_armor_weight" value="0" min="0" step="0.01" />
+                        </td>
+                        <td width="25%">
                             <input type="text" name="attr_equipment_armor_special" />
                         </td>
                     </tr>
@@ -8067,15 +8152,39 @@ console.log(load);
             <div class="flex-col">
                 <div class="inventory section">
                     <h2>Équipement</h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th width="80%">
+                                <span>Description</span>
+                            </th>
+                            <th width="10%">
+                                <span title="Quantité">Qté.</span>
+                            </th>
+                            <th width="10%">
+                                <span title="Poid Unitaire (kg)">PU</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                     <fieldset class="repeating_inventory">
-                        <div class="flex-row">
-                            <div class="flex-col">
-                                <input class="inventory-description" type="text" name="attr_inventory" placeholder="Description de l'objet" />
-                            </div>
-                            <div class="flex-col1">
-                                <input class="inventory-quantity" type="number" name="attr_inventory_quantity_max" value="0"/>
-                            </div>
-                        </div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td width="80%">
+                                        <input type="text" name="attr_inventory" />
+                                    </td>
+                                    <td width="10%">
+                                        <input type="number" name="attr_inventory_quantity" value="0" min="0" step="1"/>
+                                    </td>
+                                    <td width="10%">
+                                        <input type="number" name="attr_inventory_weight" value="0" min="0" step="0.01" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </fieldset>
                 </div>
             </div>
@@ -8252,7 +8361,6 @@ console.log(load);
     </label>
     <div>
         <h1>Notes</h1>
-
         <fieldset class="repeating_note">
             <div class="note section">
                 <input class="note-label text-left bold" type="text" name="attr_note-label" placeholder="Titre de la note" />

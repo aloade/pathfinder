@@ -19,6 +19,28 @@
     line-height: inherit;
 }
 
+.charsheet .btn, .charsheet button[type="roll"] {
+	padding: 0;
+	margin: 0;
+	text-shadow: none;
+	box-shadow: none;
+	border: none;
+	border-radius: none;
+	background-color: transparent;
+	background-repeat: none;
+}
+
+.charsheet button[type="roll"] {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.charsheet .btn:hover, .charsheet .btn:active {
+	color: inherit;
+	transition: none;
+	background-position: 0 0;
+}
+
 .charsheet input, .charsheet select, .charsheet textarea {
     display: inline-block;
     width: 100% !important;
@@ -26,17 +48,6 @@
     margin: 0;
     padding: 0;
     border-radius: 0;
-}
-
-.charsheet button[type="roll"] {
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none;
-    box-shadow: none;
-}
-
-.charsheet button[type="roll"]:hover {
-    background-position: 0 0 !important;
 }
 
 .charsheet label {
@@ -353,19 +364,18 @@
 /* --------------------------------------------------- */
 /* content */
 /* --------------------------------------------------- */
+@font-face {
+    font-family: "Formal 436";
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Formal436.ttf") format("truetype");
+}
 
 @font-face {
     font-family: "Dancing Script";
     src: url("https://github.com/aloade/pathfinder/raw/master/fonts/DancingScript.ttf") format("truetype");
 }
 
-@font-face {
-    font-family: "Formal436";
-    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Formal436.ttf") format("truetype");
-}
-
 .charsheet * {
-    font-family: Formal436, Patrick Hand, Arial, Sans;
+    font-family: "Formal 436", "Patrick Hand", Arial, Sans;
     /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
     font-size: 1.6rem;
     color: rgb(56, 61, 65);
@@ -377,12 +387,26 @@
 
 /* section */
 .sheet-section-header {
-    margin-left: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    align-items: stretch;
     margin-bottom: 2rem;
+}
+
+.sheet-section-header > div {
     border: 1px solid rgba(0, 0, 0, 0.1);
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 0.25rem;
     padding: 1px 0.75rem;
+}
+
+.sheet-section-header > div + div {
+    margin-left: 1rem;
+}
+
+.sheet-section-header .sheet-size-fixed {
+    width: 6rem !important;
 }
 
 .sheet-section-header input[disabled] {
@@ -431,6 +455,13 @@ small {
 
 .sheet-fixed-large {
     min-width: 18rem;
+}
+
+.btn.repcontrol_add, .btn.repcontrol_edit, .btn.repcontrol_move, .btn.repcontrol_del {
+    padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25rem;
 }
 
 input, select {
@@ -493,6 +524,7 @@ button[type="roll"], .sheet-fake-button-roll {
 }
 
 button[type="roll"] {
+    padding: 0.25rem !important;
     height: 2.8rem;
     font-size: 150% !important;
     line-height: 2.8rem;
@@ -565,7 +597,7 @@ button[type="roll"] {
 .sheet-header-character input {
     font-size: 180%;
     height: 5rem !important;
-    font-family: Dancing Script, Patrick Hand, Arial, Sans;
+    font-family: "Dancing Script", "Patrick Hand", Arial, Sans;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
@@ -600,7 +632,7 @@ button[type="roll"] {
     display: inline-block;
     width: 40px;
     height: 40px;
-    background-image: url("https://github.com/aloade/pathfinder/raw/master/image/icons_transparent.png");
+    background-image: url("https://github.com/aloade/pathfinder/raw/master/image/icons.png");
     background-repeat: no-repeat;
     background-size: 160px 160px;
 }
@@ -879,7 +911,7 @@ button[type="roll"] {
     width: 40%
 }
 
-.sheet-equipment-purse .sheet-device {
+.sheet-equipment-purse .sheet-currency {
     display: inline-block;
     width: calc(1.5rem - 2px);
     height: calc(1.5rem - 2px);
@@ -887,17 +919,17 @@ button[type="roll"] {
     border-radius: 100%;
 }
 
-.sheet-equipment-purse .sheet-device-gold {
+.sheet-equipment-purse .sheet-currency-gold {
     background-color: rgb(255,223,0);
     border-color: rgb(215,193,0);
 }
 
-.sheet-equipment-purse .sheet-device-silver {
+.sheet-equipment-purse .sheet-currency-silver {
     background-color: rgb(192,192,192);
     border-color: rgb(152,152,152);
 }
 
-.sheet-equipment-purse .sheet-device-copper {
+.sheet-equipment-purse .sheet-currency-copper {
     background-color: rgb(184, 115, 51);
     border-color: rgb(144, 75, 11);
 }
@@ -951,28 +983,13 @@ button[type="roll"] {
     height: 15rem;
 }
 
-/* not used */
-.sheet-battlemoves {}
-.sheet-character {}
-.sheet-class {}
-.sheet-devise {}
-.sheet-equipment-armor {}
-.sheet-inventory1 {}
-.sheet-inventory2 {}
-.sheet-inventory-description {}
-.sheet-inventory-quantity {}
-.sheet-magic-resistance {}
-.sheet-contact-attack {}
-.sheet-stat {}
-.sheet-saves {}
-
 /* --------------------------------------------------- */
 /* rolltemplate */
 /* --------------------------------------------------- */
 
 /* generic */
 .sheet-rolltemplate-roll * {
-    font-family: Formal436, Patrick Hand, Arial, Sans;
+    font-family: "Formal 436", "Patrick Hand", Arial, Sans;
     /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
     font-size: 1.6rem;
     color: rgb(56, 61, 65);
