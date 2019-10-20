@@ -361,7 +361,7 @@
 
 @font-face {
     font-family: "Formal436";
-    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Forml436.ttf") format("truetype");
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Formal436.ttf") format("truetype");
 }
 
 .charsheet * {
@@ -971,6 +971,13 @@ button[type="roll"] {
 /* --------------------------------------------------- */
 
 /* generic */
+.sheet-rolltemplate-roll * {
+    font-family: Formal436, Patrick Hand, Arial, Sans;
+    /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
+    font-size: 1.6rem;
+    color: rgb(56, 61, 65);
+}
+
 .sheet-rolltemplate-roll {
     padding: 0.5rem;
     background: rgb(221, 200, 139) url("https://github.com/aloade/pathfinder/raw/master/image/noise_light.jpg") repeat top left;
