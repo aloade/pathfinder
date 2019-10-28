@@ -1,7 +1,8 @@
-# pathfinder
-template for roll20 pathfinder
+# template for roll20 pathfinder
+Proposition d'une fiche de personnage pour le jeux Pathfinder.
+Le but est de coller au mieux aux règles tout en simplifiant les calculs rébarbartifs, néanmoins le joueur est mis à contribution pour les parties importantes, pour éviter de trop guider le joueur qui pourrait se reposer sur la fiche sans comprendre les règles.
 
-Modifications à apporter pour la prochaine version
+## modification prévues pour la prochaine version
 - En tête
     - supprimer le champ "Vitalité" compliquant les rêgles sur la vie.
 - Combat
@@ -15,7 +16,8 @@ Modifications à apporter pour la prochaine version
     - Voir pour l'ajouter d'un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
     - Armes : pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
     
-Remarques concernant roll20 et la création du "character sheet" :
+## Remarques concernant roll20 et la création de la fiche de personnage
+Beaucoup d'éléments bloquant ne sont pas clairement listés sur les pages d'aide de roll20, voici une liste "pense-bête".
 
 - sheet worker
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
