@@ -5,26 +5,29 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 ## modification prévues pour la prochaine version
 - Entête
     - supprimer le champ "Vitalité" compliquant les rêgles sur la vie.
-    - remplacer le terme "Santé" par "Points de vie"
+    - remplacer le terme "Santé" par "Points de vie".
 - Personnage
-    - changer "Stat." par "Carac.", refléter le "title" en fonction
-    - changer le "title" pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod."
-- Combat
-    - Attaques : changer le modificateur de caractéristiques des dégâts; ajouter la dextéritié, refléter le "title" en fonction .
-    - Attaques : jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
-    - Attaques : revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
-    - Manoeuvres de combats : relier les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ)
-    - Manoeuvres de combats : déplacer le DMD dans "Défense", ajouter une zone de commentaire, renommer "Manoeuvres de combats" par "Bonus manoeuvre offensive"
-- Magie
-    - Sortilèges : Déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
-    - Sortilèges : Ajouter une case numérique "Divers" pour le degré de difficulté.
-    - Attaque de contact : changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
+    - changer "Stat." par "Carac.", refléter le "title" en fonction.
+    - changer le "title" pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
+- Combat ( attaques )
+    - changer le modificateur de caractéristiques des dégâts; ajouter la "Dextérité", refléter le "title" en fonction.
+    - jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
+    - revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
+- Combat ( Manoeuvres de combats )
+    - relier les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
+    - déplacer le DMD dans "Défense", ajouter une zone de commentaire, renommer "Manoeuvres de combats" par "Bonus manoeuvre offensive".
+- Magie ( Sortilèges )
+    - Déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
+    - Ajouter une case numérique "Divers" pour le degré de difficulté.
+- Magie ( Attaque de contact )
+    - changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
 - Compétences
     - Limiter les points de "rangs" au niveau du personnage
 - Inventaire
-    - Voir pour l'ajouter d'un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
-    - Armes : pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
-    - Poids : ajouter la mécanique de surcharge (https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx)
+    - Ajouter d'un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
+    - Ajouter la mécanique de surcharge (https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx)
+- Inventaire ( Armes )
+    - pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
     
 ## Remarques concernant roll20 et la création de la fiche de personnage
 Beaucoup d'éléments bloquant ne sont pas clairement listés sur les pages d'aide de roll20, voici une liste "pense-bête".
