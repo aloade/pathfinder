@@ -8,6 +8,7 @@ La seule exeption étant le menu qui a une obligation d'écriture imposée par r
 ## Modifications prévues
 - Global
     - ajouter les langues.
+    - remplacer la fonte "formal436" par une fonte sans ayant-droit.
     - ajouter mise en page pour PJ/PNJ.
     
 - Entête
