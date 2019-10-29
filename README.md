@@ -10,7 +10,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
     - changer "Stat." par "Carac.", refléter le "title" en fonction.
     - changer le "title" pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
 - Combat ( attaques )
-    - définir minimum des dégâts à 1 ( utiliser "/roll {1d1, 1d20+{attribut}}d1" ).
+    - définir minimum des dégâts à 1 ( utiliser "/roll {1d1, 1d20+@{attribut}}d1" ).
     - changer le modificateur de caractéristiques des dégâts; ajouter la "Dextérité", refléter le "title" en fonction.
     - jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
     - revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
@@ -24,12 +24,13 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
     - changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
 - Compétences
     - limiter les points de "rangs" au niveau du personnage
+    - remplacer les calculs "((((x * @{attribut}) + 3) - abs((x * @{attribut}) - x)) / 2)" par "3 * ( @{attribut} + 1 - abs( @{attribut} - 1 ) ) / 2"
 - Inventaire
     - ajouter un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
     - ajouter la mécanique de surcharge (https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx)
 - Inventaire ( Armes )
     - pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
-    - ajouter un bouton (
+    - ajouter un bouton (voir https://wiki.roll20.net/Sheet_Worker_Scripts#eventInfo_Object section "clicked:<button_name>") pour ajouter un champ dans "repeating" de attaque ( voir https://wiki.roll20.net/Sheet_Worker_Scripts#eventInfo_Object section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé )
     
 ## Remarques concernant roll20 et la création de la fiche de personnage
 Beaucoup d'éléments bloquant ou étranges ne sont pas clairement listés sur les pages d'aide de roll20, voici une liste "pense-bête".
@@ -46,8 +47,11 @@ Beaucoup d'éléments bloquant ou étranges ne sont pas clairement listés sur l
     - les attributes "data" pour les balises ne sont pas autorisées
 - fieldset "repeating_xxx"
     - ne pas utliser les undescore pour le nommage de la classe
+- champ autocalc
+    - pour afficher une valeur à zéro ou un nombre donné, avec une entrée à 0 ou 1 ( checkbox de roll20 par exemple ), utiliser le calcul "3*(@{attribut}+1-abs(@{attribut}-1))/2" où "x" est la valeur souhaitée si non zéro.
+    
 - CSS
     - les règles pour les rolltemplate sont indépendant du "character sheet"
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
 - rollTemplate
-    - pas de calculs conditionnels utilisable, par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser "/roll {1d1, 1d20+{attribut}}d1" ou pour avoir une valeur maximale à 20, utiliser "/roll {1d0+20, 1d20+{attribut}}k1 
+    - pas de calculs conditionnels utilisable, par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser "/roll {1d1, 1d20+@{attribut}}d1" ou pour avoir une valeur maximale à 20, utiliser "/roll {1d0+20, 1d20+@{attribut}}k1 
