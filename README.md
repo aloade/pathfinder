@@ -9,7 +9,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
     - Attaques : changer le modificateur de caractéristiques des dégâts; ajouter la dextéritié, refléter le "title" en fonction, indiquer la force comme valeur par défaut.
     - Attaques : changer le "title" du modificateur de caractéristiques pour préciser les cas d'utilisation de "Forece" ou "Dextérité".
     - Attaques : revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
-    - Manoeuvres de combats : relié les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ )
+    - Manoeuvres de combats : relié les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ) et déplacer le DMD dans "Défense"
 - Magie
     - Sortilèges : Ajouter une case numérique "Divers" pour le degré de difficulté.
     - Attaque de contact : changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
