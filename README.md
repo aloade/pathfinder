@@ -48,11 +48,11 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       
 - Inventaire
     - ajouter un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
-    - ajouter la mécanique de surcharge (voir sur [pathfinder fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx))
+    - ajouter la mécanique de surcharge, voir sur [pathfinder fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx).
     
 - Inventaire ( Armes )
     - pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
-    - ajouter un bouton (voir sur [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "clicked:<button_name>") pour ajouter un champ dans "repeating" de attaque ( voir [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé )
+    - ajouter un bouton ( voir sur [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "clicked:<button_name>") pour ajouter un champ dans "repeating" de "Attaques" ( voir [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé ).
     
 ## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
