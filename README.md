@@ -2,9 +2,13 @@
 Proposition d'une fiche de personnage pour le jeux Pathfinder.
 Le but est de coller au mieux aux règles tout en simplifiant les calculs rébarbartifs, néanmoins le joueur est mis à contribution pour les parties importantes, pour éviter de trop guider le joueur qui pourrait se reposer sur la fiche sans comprendre les règles.
 
-## modification prévues pour la prochaine version
+La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
+La seule exeption étant le menu qui a une obligation d'écriture imposée par roll20, empêchant sont utilisation selon les standards HTML.
+
+## Modifications prévues
 - Global
-    - ajouter les langues
+    - ajouter les langues.
+    - ajouter mise en page pour PJ/PNJ.
     
 - Entête
     - supprimer le champ "Vitalité" compliquant les rêgles sur la vie.
@@ -48,7 +52,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
     - pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
     - ajouter un bouton (voir https://wiki.roll20.net/Sheet_Worker_Scripts#eventInfo_Object section "clicked:<button_name>") pour ajouter un champ dans "repeating" de attaque ( voir https://wiki.roll20.net/Sheet_Worker_Scripts#eventInfo_Object section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé )
     
-## Remarques concernant roll20 et la création de la fiche de personnage
+## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - HTML
