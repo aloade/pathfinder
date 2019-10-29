@@ -18,6 +18,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 - Inventaire
     - Voir pour l'ajouter d'un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
     - Armes : pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
+    - Poids : ajouter la mécanique de surcharge (https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx)
     
 ## Remarques concernant roll20 et la création de la fiche de personnage
 Beaucoup d'éléments bloquant ne sont pas clairement listés sur les pages d'aide de roll20, voici une liste "pense-bête".
