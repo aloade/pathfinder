@@ -51,29 +51,32 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 ## Remarques concernant roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
-- sheet worker
+- HTML
+    - pour un "radio" les input DOIVENT se suivre dans le code et DOIVENT avoir l'attribute value
+    - les balises html5 dans leur majorité ne sont pas autorisés
+    - les attributes "data" pour les balises ne sont pas autorisées
+    - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
+    
+- CSS
+    - les règles pour les rolltemplate sont indépendant du "character sheet"
+    - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
+    
+- SheetWorker
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
     - getAttr renvoie l'attribut "value" brut
       ( la valeur n'est pas calculé à la volée et renvoi un string brut )
     - si un input avec l'attribut "disabled" a un calcul incluant un négatif d'un négatif, le résultat échoue silencieusement ?!
-- html
-    - pour un "radio" les input DOIVENT se suivre dans le code et DOIVENT avoir l'attribute value
-    - les balises html5 dans leur majorité ne sont pas autorisés
-    - les attributes "data" pour les balises ne sont pas autorisées
-- fieldset "repeating_xxx"
-    - ne pas utliser les undescore pour le nommage de la classe
+    
 - champ autocalc
     - pour afficher une valeur à zéro ou un nombre donné, avec une entrée à 0 ou 1 ( checkbox de roll20 par exemple ), utiliser le calcul suivant :
       > x * ( @{attribut} + 1 - abs( @{ attribut } - 1 ) ) / 2
       
       où "x" est la valeur souhaitée si non zéro.
     
-- CSS
-    - les règles pour les rolltemplate sont indépendant du "character sheet"
-    - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
 - rollTemplate
-    - pas de calculs conditionnels utilisable, par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser :
+    - pas de calculs conditionnels utilisable, uniquement de l'affichage
+      par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser :
       > /roll { 1d1, 1d20+@{attribut} }d1
       
       ou pour avoir une valeur maximale à 20, utiliser :
