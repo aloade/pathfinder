@@ -10,6 +10,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
     - changer "Stat." par "Carac.", refléter le "title" en fonction.
     - changer le "title" pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
 - Combat ( attaques )
+    - définir minimum des dégâts à 1 ( utiliser min + abs ).
     - changer le modificateur de caractéristiques des dégâts; ajouter la "Dextérité", refléter le "title" en fonction.
     - jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
     - revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
