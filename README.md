@@ -4,6 +4,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 
 La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
 La seule exeption étant le menu qui a une obligation d'écriture imposée par roll20, empêchant sont utilisation selon les standards HTML.
+La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir le fichier "css-rules.txt" pour d'amples informations.
 
 ## Modifications prévues
 - Global
