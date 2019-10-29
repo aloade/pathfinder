@@ -6,8 +6,8 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 - En tête
     - supprimer le champ "Vitalité" compliquant les rêgles sur la vie.
 - Combat
-    - Attaques : changer le modificateur de caractéristiques des dégâts; ajouter la dextéritié, refléter le "title" en fonction, indiquer la force comme valeur par défaut.
-    - Attaques : changer le "title" du modificateur de caractéristiques pour préciser les cas d'utilisation de "Forece" ou "Dextérité".
+    - Attaques : changer le modificateur de caractéristiques des dégâts; ajouter la dextéritié, refléter le "title" en fonction .
+    - Attaques : jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
     - Attaques : revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
     - Manoeuvres de combats : relié les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ) et déplacer le DMD dans "Défense"
 - Magie
