@@ -5,6 +5,10 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 ## modification prévues pour la prochaine version
 - En tête
     - supprimer le champ "Vitalité" compliquant les rêgles sur la vie.
+    - remplacer le terme "Santé" par "Points de vie"
+- Personnage
+    - changer "Stat." par "Carac.", refléter le "title" en fonction
+    - changer le "title" pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod."
 - Combat
     - Attaques : changer le modificateur de caractéristiques des dégâts; ajouter la dextéritié, refléter le "title" en fonction .
     - Attaques : jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
