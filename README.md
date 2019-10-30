@@ -53,6 +53,41 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Inventaire ( Armes )
     - pour la colonne "Type", ajouter un descriptif des termes "T", "C", "P"
     - ajouter un bouton ( voir sur [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "clicked:<button_name>") pour ajouter un champ dans "repeating" de "Attaques" ( voir [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé ).
+
+## Règles CSS
+Compilation des règles CSS utilisable pour la mise en page.
+
+- disposition flex
+  flex-row
+  flex-col flex-col2 flex-col3 ... flex-col11
+  flex-col-auto
+  
+- input-group
+    input-group
+    input-group-prepend input-group-append input-group-text
+
+- accordéon
+    accordion
+    accordion-checkbox accordion-label
+    accordion-container
+    
+- switch
+    switch
+    switch-on switch-off
+
+- flip coin
+    coin coin-content
+    coin-on coin-off
+
+- style générique
+    center
+    strong
+    bold
+    alert
+    
+- input
+    fixed-small fixed-medium fixed-large
+
     
 ## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
