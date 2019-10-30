@@ -31,10 +31,12 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
         3. ( jet d'attaque n°1 = 20 ) -> nouveau lancé de jet d'attaque :
             1. ( jet d'attaque n°2 < CA adverse ) -> dégats normaux.
             2. ( jet d'attaque n°2 >= CA adverse ) -> dégats critiques
-            
-      ajouter un champ "Bonus Confirmation aux Critique" ( s'additionne au "jet d'attaque n°2" ).
-      ajouter un champ "Bonus Confirmation aux Critique" à la CA ( s'additionne à la CA ).
+
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
+
+    - ajouter un champ "Bonus Confirmation aux Critiques" ( s'additionne au "jet d'attaque n°2" cité précédement ).
+      
+    - ajouter un champ "Bonus Confirmation aux Critiques" à la CA ( s'additionne à la CA ).
     
 - Combat ( Manoeuvres de combats )
     - relier les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
