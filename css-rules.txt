@@ -2,4 +2,12 @@ Compilation des règles CSS utilisable pour la mise en page.
 
 - disposition flex
   .flex-row
-  .flex-col .flex-col2 .flex-col3 .flex-col4 .flex-col5 .flex-col6 .flex-col7 .flex-col8 .flex-col9
+  .flex-col .flex-col2 .flex-col3 [...] .flex-col11
+  .flex-col-auto
+  
+  examples:
+  - plusieurs colonnes de même taille
+  > <div class="flex-row">
+  >   <div class="flex-col">
+  >   <div class="flex-col">
+  >   <div class="flex-col">
