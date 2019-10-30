@@ -4,7 +4,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 
 La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
 La seule exeption étant le menu qui a une obligation d'écriture imposée par roll20, empêchant sont utilisation selon les standards HTML.
-La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir le fichier [css-rules.txt](css-rules.txt) pour d'amples informations.
+La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir les règles plus bas pour d'amples informations.
 
 ## Modifications prévues
 - Global
@@ -25,7 +25,14 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       > /roll { 1d1, 1d20+@{attribut} }d1
     - changer le modificateur de caractéristiques des dégâts; ajouter la "Dextérité", refléter le "title" en fonction.
     - jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
-    - revoir le calcul des critiques, car des modificateurs peuvent s'appliquer.
+    - revoir le calcul des critiques, lancé de jet d'attaque :
+        1. ( jet d'attaquen n°1 < CA adverse ) -> pas de de dégâts
+        2. ( CA adverse <= jet d'attaque n°1 < 20 ) -> dégâts normaux
+        3. ( jet d'attaque n°1 = 20 ) -> nouveau lancé de jet d'attaque :
+            1. ( jet d'attaque n°2 < CA adverse ) -> dégats normaux.
+            2. ( jet d'attaque n°2 >= CA adverse ) -> dégats critiques
+            
+      voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx)
     
 - Combat ( Manoeuvres de combats )
     - relier les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
