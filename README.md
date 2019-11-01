@@ -41,14 +41,17 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Combat ( Manoeuvres de combats )
     - relier les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
     - déplacer le DMD dans "Défense", ajouter une zone de commentaire, renommer "Manoeuvres de combats" par "Bonus manoeuvre offensive".
-    
+
+- Magie ( Niveau de Lanceur de Sorts )
+    - limiter "total" à 0 minimum
+
+- Magie ( Attaque de contact )
+    - changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
+
 - Magie ( Sortilèges )
     - déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
     - ajouter une case numérique "Divers" pour le degré de difficulté.
-    
-- Magie ( Attaque de contact )
-    - changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
-    
+
 - Compétences
     - limiter les points de "rangs" au niveau du personnage
     - remplacer les calculs :
