@@ -31,7 +31,8 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
         3. ( jet d'attaque n°1 >= critique de l'arme ) -> nouveau lancé de jet d'attaque :
             1. ( jet d'attaque n°2 < CA adverse ) -> dégats normaux.
             2. ( jet d'attaque n°2 >= CA adverse ) -> dégats critiques
-
+      afficher la valeur du jet de "confirmation de critique" dans le rollTemplate.
+      
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
 
     - ajouter un champ "Bonus Confirmation aux Critiques" ( s'additionne au "jet d'attaque n°2" cité précédement ).
