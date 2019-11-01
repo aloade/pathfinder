@@ -53,6 +53,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Magie ( Sortilèges )
     - déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
     - ajouter une case numérique "Divers" pour le degré de difficulté.
+    - pour les sorts, ajouter un bouton pour le lancer; affiche dans un "rollTemplate" le NLS vs RM de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le DD du sort et le jet eventuel que la cible doit faire.
 
 - Compétences
     - limiter les points de "rangs" au niveau du personnage
