@@ -365,8 +365,8 @@
 /* content */
 /* --------------------------------------------------- */
 @font-face {
-    font-family: "Formal 436";
-    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Formal436.ttf") format("truetype");
+    font-family: "Formal 436 BT";
+    src: url("https://github.com/aloade/pathfinder/raw/master/fonts/Formal436BT.ttf") format("truetype");
 }
 
 @font-face {
@@ -375,7 +375,7 @@
 }
 
 .charsheet * {
-    font-family: "Formal 436", "Patrick Hand", Arial, Sans;
+    font-family: "Formal 436 BT", "Book Antiqua", "Patrick Hand", Arial;
     /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
     font-size: 1.6rem;
     color: rgb(56, 61, 65);
@@ -598,7 +598,7 @@ button[type="roll"] {
 .sheet-header-character input {
     font-size: 180%;
     height: 5rem !important;
-    font-family: "Dancing Script", "Patrick Hand", Arial, Sans;
+    font-family: "Dancing Script", "Book Antiqua", "Patrick Hand", Arial;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
@@ -998,7 +998,7 @@ button[type="roll"] {
 
 /* generic */
 .sheet-rolltemplate-roll * {
-    font-family: "Formal 436", "Patrick Hand", Arial, Sans;
+    font-family: "Formal 436 BT", "Book Antiqua", "Patrick Hand", Arial;
     /* Arial, Patrick Hand, Contrail One, Shadows Into Light, Candal */
     font-size: 1.6rem;
     color: rgb(56, 61, 65);
