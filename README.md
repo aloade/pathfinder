@@ -13,7 +13,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - ajouter mise en page pour PJ/PNJ.
     
 - Entête
-    - supprimer le champ "Vitalité" compliquant les rêgles sur la vie.
+    - modifier le champ "Vitalité" pour le faire correspondre aux dégat non létaux, son maximum est la vie actuelle.
     - remplacer le terme "Santé" par "Points de vie".
     
 - Personnage
