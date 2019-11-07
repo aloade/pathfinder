@@ -51,16 +51,18 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
 
 - Magie ( Sortilèges )
+    - ajouter un encart pour afficher la valeur de "échecs aux sorts profanes"
     - déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
     - ajouter une case numérique "Divers" pour le degré de difficulté.
     - pour les sorts, ajouter un bouton pour le lancer; affiche dans un "rollTemplate":
     
     le NLS vs RM de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le DD du sort et le jet eventuel que la cible doit faire.
-    - Prendre en compte les échecs de sorts profane de l'armure (afficher comme information ou changer le rolltemplate ?)
+    - Prendre en compte les "échecs aux sorts profanes" de l'armure, où rollFailureSpell ( /roll 1d100 ) et FailureSpell sont à affiché dans le "rollTemplate": 
+      > {{#rollLess() rollFailureSpell FailureSpell}} ... {{/rollLess() rollFailureSpell> FailureSpell}}
+                                                                                                              
+      échec :
+      > {{#^rollLess() rollFailureSpell FailureSpell}} ... {{/^rollLess() rollFailureSpell> FailureSpell}}
 
-- Défense
-    - ajouter un champ "échec aux sorts profanes" total
-    
 - Compétences
     - limiter les points de "rangs" au niveau du personnage
     - remplacer les calculs :
@@ -72,7 +74,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Inventaire
     - ajouter un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
     - ajouter la mécanique de surcharge, voir sur [pathfinder fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx).
-    - ajouter la prise en compte de l'échec de sorts profanes
+    - ajouter la prise en compte de l'échec aux sorts profanes
     
 - Inventaire ( Armes )
     - pour la colonne "Type", ajouter un "title" pour expliquer les termes "T", "C", "P"
