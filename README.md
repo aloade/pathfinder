@@ -66,7 +66,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Compétences
     - limiter les points de "rangs" au niveau du personnage
     - remplacer les calculs :
-      > ((((x * @{attribut}) + 3) - abs((x * @{attribut}) - x)) / 2)
+      > ((((3 * @{attribut}) + 3) - abs((3 * @{attribut}) - 3)) / 2)
       
       par
       > 3 * ( @{attribut} + 1 - abs( @{attribut} - 1 ) ) / 2
