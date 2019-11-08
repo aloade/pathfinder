@@ -57,13 +57,23 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - pour les sorts, ajouter un bouton pour le lancer; affiche dans un "rollTemplate":
     
     le ***NLS*** vs ***RM*** de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le ***DD*** du sort et le jet eventuel que la cible doit faire.
-    - Prendre en compte les ***échecs aux sorts profanes*** de l'armure, où ***rollFailureSpell*** ( /roll 1d100 ) et ***FailureSpell*** sont à affichés dans le "rollTemplate": 
-      > {{#rollLess() rollFailureSpell FailureSpell}} ... {{/rollLess() rollFailureSpell> FailureSpell}}
-                                                                                                              
-      échec :
-      > {{#^rollLess() rollFailureSpell FailureSpell}} ... {{/^rollLess() rollFailureSpell> FailureSpell}}
+    - Prendre en compte les ***échecs aux sorts profanes*** de l'armure (champ déroulant utilisé/pas utilisé) ainsi que la composante gestuelle
+    
+      - ***rollFailureSpell*** = "/roll 1d100"
+      - ***FailureSpellTotal*** = ***FailureSpell*** x ***FailureSpellUsed***( 0 ou 1 ) x ***composante gestuelle***( 0 ou 1 )
+      ```
+      ... afficher les informations du sorts ...
+      {{#<FailureSpellTotal>}}
+      ... afficher les info du test aux échecs de sorts profanes ...
+      {{/<FailureSpellTotal>}}
+      {{#rollLess() rollFailureSpell FailureSpellTotal}}
+      ... afficher la réussite du sort ...
+      {{/rollLess() rollFailureSpell FailureSpellTotal}}
       
-      attention car les "sorts divin" et des exeptions n'ont pas cet aspect pris en compte, la composante gestuelle est utilisé aussi selon : ***FailureSpellTotal*** = ***FailureSpell*** x ***FailureSpellUsed***( 0 ou 1 ) x ***composante gestuelle***( 0 ou 1 ).
+      {{#^rollLess() rollFailureSpell FailureSpellTotal}}
+      ... afficher l'échec du sort ...
+      {{/^rollLess() rollFailureSpell> FailureSpellTotal}}
+      ```
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
