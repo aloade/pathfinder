@@ -13,24 +13,24 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - ajouter mise en page pour PJ/PNJ.
     
 - Entête
-    - modifier le champ "Vitalité" pour le faire correspondre aux dégat non létaux, son maximum est la vie actuelle.
-    - remplacer le terme "Santé" par "Points de vie".
+    - modifier le champ ***Vitalité*** pour le faire correspondre aux dégat non létaux, son maximum est la vie actuelle.
+    - remplacer le terme ***Santé*** par ***Points de vie***.
     
 - Personnage
-    - changer "Stat." par "Carac.", refléter le "title" en fonction.
-    - changer le "title" pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
+    - changer ***Stat.*** par ***Carac.***, refléter le ***title*** en fonction.
+    - changer le ***title*** pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
     
 - Combat ( attaques )
     - définir minimum des dégâts à 1, utiliser :
       > /roll { 1d1, 1d20+@{attribut} }d1
-    - changer le modificateur de caractéristiques des dégâts; ajouter la "Dextérité", refléter le "title" en fonction.
-    - jet d'attaque changer le "title" du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de "Force" (CaC) ou "Dextérité" (Distance).
+    - changer le modificateur de caractéristiques des dégâts; ajouter la ***Dextérité***, refléter le ***title*** en fonction.
+    - jet d'attaque changer le ***title*** du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de ***Force*** (CaC) ou ***Dextérité*** (Distance).
     - revoir le jet d'attaque et de dégâts :
-        1. ( jet d'attaquen n°1 < CA adverse ) -> pas de de dégâts
-        2. ( CA adverse <= jet d'attaque n°1 < critique de l'arme ) -> dégâts normaux
-        3. ( jet d'attaque n°1 >= critique de l'arme ) -> nouveau lancé de jet d'attaque :
-            1. ( jet d'attaque n°2 < CA adverse ) -> dégats normaux.
-            2. ( jet d'attaque n°2 >= CA adverse ) -> dégats critiques
+        1. ( ***jet d'attaquen n°1*** < ***CA adverse*** ) -> pas de de dégâts
+        2. ( ***CA advers***e <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux
+        3. (*** jet d'attaque n°1*** >= critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
+            1. ( ***jet d'attaque n°2*** < ***CA adverse*** ) -> dégats normaux.
+            2. ( ***jet d'attaque n°2*** >= ***CA adverse*** ) -> dégats critiques
             
       afficher la valeur du jet de "confirmation de critique" dans le rollTemplate.
       
@@ -62,6 +62,8 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
                                                                                                               
       échec :
       > {{#^rollLess() rollFailureSpell FailureSpell}} ... {{/^rollLess() rollFailureSpell> FailureSpell}}
+      
+      attention car les "sorts divin" n'ont pas cet aspect pris en compte (utiliser un menu déroulant déroulant "sort profane" (valeur 1 ) et "sort divin" (valeur 0 ) qui multiple ***FailureSpell***
 
 - Compétences
     - limiter les points de "rangs" au niveau du personnage
