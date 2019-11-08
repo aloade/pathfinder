@@ -35,9 +35,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       afficher la valeur du jet de ***confirmation de critique*** dans le rollTemplate.
       
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
-
     - ajouter un champ ***Bonus Confirmation aux Critique*** ( s'additionne au ***jet d'attaque n°2*** cité précédement ).
-      
     - ajouter un champ ***Bonus Confirmation aux Critiques*** à la ***CA*** ( s'additionne à la ***CA*** ).
     
 - Combat ( Manoeuvres de combats )
@@ -99,33 +97,26 @@ Compilation des règles CSS utilisable pour la mise en page.
   flex-row
   flex-col flex-col2 flex-col3 ... flex-col11
   flex-col-auto
-  
 - input-group
     input-group
     input-group-prepend input-group-append input-group-text
-
 - accordéon
     accordion
     accordion-checkbox accordion-label
     accordion-container
-    
 - switch
     switch
     switch-on switch-off
-
 - flip coin
     coin coin-content
     coin-on coin-off
-
 - style générique
     center
     strong
     bold
     alert
-    
 - input
     fixed-small fixed-medium fixed-large
-
     
 ## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
@@ -135,24 +126,20 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les balises html5 dans leur majorité ne sont pas autorisés
     - les attributes "data" pour les balises ne sont pas autorisées
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
-    
 - CSS
     - les règles pour les rolltemplate sont indépendant du "character sheet"
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
-    
 - SheetWorker
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
     - getAttr renvoie l'attribut "value" brut
       ( la valeur n'est pas calculé à la volée et renvoi un string brut )
     - si un input avec l'attribut "disabled" a un calcul incluant un négatif d'un négatif, le résultat échoue silencieusement ?!
-    
 - champ autocalc
     - pour afficher une valeur à zéro ou un nombre donné, avec une entrée à 0 ou 1 ( checkbox de roll20 par exemple ), utiliser le calcul suivant :
       > x * ( @{attribut} + 1 - abs( @{ attribut } - 1 ) ) / 2
       
       où "x" est la valeur souhaitée si non zéro.
-    
 - rollTemplate
     - pas de calculs conditionnels utilisable, uniquement de l'affichage
       par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser :
