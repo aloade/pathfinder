@@ -28,45 +28,45 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - revoir le jet d'attaque et de dégâts :
         1. ( ***jet d'attaquen n°1*** < ***CA adverse*** ) -> pas de de dégâts
         2. ( ***CA advers***e <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux
-        3. (*** jet d'attaque n°1*** >= critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
+        3. ( ***jet d'attaque n°1*** >= critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
             1. ( ***jet d'attaque n°2*** < ***CA adverse*** ) -> dégats normaux.
             2. ( ***jet d'attaque n°2*** >= ***CA adverse*** ) -> dégats critiques
             
-      afficher la valeur du jet de "confirmation de critique" dans le rollTemplate.
+      afficher la valeur du jet de ***confirmation de critique*** dans le rollTemplate.
       
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
 
-    - ajouter un champ "Bonus Confirmation aux Critiques" ( s'additionne au "jet d'attaque n°2" cité précédement ).
+    - ajouter un champ ***Bonus Confirmation aux Critique*** ( s'additionne au ***jet d'attaque n°2*** cité précédement ).
       
-    - ajouter un champ "Bonus Confirmation aux Critiques" à la CA ( s'additionne à la CA ).
+    - ajouter un champ ***Bonus Confirmation aux Critiques*** à la ***CA*** ( s'additionne à la ***CA*** ).
     
 - Combat ( Manoeuvres de combats )
-    - relier les jets de BMO au DMD adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
+    - relier les jets de ***BMO*** au ***DMD*** adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
     - déplacer le DMD dans "Défense", ajouter une zone de commentaire, renommer "Manoeuvres de combats" par "Bonus manoeuvre offensive".
 
 - Magie ( Niveau de Lanceur de Sorts )
-    - limiter "total" à 0 minimum
+    - limiter ***total*** à 0 minimum
 
 - Magie ( Attaque de contact )
-    - changer le modificateur de caractéristiques pour afficher "Force" et "Dextérité", refléter le "title" en fonction.
+    - changer le modificateur de caractéristiques pour afficher ***Force*** et ***Dextérité***, refléter le ***title*** en fonction.
 
 - Magie ( Sortilèges )
-    - ajouter un encart pour afficher la valeur de "échecs aux sorts profanes"
+    - ajouter un encart pour afficher la valeur de ***échecs aux sorts profanes***
     - déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
-    - ajouter une case numérique "Divers" pour le degré de difficulté.
+    - ajouter une case numérique ***Divers*** pour le degré de difficulté.
     - pour les sorts, ajouter un bouton pour le lancer; affiche dans un "rollTemplate":
     
-    le NLS vs RM de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le DD du sort et le jet eventuel que la cible doit faire.
-    - Prendre en compte les "échecs aux sorts profanes" de l'armure, où rollFailureSpell ( /roll 1d100 ) et FailureSpell sont à affiché dans le "rollTemplate": 
+    le ***NLS*** vs ***RM*** de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le ***DD*** du sort et le jet eventuel que la cible doit faire.
+    - Prendre en compte les ***échecs aux sorts profanes*** de l'armure, où ***rollFailureSpell*** ( /roll 1d100 ) et ***FailureSpell*** sont à affichés dans le "rollTemplate": 
       > {{#rollLess() rollFailureSpell FailureSpell}} ... {{/rollLess() rollFailureSpell> FailureSpell}}
                                                                                                               
       échec :
       > {{#^rollLess() rollFailureSpell FailureSpell}} ... {{/^rollLess() rollFailureSpell> FailureSpell}}
       
-      attention car les "sorts divin" n'ont pas cet aspect pris en compte (utiliser un menu déroulant déroulant "sort profane" (valeur 1 ) et "sort divin" (valeur 0 ) qui multiple ***FailureSpell***
+      attention car les "sorts divin" n'ont pas cet aspect pris en compte (utiliser un menu déroulant déroulant "sort profane" (valeur 1) et "sort divin" (valeur 0 ) qui multiple ***FailureSpell*** et mutiplier avec la ***composante gestuelle***
 
 - Compétences
-    - limiter les points de "rangs" au niveau du personnage
+    - limiter les points de ***rangs*** au niveau du personnage
     - remplacer les calculs :
       > ((((3 * @{attribut}) + 3) - abs((3 * @{attribut}) - 3)) / 2)
       
@@ -79,7 +79,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - ajouter la prise en compte de l'échec aux sorts profanes
     
 - Inventaire ( Armes )
-    - pour la colonne "Type", ajouter un "title" pour expliquer les termes "T", "C", "P"
+    - pour la colonne ***Type***, ajouter un ***title*** pour expliquer les termes "T", "C", "P"
     - ajouter un bouton ( voir sur [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "clicked:<button_name>") pour ajouter un champ dans "repeating" de "Attaques" ( voir [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé ).
 
 ## Règles CSS
