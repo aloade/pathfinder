@@ -63,7 +63,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       échec :
       > {{#^rollLess() rollFailureSpell FailureSpell}} ... {{/^rollLess() rollFailureSpell> FailureSpell}}
       
-      attention car les "sorts divin" n'ont pas cet aspect pris en compte (utiliser un menu déroulant déroulant "sort profane" (valeur 1) et "sort divin" (valeur 0 ) qui multiple ***FailureSpell*** et mutiplier avec la ***composante gestuelle***
+      attention car les "sorts divin" et des exeptions n'ont pas cet aspect pris en compte, la composante gestuelle est utilisé aussi selon : ***FailureSpellTotal = ***FailureSpell*** x ***FailureSpellUsed***( 0 ou 1 ) x ***composante gestuelle***.
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
