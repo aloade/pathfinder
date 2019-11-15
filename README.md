@@ -27,8 +27,8 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - jet d'attaque changer le ***title*** du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de ***Force*** (CaC) ou ***Dextérité*** (Distance).
     - revoir le jet d'attaque et de dégâts :
         1. ( ***jet d'attaquen n°1*** < ***CA adverse*** ) -> pas de de dégâts
-        2. ( ***CA advers***e <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux
-        3. ( ***jet d'attaque n°1*** >= critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
+        2. ( ***CA adverse*** <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux
+        3. ( ***jet d'attaque n°1*** >= ***critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
             1. ( ***jet d'attaque n°2*** < ***CA adverse*** ) -> dégats normaux.
             2. ( ***jet d'attaque n°2*** >= ***CA adverse*** ) -> dégats critiques
             
