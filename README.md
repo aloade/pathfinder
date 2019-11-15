@@ -21,7 +21,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - changer le ***title*** pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
 
 - Combat ( initiative )
-    - ajouter un bouton pour passer son tour
+    - ajouter un bouton pour passer son tour ( commande **!eot** ? )
     
 - Combat ( attaques )
     - définir minimum des dégâts à 1, utiliser :
