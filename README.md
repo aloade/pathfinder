@@ -13,12 +13,15 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - ajouter mise en page pour PJ/PNJ.
     
 - Entête
-    - ajouterl le champ ***dégâts non létaux*** ( son maximum est la vie actuelle ).
+    - ajouter le champ ***dégâts non létaux*** ( son maximum est la vie actuelle ).
     - remplacer le terme ***Santé*** par ***Points de vie***.
     
 - Personnage
     - changer ***Stat.*** par ***Carac.***, refléter le ***title*** en fonction.
     - changer le ***title*** pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
+
+- Combat ( initiative )
+    - ajouter un bouton pour passer son tour
     
 - Combat ( attaques )
     - définir minimum des dégâts à 1, utiliser :
