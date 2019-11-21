@@ -32,10 +32,12 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
         1. ( ***jet d'attaque  n°1*** < ***CA adverse*** ) -> pas de de dégâts
         2. ( ***CA adverse*** <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux
         3. ( ***jet d'attaque n°1*** >= ***critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
-            1. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique*** < ***CA adverse*** + ***Bonus confirmation critique (adverse)*** ) -> dégats normaux.
-            2. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique*** >= ***CA adverse*** + ***Bonus confirmation critique (adverse)*** ) -> dégats critiques
+            1. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique*** < ***CA adverse*** ) -> dégats normaux.
+            2. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique*** >= ***CA adverse*** ) -> dégats critiques
             
       afficher la valeur du jet de ***confirmation de critique*** dans le rollTemplate.
+    - séparer le champ ***Bonus confirmation critique***
+    - ajouter champ "dégâts supplémentaires" ( précis, sournois, élémentaire, ... )
       
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
     - ajouter un champ ***Bonus Confirmation aux Critiques*** ( s'additionne au ***jet d'attaque n°2*** cité précédement ).
@@ -76,7 +78,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       ```
 
 - Défense
-    - ajouter un champ ***Bonus Confirmation aux Critiques*** à la ***CA*** ( s'additionne à la ***CA*** ).
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
