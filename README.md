@@ -56,10 +56,11 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - ajouter un encart pour afficher la valeur de ***échecs aux sorts profanes***
     - déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
     - ajouter une case numérique ***Divers*** pour le degré de difficulté.
-    - pour les sorts, ajouter un bouton pour le lancer; affiche dans un "rollTemplate":
-    
-    le ***NLS*** vs ***RM*** de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le ***DD*** du sort et le jet eventuel que la cible doit faire.
-    - Prendre en compte les ***échecs aux sorts profanes*** de l'armure (champ déroulant utilisé/pas utilisé) ainsi que la composante gestuelle
+    - pour les sorts, ajouter un bouton pour le lancer; affiche le résultat dans un "rollTemplate" dédié :
+      
+      le ***NLS*** vs ***RM*** de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le ***DD*** du sort et le jet eventuel que la cible doit faire.
+      
+      Prendre en compte les ***échecs aux sorts profanes*** de l'armure (champ déroulant utilisé/pas utilisé) ainsi que la composante gestuelle
     
       - ***rollFailureSpell*** = "/roll 1d100"
       - ***FailureSpellTotal*** = ***FailureSpell*** x ***FailureSpellUsed***( 0 ou 1 ) x ***composante gestuelle***( 0 ou 1 )
