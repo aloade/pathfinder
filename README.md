@@ -88,7 +88,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       > 3 * ( @{attribut} + 1 - abs( @{attribut} - 1 ) ) / 2
       
 - Inventaire
-    - ajouter un bouton pour masquer le poids des armes, armures, et objets ( masquage via CSS ? )
     - ajouter la mécanique de surcharge, voir sur [pathfinder fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx).
     - ajouter la prise en compte de l'échec aux sorts profanes
     
