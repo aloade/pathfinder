@@ -32,7 +32,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
         1. ( ***jet d'attaquen n°1*** < ***CA adverse*** ) -> pas de de dégâts
         2. ( ***CA adverse*** <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux
         3. ( ***jet d'attaque n°1*** >= ***critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
-            1. ( ***jet d'attaque n°2*** < ***CA adverse*** ) -> dégats normaux.
+            1. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique (attaquant)*** < ***CA adverse*** + ***Bonus confirmation critique (adverse)*** ) -> dégats normaux.
             2. ( ***jet d'attaque n°2*** >= ***CA adverse*** ) -> dégats critiques
             
       afficher la valeur du jet de ***confirmation de critique*** dans le rollTemplate.
