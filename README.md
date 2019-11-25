@@ -41,6 +41,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
     - ajouter un champ ***Bonus Confirmation aux Critiques*** ( s'additionne au ***jet d'attaque n°2*** cité précédement ).
+    - ajouter le coup de grâce : afficher dans rolltemplate dégats critiques et le DD vigueur ( 10 + dégats critiques ) pour l'adversaire
     
 - Combat ( Manoeuvres de combats )
     - relier les jets de ***BMO*** au ***DMD*** adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
