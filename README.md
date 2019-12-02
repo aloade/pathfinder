@@ -19,6 +19,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Personnage
     - changer ***Stat.*** par ***Carac.***, refléter le ***title*** en fonction.
     - changer le ***title*** pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
+    - afficher déplacement selon une vitesse de base ( attention modificateur déplacement des nains )
 
 - Combat ( initiative )
     - ajouter un bouton pour passer son tour ( commande **!eot** ? )
@@ -89,6 +90,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Inventaire
     - ajouter la mécanique de surcharge, voir sur [pathfinder fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx).
     - ajouter la prise en compte de l'échec aux sorts profanes
+    - afficher le poids de la monnaie ?
     
 - Inventaire ( Armes )
     - pour la colonne ***Type***, ajouter un ***title*** pour expliquer les termes "T", "C", "P"
