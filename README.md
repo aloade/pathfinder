@@ -11,6 +11,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - ajouter les langues.
     - remplacer la fonte "formal436" par une fonte sans ayant-droit.
     - ajouter mise en page pour PJ/PNJ.
+    - appliquer les états préjudiciable en automatique ? [pathfinder.fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.%C3%89tats%20pr%C3%A9judiciables.ashx#Sansd%C3%A9fense)
     
 - Entête
     - ajouter le champ ***dégâts non létaux*** ( son maximum est la vie actuelle ).
