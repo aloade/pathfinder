@@ -156,7 +156,11 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
       > /roll { 1d0+20, { 1d20+@{attribut} } }kh1 
     - règles pour les inégalités
         - x = y : nope
-        - x < y : {{#rollLess() x y }} ... {{/rollLess() x y }}
-        - x <= y : {{#^rollGreater() x y }} ... {{/^rollGreater() x y }}
-        - x > y : {{#rollGreater() x y }} ... {{/rollGreater() x y }}
-        - x >= y : {{#^rollLess() x y }} ... {{/^rollLess() x y }}
+        - x < y :
+          > {{#rollLess() x y }} ... {{/rollLess() x y }}
+        - x <= y :
+          > {{#^rollGreater() x y }} ... {{/^rollGreater() x y }}
+        - x > y :
+          > {{#rollGreater() x y }} ... {{/rollGreater() x y }}
+        - x >= y :
+          > {{#^rollLess() x y }} ... {{/^rollLess() x y }}
