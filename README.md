@@ -155,7 +155,11 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
       ou pour avoir une valeur maximale à 20, utiliser :
       > /roll { 1d0+20, { 1d20+@{attribut} } }kh1 
     - x = y : nope
+    
       x < y : {{#rollLess() x y }} ... {{/rollLess() x y }}
+      
       x <= y : {{#^rollGreater() x y }} ... {{/^rollGreater() x y }}
+      
       x > y : {{#rollGreater() x y }} ... {{/rollGreater() x y }}
+      
       x >= y : {{#^rollLess() x y }} ... {{/^rollLess() x y }}
