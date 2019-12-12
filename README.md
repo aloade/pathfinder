@@ -27,7 +27,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     
 - Combat ( attaques )
     - définir minimum des dégâts à 1, utiliser :
-      > /roll { 1d1, 1d20+@{attribut} }d1
+      > /roll { 1d1, { 1d20+@{attribut} } }dl1
     - changer le modificateur de caractéristiques des dégâts; ajouter la ***Dextérité***, refléter le ***title*** en fonction.
     - jet d'attaque changer le ***title*** du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de ***Force*** (CaC) ou ***Dextérité*** (Distance).
     - ajouter un champ ***Bonus confirmation critique***
@@ -150,7 +150,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
 - rollTemplate
     - pas de calculs conditionnels utilisable, uniquement de l'affichage
       par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser :
-      > /roll { 1d1, 1d20+@{attribut} }d1
+      > /roll { 1d1, { 1d20+@{attribut} } }dl1
       
       ou pour avoir une valeur maximale à 20, utiliser :
-      > /roll { 1d0+20, 1d20+@{attribut} }k1 
+      > /roll { 1d0+20, { 1d20+@{attribut} } }kh1 
