@@ -137,10 +137,11 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les règles pour "rolltemplate" sont indépendant du "character sheet"
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
     - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
+    - les images en base64 ne peuvent être intégrés dans les styles CSS
 - SheetWorker
     - les champs sont pensé **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
     
-    pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" />
+    pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" /> (voir du côté de "readonly" )
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
     - getAttr renvoie l'attribut "value" brut
