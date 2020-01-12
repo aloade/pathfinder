@@ -138,7 +138,9 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
     - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
 - SheetWorker
-    - les input hidden, sans type, définit avec value="" (autre que type="text"), value=@{[...]} sont traités commes des nombres; pour travailler sur des string il est obligatoire de les envoyés vers "<input type="text" name="[...]" value="[...]" />
+    - les champs sont pensé **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
+    
+    pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" />
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
     - getAttr renvoie l'attribut "value" brut
