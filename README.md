@@ -134,8 +134,9 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les attributes "data" pour les balises ne sont pas autorisées
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
 - CSS
-    - les règles pour les rolltemplate sont indépendant du "character sheet"
+    - les règles pour "rolltemplate" sont indépendant du "character sheet"
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
+    - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
 - SheetWorker
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
