@@ -99,9 +99,9 @@ Compilation des règles CSS utilisable pour la mise en page.
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - HTML
-    - pour un "radio" les input DOIVENT se suivre dans le code et DOIVENT avoir l'attribute value
+    - pour un "radio" les input **doivent** se suivre dans le code et **doivent** avoir l'attribute value
     - les balises html5 dans leur majorité ne sont pas autorisés
-    - les attributes "data" pour les balises ne sont pas autorisées
+    - les attributes "data" pour les balises sont supprimés
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
 - CSS
     - les règles pour "rolltemplate" sont indépendant du "character sheet"
@@ -109,7 +109,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
     - les images en base64 ne peuvent être intégrés dans les styles CSS
 - SheetWorker
-    - les champs sont pensé **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
+    - les champs sont pensés **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
     
     pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" /> (voir du côté de "readonly" )
     - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
@@ -117,6 +117,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - getAttr renvoie l'attribut "value" brut
       ( la valeur n'est pas calculé à la volée et renvoi un string brut )
     - si un input avec l'attribut "disabled" a un calcul incluant un négatif d'un négatif, le résultat échoue silencieusement ?!
+    - les bouton de type "action" ne doivent pas contenir d'underscore.
 - champ autocalc
     - pour afficher une valeur à zéro ou un nombre donné, avec une entrée à 0 ou 1 ( checkbox de roll20 par exemple ), utiliser le calcul suivant :
       > x * ( @{attribut} + 1 - abs( @{ attribut } - 1 ) ) / 2
