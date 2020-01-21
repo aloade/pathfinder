@@ -1,26 +1,18 @@
 # template for roll20 pathfinder
 Proposition d'une fiche de personnage pour le jeux Pathfinder.
-Le but est de coller au mieux aux règles tout en simplifiant les calculs rébarbartifs, néanmoins le joueur est mis à contribution pour les parties importantes, pour éviter de trop guider le joueur qui pourrait se reposer sur la fiche sans comprendre les règles.
+Le but est de coller au mieux aux règles tout en simplifiant les calculs rébarbartifs, néanmoins le joueur est mis à contribution pour les parties importantes, pour éviter de trop le guider, qui pourrait se reposer sur la fiche sans comprendre les règles.
 
 La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
-La seule exeption étant le menu qui a une obligation d'écriture imposée par roll20, empêchant sont utilisation selon les standards HTML.
 La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir les [règles](README.md#règles-css) pour d'amples informations.
 
 ## Modifications prévues
 - Global
-    - ajouter les langues.
     - remplacer la fonte "formal436" par une fonte sans ayant-droit.
     - ajouter mise en page pour PJ/PNJ.
-    - appliquer les états préjudiciable en automatique ? [pathfinder.fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.%C3%89tats%20pr%C3%A9judiciables.ashx#Sansd%C3%A9fense)
     
 - Entête
-    - ajouter le champ ***dégâts non létaux*** ( son maximum est la vie actuelle ).
-    - remplacer le terme ***Santé*** par ***Points de vie***.
     
 - Personnage
-    - changer ***Stat.*** par ***Carac.***, refléter le ***title*** en fonction.
-    - changer le ***title*** pour tous les lancer de dés pour remplacer "1d20 + Total" par "1d20 + Mod.".
-    - afficher déplacement selon une vitesse de base ( attention modificateur déplacement des nains )
 
 - Combat ( initiative )
     - ajouter un bouton pour passer son tour ( commande **!eot** ? )
@@ -43,22 +35,12 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
       
       voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
     - ajouter un champ ***Bonus Confirmation aux Critiques*** ( s'additionne au ***jet d'attaque n°2*** cité précédement ).
-    - ajouter le coup de grâce : afficher dans rolltemplate dégats critiques et le DD vigueur ( 10 + dégats critiques ) pour l'adversaire
     
 - Combat ( Manoeuvres de combats )
     - relier les jets de ***BMO*** au ***DMD*** adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
-    - déplacer le DMD dans "Défense", ajouter une zone de commentaire, renommer "Manoeuvres de combats" par "Bonus manoeuvre offensive".
-
-- Magie ( Niveau de Lanceur de Sorts )
-    - limiter ***total*** à 0 minimum
-
-- Magie ( Attaque de contact )
-    - changer le modificateur de caractéristiques pour afficher ***Force*** et ***Dextérité***, refléter le ***title*** en fonction.
 
 - Magie ( Sortilèges )
     - ajouter un encart pour afficher la valeur de ***échecs aux sorts profanes***
-    - déplacer la navigation des sorts par une barre verticale sur la gauche du contenu
-    - ajouter une case numérique ***Divers*** pour le degré de difficulté.
     - pour les sorts, ajouter un bouton pour le lancer; affiche le résultat dans un "rollTemplate" dédié :
       - le ***NLS*** vs ***RM*** de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le ***DD*** du sort et le jet eventuel que la cible doit faire.
       - Prendre en compte les ***échecs aux sorts profanes*** de l'armure (champ déroulant utilisé/pas utilisé) ainsi que la composante gestuelle
@@ -82,20 +64,8 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
-    - remplacer les calculs :
-      > ((((3 * @{attribut}) + 3) - abs((3 * @{attribut}) - 3)) / 2)
       
-      par
-      > 3 * ( @{attribut} + 1 - abs( @{attribut} - 1 ) ) / 2
-      
-- Inventaire
-    - ajouter la mécanique de surcharge, voir sur [pathfinder fr](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Poids%20transportable.ashx).
-    - ajouter la prise en compte de l'échec aux sorts profanes
-    - afficher le poids de la monnaie ?
-    
 - Inventaire ( Armes )
-    - pour la colonne ***Type***, ajouter un ***title*** pour expliquer les termes "T", "C", "P"
-    - ajouter un bouton ( voir sur [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "clicked:<button_name>") pour ajouter un champ dans "repeating" de "Attaques" ( voir [roll20.net](https://wiki.roll20.net/Sheet_Worker_Scripts) section "generateRowID()"; pensez à vérifier que ca correspond pas un ID déjà créé ).
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
