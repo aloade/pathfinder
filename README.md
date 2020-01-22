@@ -123,6 +123,9 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
       > x * ( @{attribut} + 1 - abs( @{ attribut } - 1 ) ) / 2
       
       où "x" est la valeur souhaitée si non zéro.
+      
+- translation.json
+    - le message d'erreur "Foudn a pre-defined key order!" correspond à une liste d'élément ordonné contenant une erreur.
 - rollTemplate
     - pas de calculs conditionnels utilisable, uniquement de l'affichage
       par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser :
