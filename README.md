@@ -10,7 +10,9 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - remplacer la fonte "formal436" par une fonte sans ayant-droit.
     - ajouter mise en page pour PJ/PNJ.
     
-- Entête
+- Entête ( status )
+    - prendre en charge la perte de bonus de caractéristique ( -> base = 10 & mod = 0 )
+    - prendre en charge caractéristique vaut 0 ( -> base = 0 & mod = -5 )
     
 - Personnage
 
@@ -112,7 +114,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les champs sont pensés **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
     
     pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" /> (voir du côté de "readonly" )
-    - si des repeating sont en cause, les résultats des calculs doivent être envoyé vers des input "hidden"
+    - si des repeating sont en cause, les résultats des calculs doivent être envoyés vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
     - getAttr renvoie l'attribut "value" brut
       ( la valeur n'est pas calculé à la volée et renvoi un string brut )
