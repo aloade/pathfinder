@@ -9,6 +9,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Global
     - remplacer la fonte "formal436" par une fonte sans ayant-droit.
     - ajouter mise en page pour PJ/PNJ.
+    - supprimer le texte pour les "data-i18n" (h1, span, label, placeholder, option, title )
     
 - Entête ( status )
     - prendre en charge la perte de bonus de caractéristique ( -> base = 10 & mod = 0 )
