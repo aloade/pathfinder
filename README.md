@@ -7,8 +7,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 ## Modifications prévues
 - Global
-    - remplacer la fonte "formal436" par une fonte sans ayant-droit.
-    - ajouter mise en page pour PJ/PNJ.
     - supprimer le texte pour les "data-i18n" (h1, span, label, placeholder, option, title )
     
 - Entête ( status )
@@ -106,6 +104,9 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les balises html5 dans leur majorité ne sont pas autorisés
     - les attributes "data" pour les balises sont supprimés
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
+- ECMAscript
+    - la fonction sort() génère des erreurs, mais execute tout de même la foncion
+    
 - CSS
     - les règles pour "rolltemplate" sont indépendant du "character sheet"
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
