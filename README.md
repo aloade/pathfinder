@@ -100,8 +100,8 @@ Compilation des règles CSS utilisable pour la mise en page.
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - HTML
-    - **éviter** d'utiliser le terme **"max"** pour les variables, en particulier pour les calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 )
-    - pour un "radio" les input **doivent** se suivre dans le code et **doivent** avoir l'attribute value
+    - **ne pas** utiliser le terme **_max** ou **_maximum** pour les variables utilisés dans des calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 )
+    - pour un "radio" les inputs **doivent** se suivre dans le code et **doivent** avoir l'attribute value
     - les balises html5 dans leur majorité ne sont pas autorisés
     - les attributes "data" pour les balises sont supprimés
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
@@ -110,7 +110,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - la fonction sort() génère des erreurs, mais execute tout de même la foncion
     
 - CSS
-    - les règles pour "rolltemplate" sont indépendant du "character sheet"
+    - les règles pour "rolltemplate" sont indépendants du "character sheet"
     - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
     - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
     - les images en base64 ne peuvent être intégrés dans les styles CSS
