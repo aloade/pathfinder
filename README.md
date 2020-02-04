@@ -100,10 +100,12 @@ Compilation des règles CSS utilisable pour la mise en page.
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - HTML
+    - **éviter** d'utiliser le terme **"max"** pour les variables, en particulier pour les calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 )
     - pour un "radio" les input **doivent** se suivre dans le code et **doivent** avoir l'attribute value
     - les balises html5 dans leur majorité ne sont pas autorisés
     - les attributes "data" pour les balises sont supprimés
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
+    
 - ECMAscript
     - la fonction sort() génère des erreurs, mais execute tout de même la foncion
     
