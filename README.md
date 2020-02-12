@@ -5,6 +5,10 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
 La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir les [règles](README.md#règles-css) pour d'amples informations.
 
+## notes pour les traductions
+la variable ***language*** est necessaire pour une fonction de tri des chaînes de caractères.
+Elle doit correspondre au codage en deux caractère de la norme ISO 639-1
+
 ## Modifications prévues
 - Global
     - supprimer le texte pour les "data-i18n" (h1, span, label, placeholder, option, title )
