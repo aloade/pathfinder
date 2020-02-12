@@ -1,10 +1,12 @@
 {
-	"html": "aloade.html",
-	"css": "aloade.css",
 	"authors": "lo(ea)l,Einkil",
 	"roll20userid": "4268433,707682",
-	"patreon": "",
-	"tipeee": "",
 	"preview": "preview.jpeg",
-	"instructions": "Please read the README.md file."
+	"instructions": "Please read the README.md file.",
+	"html": "aloade.html",
+	"css": "aloade.css",
+	"compendium": "pathfinder",
+	"useroptions": [],
+	"patreon": "",
+	"tipeee": ""
 }
