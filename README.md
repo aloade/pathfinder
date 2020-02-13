@@ -16,6 +16,7 @@ Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 - Entête ( status )
     - prendre en charge la perte de bonus de caractéristique ( -> base = 10 & mod = 0 )
     - prendre en charge caractéristique vaut 0 ( -> base = 0 & mod = -5 )
+    - prendre en compte malus 20% sorts à composantes verbales
     
 - Personnage
 
@@ -25,6 +26,7 @@ Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 - Combat
 
 - Magie
+    - afficher une alerte si malus sur sorts réactifs
 
 - Défense
 
