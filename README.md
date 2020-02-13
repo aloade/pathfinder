@@ -12,7 +12,6 @@ Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 
 ## Modifications prévues
 - Global
-    - supprimer le texte pour les "data-i18n" (h1, span, label, placeholder, option, title )
     
 - Entête ( status )
     - prendre en charge la perte de bonus de caractéristique ( -> base = 10 & mod = 0 )
@@ -23,48 +22,9 @@ Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 - Combat ( initiative )
     - ajouter un bouton pour passer son tour ( commande **!eot** ? )
     
-- Combat ( attaques )
-    - définir minimum des dégâts à 1, utiliser :
-      > /roll { 1d1, { 1d20+@{attribut} } }dl1
-    - changer le modificateur de caractéristiques des dégâts; ajouter la ***Dextérité***, refléter le ***title*** en fonction.
-    - jet d'attaque changer le ***title*** du modificateur de caractéristique pour préciser les cas d'utilisation par défaut de ***Force*** (CaC) ou ***Dextérité*** (Distance).
-    - ajouter un champ ***Bonus confirmation critique***
-    - revoir le jet d'attaque et de dégâts :
-        1. ( ***jet d'attaque  n°1*** < ***CA adverse*** ) -> pas de de dégâts
-        2. ( ***CA adverse*** <= ***jet d'attaque n°1*** < ***critique de l'arme*** ) -> dégâts normaux + dégâts sup.
-        3. ( ***jet d'attaque n°1*** >= ***critique de l'arme*** ) -> nouveau lancé de jet d'attaque :
-            1. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique*** < ***CA adverse*** ) -> dégats normaux + dégâts sup.
-            2. ( ***jet d'attaque n°2*** + ***Bonus confirmation critique*** >= ***CA adverse*** ) -> dégats critiques + dégâts sup.
-            
-      afficher la valeur du jet de ***confirmation de critique*** dans le rollTemplate.
-    - ajouter champ "dégâts supplémentaires" ( précis, sournois, élémentaire, ... )
-      
-      voir [pathfinder wiki](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Valeurs%20de%20combat.ashx).
-    - ajouter un champ ***Bonus Confirmation aux Critiques*** ( s'additionne au ***jet d'attaque n°2*** cité précédement ).
-    
-- Combat ( Manoeuvres de combats )
-    - relier les jets de ***BMO*** au ***DMD*** adverse (comme une attaque), ajouter dans le "rolltemplate" la différence des deux résultats (utile pour le MJ).
+- Combat
 
-- Magie ( Sortilèges )
-    - ajouter un encart pour afficher la valeur de ***échecs aux sorts profanes***
-    - pour les sorts, ajouter un bouton pour le lancer; affiche le résultat dans un "rollTemplate" dédié :
-      - le ***NLS*** vs ***RM*** de la cible, si ca touche afficher les dégâts et effet (description du sort ? ), ainsi que le ***DD*** du sort et le jet eventuel que la cible doit faire.
-      - Prendre en compte les ***échecs aux sorts profanes*** de l'armure (champ déroulant utilisé/pas utilisé) ainsi que la composante gestuelle
-      - ***rollFailureSpell*** = "/roll 1d100"
-      - ***FailureSpellTotal*** = ***FailureSpell*** x ***FailureSpellUsed***( 0 ou 1 ) x ***composante gestuelle***( 0 ou 1 )
-      ```
-      ... afficher les informations du sorts ...
-      {{#<FailureSpellTotal>}}
-      ... afficher les info du test aux échecs de sorts profanes ...
-      {{/<FailureSpellTotal>}}
-      {{#rollLess() rollFailureSpell FailureSpellTotal}}
-      ... afficher la réussite du sort ...
-      {{/rollLess() rollFailureSpell FailureSpellTotal}}
-      
-      {{#^rollLess() rollFailureSpell FailureSpellTotal}}
-      ... afficher l'échec du sort ...
-      {{/^rollLess() rollFailureSpell> FailureSpellTotal}}
-      ```
+- Magie
 
 - Défense
 
