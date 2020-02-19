@@ -71,7 +71,6 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
     
 - ECMAscript
-    - la fonction sort() génère des erreurs, mais execute tout de même la foncion
     
 - CSS
     - les règles pour "rolltemplate" sont indépendants du "character sheet"
