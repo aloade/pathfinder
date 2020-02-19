@@ -5,7 +5,7 @@ Le but est de coller au mieux aux règles tout en simplifiant les calculs rébar
 La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
 La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir les [règles](README.md#règles-css) pour d'amples informations.
 
-## notes pour translation.json
+## Notes pour translation.json
 - la propriété ***language*** est necessaire pour une fonction de tri des chaînes de caractères.
   Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 - remplacer le fichier ***translation.json** par celui de la langue choisie dans le répertoire language
