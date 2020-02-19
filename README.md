@@ -31,6 +31,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - limiter les points de ***rangs*** au niveau du personnage
       
 - Inventaire ( Armes )
+    - refléter sur ***foo_character_dexterity_mod_charge*** le malus de dextérité eventuel
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
