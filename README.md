@@ -7,7 +7,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 ## notes pour les traductions
 la variable ***language*** est necessaire pour une fonction de tri des chaînes de caractères.
-
 Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 
 ## Modifications prévues
@@ -20,9 +19,6 @@ Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
     
 - Personnage
 
-- Combat ( initiative )
-    - ajouter un bouton pour passer son tour ( commande **!eot** ? )
-    
 - Combat
 
 - Magie
