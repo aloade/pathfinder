@@ -17,6 +17,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - prendre en charge la perte de bonus de caractéristique ( -> base = 10 & mod = 0 )
     - prendre en charge caractéristique vaut 0 ( -> base = 0 & mod = -5 )
     - prendre en compte malus 20% sorts à composantes verbales
+    - afficher malus de surcharge dans les effets appliquables des status
     
 - Personnage
 
