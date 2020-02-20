@@ -19,7 +19,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - prendre en charge caractéristique vaut 0 ( -> base = 0 & mod = -5 )
     - prendre en compte malus 20% sorts à composantes verbales
     - afficher malus de surcharge dans les effets appliquables des status
-    - supprimer ***foo_equipment_load_roll_malus*** pour l'intégrer dans les variables de status ( donc pour chaque éléments à modifier )
     
 - Personnage
 
