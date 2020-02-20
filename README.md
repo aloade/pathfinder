@@ -28,6 +28,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - afficher une alerte si malus sur sorts réactifs
 
 - Défense
+    - intégrer gestion dextérité maximales aux status
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
