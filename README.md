@@ -12,12 +12,15 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 ## Modifications prévues
 - Global
+    - afficher les malus apliqué sur chaque stat ( ajouter colomne grissé ), pour la force et la dextéritié indiquer indépendament la perte du bonus complet et un malus sur la stat.
     
 - Entête ( status )
     - prendre en charge la perte de bonus de caractéristique ( -> base = 10 & mod = 0 )
     - prendre en charge caractéristique vaut 0 ( -> base = 0 & mod = -5 )
     - prendre en compte malus 20% sorts à composantes verbales
     - afficher malus de surcharge dans les effets appliquables des status
+    - ajouter un bouton pour ne pas prendre en compte les malus des status
+    - ajouter un bouton pour ne pas prendre en compte les malus de la charge
     
 - Personnage
 
