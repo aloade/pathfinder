@@ -13,6 +13,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 ## Modifications prévues
 - Global
     - afficher les malus appliqué sur chaque éléments de la fiche
+    - mettre en place traduction pour les roll ( label ou autre envoyé au rolltemplate )
     
 - Entête ( status )
     - prendre en compte malus 20% sorts à composantes verbales
@@ -25,13 +26,11 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
     - afficher une alerte si malus sur sorts réactifs
 
 - Défense
-    - intégrer gestion dextérité maximales aux status
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
       
 - Inventaire ( Armes )
-    - refléter sur ***foo_character_dexterity_mod_charge*** le malus de dextérité eventuel
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
