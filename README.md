@@ -12,8 +12,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 ## Modifications prévues
 - Global
-    - afficher les malus appliqué sur chaque éléments de la fiche
-    - mettre en place traduction pour les roll ( label ou autre envoyé au rolltemplate )
     
 - Entête ( status )
     - prendre en compte malus 20% sorts à composantes verbales
