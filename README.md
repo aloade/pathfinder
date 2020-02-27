@@ -76,6 +76,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
     - les images en base64 ne peuvent être intégrés dans les styles CSS
 - SheetWorker
+    - roll20 ne gère pas les négatifs de négatifs, pour gérer les négatifs on doit utiliser ***-(@{variable})***
     - les champs sont pensés **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
     
     pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" /> (voir du côté de "readonly" )
