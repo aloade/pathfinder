@@ -21,7 +21,6 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Combat
 
 - Magie
-    - afficher une alerte si malus sur sorts réactifs
 
 - Défense
 
