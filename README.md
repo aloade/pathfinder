@@ -8,7 +8,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 ## Notes pour translation.json
 - la propriété ***language*** est necessaire pour une fonction de tri des chaînes de caractères.
   Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
-- remplacer le fichier ***translation.json** par celui de la langue choisie dans le répertoire language
+- remplacer le fichier ***translation.json*** par celui de la langue choisie dans le répertoire language
 
 ## Modifications prévues
 - Global
