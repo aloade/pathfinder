@@ -18,8 +18,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
   
 - Global
     
-- Entête ( status )
-    - prendre en compte malus 20% sorts à composantes verbales
+- Entête
     
 - Personnage
 
