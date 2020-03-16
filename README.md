@@ -12,8 +12,8 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 ## Modifications selon les règlesde Pathfinder
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
-  > pour [0;10] : 5 x Force
-  > pour ]10; Infini[ : load = 12.903 e^( 0.137 x Strength )
+  > pour 0 à 10 : 5 x Force
+  > supérieur à 10 : 12.903 e^( 0.137 x Force )
   
 - Global
     
