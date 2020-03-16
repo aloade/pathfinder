@@ -83,7 +83,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     - roll20 ne gère pas les négatifs de négatifs, pour gérer les négatifs on doit utiliser ***-(@{variable})***
     - les champs sont pensés **uniquement** pour les nombres, (disabled="disabled", type="hidden", value=@{[...]}, active ces fonctions ).
     
-    pour travailler sur des string il est **obligatoire** d'utiliser "<input type="text" name="[...]" value="[...]" /> (voir du côté de "readonly" )
+    pour travailler sur des string il est **obligatoire** d'utiliser un type "text" et l'attribut "readonly"
     - si des repeating sont en cause, les résultats des calculs doivent être envoyés vers des input "hidden"
       ( quand l'attribut "disabled" est présent les calculs sont 'parasités' )
     - getAttr renvoie l'attribut "value" brut
