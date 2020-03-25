@@ -25,13 +25,16 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Combat
 
 - Magie
+    - ajouter le drop du compendium
 
 - Défense
 
 - Compétences
     - limiter les points de ***rangs*** au niveau du personnage
       
-- Inventaire ( Armes )
+- Inventaire
+    - erreur sur les malus de charge/armure, changer le type n'a pas d'impact; prendre somme(malus d'amure) VS malus charge
+    - ajouter option pour activer/désactiver l'adaptation de la taille de l'équipement selon la catégorie de taille ( ne pas toucher à la conversion d'unité )
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
