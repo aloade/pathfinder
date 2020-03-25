@@ -21,6 +21,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - Entête
     
 - Personnage
+    - vérifier que le malus d'amure s'applique pour les test de force et de dextérité
 
 - Combat
 
