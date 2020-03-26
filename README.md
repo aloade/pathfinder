@@ -10,6 +10,13 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
   Elle doit correspondre au codage en deux caractères de la norme ISO 639-1
 - remplacer le fichier ***translation.json*** par celui de la langue choisie dans le répertoire language
 
+## fonctionnalitées
+- Commentaire avec survol de la souris pour chaque lancé de dés avec explications
+- Application des status via une fenêtre dédié
+- Gestion des malus de charge selon le poid transporté
+- glissé déposé du compendium Pathfinder pour les objets et les sorts
+- création d'une attaque a prtir d'une arme de l'inventaire via un bouton
+
 ## Modifications selon les règlesde Pathfinder
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
   > pour 0 à 10 : 5 x Force
