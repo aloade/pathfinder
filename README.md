@@ -12,9 +12,9 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 
 ## Fonctionnalitées
 - Commentaire avec survol de la souris pour chaque lancé de dés avec explications
-- Application des status par un click sur un bouton
+- Application des status par un click
 - Gestion des malus de charge selon le poid des objets
-- glissé déposé du compendium Pathfinder pour les objets et les sorts
+- glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités selon les options de la fiche )
 - création d'une attaque a prtir d'une arme de l'inventaire via un bouton
 
 ## Modifications des règles Pathfinder
@@ -22,7 +22,8 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
   > pour 0 à 10 : 5 x Force
   
   > supérieur à 10 : 12.903 e^( 0.137 x Force )
-  
+ 
+- Les âges dans les règles d'origine ne sont pas clair, les règles retenue sont celle de pathfinder.fr, qui même pas forcément juste à l'avantage de donner des âges pour chaque races ( la catégorie enfance n'as pas été pris en compte )
 - Global
     
 - Entête
