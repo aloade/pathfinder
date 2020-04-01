@@ -11,7 +11,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - remplacer le fichier ***translation.json*** par celui de la langue choisie dans le répertoire language
 
 ## Fonctionnalitées
-la fiche est basé sur pathfinder 2nd édition, les sources vienent du site [http://www.d20pfsrd.com] et [https://www.pathfinder-fr.org/]
+la fiche est basé sur pathfinder 2nd édition, les sources vienent du site https://www.d20pfsrd.com et https://www.pathfinder-fr.org/
 
 les fonctionnalitées sont les suivantes :
 - template pour un personnage et un animal/familier/compagnon animal
@@ -38,11 +38,11 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
  
 - Les âges dans les règles d'origine ne sont pas clair, les règles retenue sont celle de pathfinder.fr, qui même pas forcément juste à l'avantage de donner des âges pour chaque races ( la catégorie enfance n'as pas été pris en compte )
 - Global
-    
+    - nettoyer le fichier "translation.js" des relicats et doublons
 - Entête
     
 - Personnage
-    - vérifier que le malus d'amure s'applique pour les test de force et de dextérité
+    - vérifier les classes de personnages
 
 - Combat
 
@@ -55,8 +55,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
     - limiter les points de ***rangs*** au niveau du personnage
       
 - Inventaire
-    - erreur sur les malus de charge/armure, changer le type n'a pas d'impact; prendre somme(malus d'amure) VS malus charge
-    - ajouter option pour activer/désactiver l'adaptation de la taille de l'équipement selon la catégorie de taille ( ne pas toucher à la conversion d'unité )
+    - ajouter argent sotckés dans une banque ?
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
