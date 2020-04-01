@@ -11,11 +11,24 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - remplacer le fichier ***translation.json*** par celui de la langue choisie dans le répertoire language
 
 ## Fonctionnalitées
-- Commentaire avec survol de la souris pour chaque lancé de dés avec explications
-- Application des status par un click
-- Gestion des malus de charge selon le poid des objets
-- glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités selon les options de la fiche )
-- création d'une attaque a prtir d'une arme de l'inventaire via un bouton
+la fiche est basé sur pathfinder 2nd édition, les sources vienent du site [http://www.d20pfsrd.com] et [https://www.pathfinder-fr.org/]
+
+les fonctionnalitées sont les suivantes :
+- template pour un personnage et un animal/familier/compagnon animal
+- utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
+- commentaire avec survol de la souris pour chaque lancé de dés avec explications
+- application des status par un click
+- gestion des malus lié à l'âge du personnage
+- classes, langues et races préintégrés dans la fiche
+- calcul automatique des tailles et poids des personnages et déplacement selon la race est ses caracétristiques
+- gestion des malus de charge selon le poid des objets
+- pour le sorts gestion des échecs aux sorts profanes lors d'un lancé de dé, et prise en compte de la résistance magique
+- glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités si souhaité par l'utilisateur )
+- création d'une attaque a partir d'une arme de l'inventaire via un bouton
+
+certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
+- lors d'une attaque la classe d'armure est indiqué pour la cible, alors que pour les sorts la résistance magique n'apparait pas; car lors d'un combat si un personn age assite à un combat, il est capable de deviner ses capacités ( reflété par la CA ), à l'inverse d'un sort lancé ou l'on ne peut deviner les capacités magique de défenses.
+
 
 ## Modifications des règles Pathfinder
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
