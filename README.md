@@ -26,17 +26,17 @@ les fonctionnalitées sont les suivantes :
 - glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités si souhaité par l'utilisateur )
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
 
-certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
-- lors d'une attaque la classe d'armure est indiqué pour la cible, alors que pour les sorts la résistance magique n'apparait pas; car lors d'un combat si un personn age assite à un combat, il est capable de deviner ses capacités ( reflété par la CA ), à l'inverse d'un sort lancé ou l'on ne peut deviner les capacités magique de défenses.
-
-
 ## Modifications des règles Pathfinder
+certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
+
+- lors d'une attaque la classe d'armure est indiqué pour la cible, alors que pour les sorts la résistance magique n'apparait pas; car lors d'un combat si un personn age assite à un combat, il est capable de deviner ses capacités ( reflété par la CA ), à l'inverse d'un sort lancé ou l'on ne peut deviner les capacités magique de défenses.
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
   > pour 0 à 10 : 5 x Force
   
-  > supérieur à 10 : 12.903 e^( 0.137 x Force )
+  > supérieur à 10 : 86.731 e^( 0.1386 x Force )
  
-- Les âges dans les règles d'origine ne sont pas clair, les règles retenue sont celle de pathfinder.fr, qui même pas forcément juste à l'avantage de donner des âges pour chaque races ( la catégorie enfance n'as pas été pris en compte )
+- L'âge limite pour la jeunesse n'est pas définit clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
+
 - Global
     - nettoyer le fichier "translation.js" des relicats et doublons
 - Entête
