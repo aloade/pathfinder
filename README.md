@@ -39,6 +39,8 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 
 - Global
     - nettoyer le fichier "translation.js" des relicats et doublons
+    - ajouter la possibilitées de n'envoyer les roll qu'au GM
+    
 - Entête
     
 - Personnage
