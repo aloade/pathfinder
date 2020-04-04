@@ -15,15 +15,16 @@ la fiche est basé sur pathfinder 2nd édition, les sources vienent du site http
 
 les fonctionnalitées sont les suivantes :
 - template pour un personnage et un animal/familier/compagnon animal
+- envoie des jet dans le chat ou uniquement au maêtre de jeu
 - utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
-- commentaire avec survol de la souris pour chaque lancé de dés avec explications
+- commentaire complet au survol de la souris pour chaque lancé de dés
 - application des status par un click
 - gestion des malus lié à l'âge du personnage
 - classes, langues et races préintégrés dans la fiche
-- calcul automatique des tailles et poids des personnages et déplacement selon la race est ses caracétristiques
+- calcul automatique des tailles et poids des personnages et déplacement selon la race et ses caracétristiques
 - gestion des malus de charge selon le poid des objets
 - pour le sorts gestion des échecs aux sorts profanes lors d'un lancé de dé, et prise en compte de la résistance magique
-- glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités si souhaité par l'utilisateur )
+- glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités et selon la catégorie de la taille si souhaité par l'utilisateur )
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
 
 ## Modifications des règles Pathfinder
