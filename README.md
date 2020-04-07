@@ -32,9 +32,9 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 
 - lors d'une attaque la classe d'armure est indiqué pour la cible, alors que pour les sorts la résistance magique n'apparait pas; car lors d'un combat si un personn age assite à un combat, il est capable de deviner ses capacités ( reflété par la CA ), à l'inverse d'un sort lancé ou l'on ne peut deviner les capacités magique de défenses.
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
-  > pour 0 à 10 : 5 x Force
+  > Force compris entre 0 à 10 : 5 x Force
   
-  > supérieur à 10 : 24.9087 e^( 0.1386 x Force )
+  > Force supérieuré à 10 : 24.9087 e^( 0.1386 x Force )
  
 - L'âge limite pour la jeunesse n'est pas définit clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
 
