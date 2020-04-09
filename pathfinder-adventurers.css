@@ -1,0 +1,2307 @@
+/* --------------------------------------------------- */
+/* roll20 fixed */
+/* --------------------------------------------------- */
+html, body {
+    font-size: 16px;
+    margin: 0;
+}
+
+.charsheet {
+    padding : 0 !important;
+    margin : 0;
+}
+
+.charsheet *, .charsheet *::after, .charsheet *::before {
+    box-sizing: border-box;
+}
+
+.charsheet * {
+    font-size: 15px;
+    line-height: 15px;
+}
+
+.charsheet *::before, .charsheet *::after {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.charsheet table th, .charsheet table td {
+    padding: 0;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button) {
+    padding: 0;
+    margin: 0;
+    text-shadow: none;
+    box-shadow: none;
+    border: none;
+    border-radius: unset;
+    background-color: transparent;
+    background-repeat: unset;
+}
+
+.charsheet input, .charsheet select, .charsheet textarea {
+    display: inline-block;
+    width: 100% !important;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+.charsheet label {
+    margin: 0;
+    padding: 0;
+}
+
+.charsheet .repcontainer .repitem .itemcontrol {
+    z-index: 999;
+}
+
+.charsheet .repcontrol {
+    min-height: 26px;
+}
+
+.btn {
+    text-shadow: none;
+}
+
+/* --------------------------------------------------- */
+/* preload */
+/* --------------------------------------------------- */
+/* force download for not visible images */
+.sheet-locale {
+    background-image: url("https://github.com/aloade/pathfinder/raw/master/image/button.jpg")
+    , url("https://github.com/aloade/pathfinder/raw/master/image/select_dropdown.png")
+    , url("https://github.com/aloade/pathfinder/raw/master/image/dice.png")
+    , url("https://github.com/aloade/pathfinder/raw/master/image/wax_seal.png")
+    , url("https://github.com/aloade/pathfinder/raw/master/image/title.png")
+    , url("https://github.com/aloade/pathfinder/raw/master/image/sheets-static.png")
+    , url("https://github.com/aloade/pathfinder/raw/master/image/modal.jpg");
+    width: 0;
+    height: 0;
+    display: inline;
+}
+
+/* --------------------------------------------------- */
+/* option - template */
+/* --------------------------------------------------- */
+.sheet-template-monster,
+.sheet-template-non-playable-character,
+.sheet-template-playable-character {
+    display: none;
+}
+
+input[name="attr_foo_option_template"][value="monster"] ~ div .sheet-template-monster,
+input[name="attr_foo_option_template"][value="pc"] ~ div .sheet-template-playable-character {
+    display: block;
+}
+
+input[name="attr_foo_option_template"][value="monster"] ~ div tr.sheet-template-monster,
+input[name="attr_foo_option_template"][value="pc"] ~ div tr.sheet-template-playable-character {
+    display: table-row;
+}
+
+input[name="attr_foo_option_template"][value="monster"] ~ div th.sheet-template-monster,
+input[name="attr_foo_option_template"][value="monster"] ~ div td.sheet-template-monster,
+input[name="attr_foo_option_template"][value="pc"] ~ div th.sheet-template-playable-character,
+input[name="attr_foo_option_template"][value="pc"] ~ div td.sheet-template-playable-character {
+    display: table-cell;
+}
+
+/* --------------------------------------------------- */
+/* option - roll attack */
+/* --------------------------------------------------- */
+.sheet-template-no-target,
+.sheet-template-target {
+    display: none;
+}
+
+input[name="attr_foo_option_attack_roll"][value="no-target"] ~ div .sheet-template-no-target,
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div .sheet-template-target {
+    display: block;
+}
+
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div tr.sheet-template-no-target,
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div tr.sheet-template-target {
+    display: table-row;
+}
+
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div th.sheet-template-no-target,
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div td.sheet-template-no-target,
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div th.sheet-template-target,
+input[name="attr_foo_option_attack_roll"][value="target"] ~ div td.sheet-template-target {
+    display: table-cell;
+}
+
+/* --------------------------------------------------- */
+/* option - health */
+/* --------------------------------------------------- */
+.sheet-template-health-standard,
+.sheet-template-health-alternative {
+    display: none;
+}
+
+input[name="attr_foo_option_health"][value="standard"] ~ div .sheet-template-health-standard,
+input[name="attr_foo_option_health"][value="alternative"] ~ div .sheet-template-health-alternative {
+    display: block;
+}
+
+input[name="attr_foo_option_health"][value="standard"] ~ div tr.sheet-template-health-standard,
+input[name="attr_foo_option_health"][value="alternative"] ~ div tr.sheet-template-health-alternative {
+    display: table-row;
+}
+
+input[name="attr_foo_option_health"][value="standard"] ~ div th.sheet-template-health-standard,
+input[name="attr_foo_option_health"][value="standard"] ~ div td.sheet-template-health-standard,
+input[name="attr_foo_option_health"][value="alternative"] ~ div th.sheet-template-health-alternative,
+input[name="attr_foo_option_health"][value="alternative"] ~ div td.sheet-template-health-alternative {
+    display: table-cell;
+}
+
+/* --------------------------------------------------- */
+/* compendium drop */
+/* --------------------------------------------------- */
+.sheet-compendium-drop-target {
+    transition: box-shadow 0.25s ease;
+}
+
+.sheet-compendium-drop-target.dropping {
+    background-color: inherit;
+    box-shadow: 0 0 0 9px rgba(0, 123, 255, 0.5);
+}
+/* --------------------------------------------------- */
+/* common */
+/* --------------------------------------------------- */
+.charsheet {
+    box-shadow: 0 0 9px rgb(20, 20, 20);
+    margin: 10px;
+}
+
+.charsheet .sheet-locale {
+    display: none;
+}
+
+.charsheet * {
+    box-sizing: border-box;
+    font-family: "Gloria Hallelujah", "Patrick Hand", sans-serif;
+    color: rgb(56, 61, 65);
+    line-height: 15px;
+}
+
+.charsheet .sheet-text-center {
+    text-align: center;
+}
+
+.charsheet .sheet-text-strong {
+    font-weight: bold;
+}
+
+.charsheet .sheet-text-bold {
+    font-weight: bold;
+}
+
+.charsheet .sheet-alert,
+.charsheet .sheet-chain,
+.charsheet .sheet-cog {
+    font-family: "Pictos", sans-serif;
+}
+
+.charsheet .sheet-alert {
+    color: rgb(220, 53, 69);
+    padding-right: 4px;
+}
+
+.charsheet .sheet-alert::after {
+    content : "!";
+}
+
+.charsheet .sheet-chain::after {
+    content : "j";
+}
+
+.charsheet .sheet-cog::after {
+    content : "y";
+}
+
+.charsheet small {
+    color: rgb(108, 117, 125);
+    font-size: 80%;
+}
+
+.charsheet .sheet-fixed-small {
+    max-width: 45px !important;
+}
+
+.charsheet .sheet-fixed-medium {
+    max-width: 105px !important;
+}
+
+.charsheet .sheet-fixed-large {
+    max-width: 180px !important;
+}
+
+.charsheet input,
+.charsheet select {
+    background-color: transparent;
+    width: auto;
+    text-align: center;
+    border: none;
+    height: 23px;
+    margin: 0;
+    line-height: 23px;
+}
+
+/* "text-align-last:center; " chrome hack for 'text-align: center' */
+.charsheet select {
+    text-align-last:center;
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/select_dropdown.png") no-repeat center right;
+    padding-right: 9px !important;
+    cursor: pointer;
+}
+
+.charsheet select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+.charsheet input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+}
+
+/* chrome hack for "appearance: textfield' on 'input[type="number"]' */
+.charsheet input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.charsheet input:focus,
+.charsheet select:focus,
+.charsheet textarea:focus,
+.charsheet button:focus {
+    outline: none;
+}
+
+.charsheet .sheet-text-left {
+    text-align: left !important;
+}
+
+.charsheet .sheet-text-right {
+    text-align: right !important;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button), .sheet-fake-button-roll {
+    width: 30px;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button) {
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent url("https://github.com/aloade/pathfinder/raw/master/image/dice.png") no-repeat;
+    background-size: 30px 30px;
+    cursor: pointer;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button)[type="roll"]:before {
+    content: "";
+}
+
+.sheet-button,
+.sheet-button-fake {
+    min-width: 26px;
+}
+
+.sheet-button::before {
+    content: "" !important;
+    display: block;
+    border-radius: 3px;
+    box-shadow: rgb(98, 114, 126) 0 2px 5px;
+    height: 100%;
+    padding: 2px 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.sheet-button,
+.sheet-button-switch {
+    position: relative;
+    height: 26px;
+    font-size: 15px !important;
+    line-height: 19px;
+    margin: 0 !important;
+    padding: 0 12px !important;
+    text-align: center;
+    color: rgb(246, 226, 195);
+    background-color: rgb(75, 38, 22);
+    border: 2px solid rgb(150, 120, 50);
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/button.jpg");
+    border-image-slice: 49 fill;
+    border-image-width: 15px;
+    border-image-repeat: round;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    transition: color 0.35s ease;
+}
+
+.sheet-button:hover, .sheet-button:hover select,
+.sheet-button-switch:hover {
+    color: rgb(255, 255, 255);
+}
+
+.sheet-button:active,
+.sheet-button-switch:active {
+    box-shadow: inset 0 9px 15px 0 #c4c4c4;
+    top: 2px;
+}
+
+.sheet-button-small {
+    width: 26px;
+    padding: 0 !important;
+}
+
+.sheet-button span {
+    color: inherit;
+}
+
+.sheet-button .sheet-input-group-text {
+    color: rgb(150, 150, 150);
+    line-height: 19px;
+}
+
+.sheet-button select {
+    width: 100%;
+    color: rgb(246, 226, 195);
+    background: none;
+    transition: color 0.35s ease;
+    margin-top: -1px;
+}
+
+.sheet-button-switch {
+}
+
+.sheet-button-switch input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.charsheet .sheet-button-switch-face {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    width: 15px;
+    height: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+    line-height: 23px;
+    transition: opacity 0.25s ease;
+    border-radius: 50%;
+    color: inherit;
+    border: none;
+    transform: translate(-50%, -50%);
+}
+
+.charsheet .sheet-button-switch input:checked ~ .sheet-button-switch-face {
+    background-color: rgb(255, 0, 0);
+    box-shadow: inset 0 0 4px rgb(0, 0, 0), 0 0 15px rgba(255, 0, 0, 0.75);
+}
+
+.charsheet .sheet-button-switch input:not(:checked) ~ .sheet-button-switch-face {
+    background-color: rgb(90, 0, 0);
+    box-shadow: inset 0 0 4px rgb(0, 0, 0), 0 0 15px rgba(90, 0, 0, 0.75);
+}
+
+.charsheet .sheet-button-switch-label {
+    padding-left: 15px;
+    color: inherit;
+}
+
+/* group of horizontal button */
+.charsheet .sheet-horizontal-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 -6px 7px;
+    padding: 0;
+}
+
+.charsheet .sheet-horizontal-button-group > li {
+    list-style: none;
+    margin: 0 6px 8px;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+/* group of vertial button */
+.charsheet .sheet-vertical-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 -6px 17px;
+    padding: 0;
+}
+
+.charsheet .sheet-vertical-button-group > li {
+    list-style: none;
+    margin: 0 6px 6px;
+    flex: 0 0 auto;
+    width: 100%;
+}
+/* repeating controls */
+.charsheet .repcontrol {
+    margin-top: 15px;
+}
+
+.charsheet .btn.repcontrol_add,
+.charsheet .btn.repcontrol_edit,
+.charsheet .btn.repcontrol_move,
+.charsheet .btn.repcontrol_del {
+    position: relative;
+    height: 26px;
+    line-height: 15px;
+    padding: 0 9px;
+    text-align: center;
+    color: rgb(246, 226, 195);
+    background-color: rgb(75, 38, 22);
+    background-image: none;
+    border-radius: 0;
+    border: 2px solid rgb(150, 120, 50);
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/button.jpg");
+    border-image-slice: 49 fill;
+    border-image-width: 15px;
+    border-image-repeat: round;
+    box-shadow: 0 2px 5px rgb(100, 100, 100);
+    transition: color 0.35s ease;
+}
+
+.charsheet .btn.repcontrol_move,
+.charsheet .btn.repcontrol_del {
+    font-family: "Pictos";
+}
+
+.charsheet .btn.repcontrol_add:hover,
+.charsheet .btn.repcontrol_edit:hover,
+.charsheet .btn.repcontrol_move:hover,
+.charsheet .btn.repcontrol_del:hover {
+    color: rgb(255, 255, 255);
+}
+
+.charsheet .btn.repcontrol_add:active,
+.charsheet .btn.repcontrol_edit:active,
+.charsheet .btn.repcontrol_move:active,
+.charsheet .btn.repcontrol_del:active {
+    box-shadow: inset 0 9px 15px 0 #c4c4c4;
+    top:2px;
+}
+
+.charsheet .repcontainer.editmode div.repitem .itemcontrol {
+    transition: all 0.35s ease;
+    background: transparent repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 7px);
+}
+
+.charsheet .repcontainer.editmode div.repitem:hover .itemcontrol {
+    background: transparent repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 7px) !important ;
+}
+
+/* flex */
+.charsheet .sheet-flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 -8px;
+}
+
+.charsheet .sheet-flex-col,
+.charsheet .sheet-flex-col2,
+.charsheet .sheet-flex-col3,
+.charsheet .sheet-flex-col4,
+.charsheet .sheet-flex-col5,
+.charsheet .sheet-flex-col6,
+.charsheet .sheet-flex-col7,
+.charsheet .sheet-flex-col8,
+.charsheet .sheet-flex-col9,
+.charsheet .sheet-flex-col10,
+.charsheet .sheet-flex-col11 {
+    position: relative;
+    width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 0 8px;
+}
+.charsheet .sheet-flex-col   { max-width: 100%;}
+.charsheet .sheet-flex-col1  { max-width: 8.333333%;}
+.charsheet .sheet-flex-col2  { max-width: 16.666667%;}
+.charsheet .sheet-flex-col3  { max-width: 25%;}
+.charsheet .sheet-flex-col4  { max-width: 33.333333%;}
+.charsheet .sheet-flex-col5  { max-width: 41.666667%;}
+.charsheet .sheet-flex-col6  { max-width: 50%;}
+.charsheet .sheet-flex-col7  { max-width: 58.333333%;}
+.charsheet .sheet-flex-col8  { max-width: 66.666667%;}
+.charsheet .sheet-flex-col9  { max-width: 75%;}
+.charsheet .sheet-flex-col10 { max-width: 83.333333%;}
+.charsheet .sheet-flex-col11 { max-width: 91.666667%;}
+
+.charsheet .sheet-flex-col-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+/* modal */
+.sheet-modal {
+    position: relative;
+}
+
+.sheet-modal-checkbox {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.charsheet .sheet-modal-checkbox:checked ~ .sheet-modal-content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sheet-modal-label {
+}
+
+.sheet-modal-content {
+    position: absolute;
+    z-index: 1;
+    background-color: rgb(77,57,42);
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/modal.jpg");
+    border-image-slice: 60 fill;
+    border-image-width: 30px;
+    border-image-repeat: stretch;
+    padding: 30px;
+    transform: translate(0, calc(100% + 8px) );
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 0 9px rgb(20, 20, 20);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+    z-index: 5;
+}
+
+/* accordion */
+.charsheet .sheet-accordion {
+    position: relative;
+}
+
+.charsheet .sheet-accordion-checkbox {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 30px !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.charsheet .sheet-accordion-label {
+    min-height: 39px;
+}
+
+.charsheet .sheet-accordion-container {
+    padding-left: 45px;
+    min-height: 30px;
+}
+
+.charsheet .sheet-accordion-container::before {
+    display: block;
+    content: "-";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    line-height: 39px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.charsheet .sheet-accordion-checkbox:not(:checked) ~ .sheet-accordion-container .sheet-accordion-content {
+    display: none;
+}
+
+.charsheet .sheet-accordion-checkbox:not(:checked) ~ .sheet-accordion-container::before {
+    content: "+";
+}
+
+/* tab */
+.charsheet .sheet-tab {
+    position: relative;
+}
+
+.charsheet .sheet-tab-input, .charsheet .sheet-tab-label {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.charsheet .sheet-tab-input {
+    opacity: 0;
+    margin: 0;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.charsheet .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9),
+.charsheet .sheet-tab-input:checked:nth-of-type(10) ~ .sheet-tab-label:nth-of-type(10),
+.charsheet .sheet-tab-input:checked:nth-of-type(11) ~ .sheet-tab-label:nth-of-type(11) {
+    z-index: 4;
+}
+
+.charsheet .sheet-tab-content {
+    display: none;
+}
+
+.charsheet .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
+.charsheet .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-content:nth-of-type(2),
+.charsheet .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-content:nth-of-type(3),
+.charsheet .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
+.charsheet .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
+.charsheet .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
+.charsheet .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7),
+.charsheet .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-content:nth-of-type(8),
+.charsheet .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-content:nth-of-type(9),
+.charsheet .sheet-tab-input:checked:nth-of-type(10) ~ .sheet-tab-content:nth-of-type(10),
+.charsheet .sheet-tab-input:checked:nth-of-type(11) ~ .sheet-tab-content:nth-of-type(11) {
+    display: block;
+}
+
+/* input group */
+.charsheet .sheet-input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.charsheet .sheet-input-group > * + * {
+    margin-left: 8px;
+}
+
+.charsheet .sheet-input-group input,
+.charsheet .sheet-input-group select {
+    flex: 1 1 auto;
+    width: 1% !important;
+}
+
+.charsheet .sheet-input-group-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+.charsheet .sheet-input-group-text * {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* checkbox was seal */
+.charsheet .sheet-waxseal {
+    position: relative;
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+}
+
+.charsheet .sheet-waxseal input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.charsheet .sheet-waxseal-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+    line-height: 23px;
+    transition: opacity 0.25s ease;
+}
+
+.charsheet .sheet-waxseal-on {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/wax_seal.png") no-repeat center;
+    background-size: 100% 100%;
+    opacity: 1;
+    color: rgb(70, 0, 3);
+}
+
+.charsheet .sheet-waxseal input:not(:checked) ~ .sheet-waxseal-on {
+    opacity: 0;
+}
+
+.charsheet .sheet-waxseal-off {
+    opacity: 0;
+}
+
+.charsheet .sheet-waxseal input:not(:checked) ~ .sheet-waxseal-off {
+    color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+/* checkbox coin */
+.charsheet .sheet-coin {
+    width: 23px;
+    height: 23px;
+}
+
+.charsheet .sheet-coin {
+    perspective: 1000px;
+    position: relative;
+    display: inline-block;
+}
+
+.charsheet .sheet-coin input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.charsheet .sheet-coin-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: 0.25s;
+    transform-style: preserve-3d;
+}
+
+.charsheet .sheet-coin-face {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 20px;
+    font-size: 11px;
+    border-radius: 50%;
+    text-align: center;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    background-color: transparent;
+    border: 2px solid transparent;
+}
+
+.charsheet .sheet-coin-on,
+.charsheet .sheet-coin-off {
+    background-color: lightgray;
+    border-radius: 50%;
+    backface-visibility: hidden;
+}
+
+/* "transform: rotateY(180deg);" for firefox 31 */
+.charsheet .sheet-coin-on {
+    background-color: rgb(207, 181, 59);
+    border-color: rgb(255, 200, 46);
+    color: rgb(240, 196, 27);
+    box-shadow: 0 2px rgb(207, 181, 59), 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    transform: rotateY(180deg);
+}
+
+.charsheet .sheet-coin-off {
+    text-decoration: line-through;
+    background-color: rgb(192, 201, 210);
+    border-color: rgb(213, 221, 227);
+    color: rgb(233, 239, 245);
+    box-shadow: 0 1px rgb(192, 201, 210), 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    transform: rotateY(0deg);
+}
+
+.charsheet .sheet-coin input:checked ~ .sheet-coin-content {
+    transform: rotateY(180deg);
+}
+
+/* --------------------------------------------------- */
+/* header */
+/* --------------------------------------------------- */
+.charsheet .sheet-header {
+    position: relative;
+    padding: 20px 30px;
+    background-color: rgb(42, 31, 26);
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/header_frame.jpg");
+    border-image-slice: 100 130 fill;
+    border-image-width: 60px;
+    border-image-repeat: stretch;
+}
+
+.charsheet .sheet-header .sheet-section + .sheet-section {
+    margin-top: 15px;
+}
+
+.charsheet .sheet-header-character,
+.charsheet .sheet-header-player,
+.charsheet .sheet-header-health span, .charsheet .sheet-header-health input {
+    color: rgb(200, 200, 200);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.charsheet .sheet-header input {
+    width: 100%;
+}
+
+.charsheet .sheet-header span[title] {
+    text-decoration: underline dashed rgb(150, 150, 150);
+    cursor: help;
+}
+
+.charsheet .sheet-header-character {
+    font-size: 28px;
+    line-height: 40px;
+    font-family: "Julee", "Patrick Hand", sans-serif;
+}
+
+.charsheet .sheet-header-player {
+    height: 30px;
+    line-height: 30px;
+}
+
+.charsheet .sheet-header-health table {
+    max-width: 360px;
+}
+
+.charsheet .sheet-header-health table th {
+    text-align: center;
+    line-height: 26px;
+}
+
+.charsheet .sheet-header-health th span {
+    display: inline-block;
+    line-height: 23px;
+    height: 26px;
+}
+
+.charsheet .sheet-header .sheet-input-group-text span {
+    line-height: 23px;
+}
+
+/* --------------------------------------------------- */
+/* content */
+/* --------------------------------------------------- */
+.charsheet .sheet-main.section {
+    margin-bottom: 30px;
+}
+
+/* tab */
+.charsheet .sheet-main-menu {
+    display: block;
+    height: 32px;
+    background-color: rgb(50, 36, 37);
+    border: 2px solid rgb(50, 50, 50);
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/menu_background.jpg");
+    border-image-slice: 38 fill;
+    border-image-width: 36px;
+    border-image-repeat: round;
+}
+
+/* width =  100 / 8 */
+.charsheet .sheet-main-slider {
+    display: block;
+    position: absolute;
+    top: 0;
+    min-width: 90px;
+    width: 11.111111%;
+    max-width: 180px;
+    height: 32px;
+    background-image: url("https://github.com/aloade/pathfinder/raw/master/image/menu_slider.png");
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    color: rgb(255, 255, 255);
+    z-index: 1;
+    transform: translateX(-50%);
+    transition: left 0.25s ease-out;
+    left: 6.25%;
+}
+
+/*
+   count = "count of tabs"
+   x = [0; count[
+   left = x  * ( 100 / count ) + 100 / (count x 2 )  */
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-main-slider { left: 5.555555%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-main-slider { left: 16.666666%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-main-slider { left: 27.777777%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-main-slider { left: 38.888888%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-main-slider { left: 50%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-main-slider { left: 61.111111%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-main-slider { left: 72.222222%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-main-slider { left: 83.333333%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-main-slider { left: 94.444444%; }
+
+.charsheet .sheet-main > .sheet-tab-input,
+.charsheet .sheet-main > .sheet-tab-label {
+    width: 11.111111% !important;
+    height: 32px;
+}
+
+/*
+   count = "count of tabs"
+   x = [0; count[
+   left = x  * ( 100 / count )
+*/
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(1) { left: 0%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(2) { left: 11.111111%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(3) { left: 22.222222%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(4) { left: 33.333333%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(5) { left: 44.444444%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(6) { left: 55.555555%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(7) { left: 66.666666%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(8) { left: 77.777777%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(9) { left: 88.888888%; }
+
+.charsheet .sheet-main > .sheet-tab-label {
+    min-width: 94px;
+    max-width: 188px;
+    text-align: center;
+    color: rgb(159, 128, 73);
+    font-size: 90%;
+    line-height: 30px;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-weight: bold;
+    transition: color 0.35s ease;
+}
+
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(1) { left: 5.555555%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(2) { left: 16.666666%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(3) { left: 27.777777%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(4) { left: 38.888888%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(5) { left: 50%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(6) { left: 61.111111%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(7) { left: 72.222222%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(8) { left: 83.333333%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(9) { left: 94.444444%; }
+
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9) {
+    color: rgb(255, 255, 255);
+}
+
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9) {
+    color: rgb(255, 255, 255);
+}
+
+.charsheet .sheet-main > .sheet-tab-label span {
+    display: inline-block;
+    color: inherit;
+    font-size: inherit;
+}
+
+.charsheet .sheet-main > .sheet-tab-content {
+    min-height: 600px;
+    background-color: rgb(42, 31, 26);
+    border: 8px solid rgb(20, 20, 20);
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/body_frame.jpg");
+    border-image-slice: 100 130 fill;
+    border-image-width: 60px;
+    border-image-repeat: round;
+    padding: 26px;
+}
+
+/* content */
+.charsheet .sheet-paper {
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/sheets.png");
+    border-image-slice: 110 fill;
+    border-image-width: 105px;
+    border-image-repeat: stretch;
+    padding: 30px;
+    min-height: 450px;
+}
+
+.charsheet .sheet-paper h1 {
+    text-align: center;
+    color: rgb(164, 82, 58);
+    font-size: 150%;
+    line-height: 27px;
+    margin: 0 0 23px;
+    font-weight: bold;
+    text-shadow: 0 0 1px rgba(164, 82, 58, 0.3);
+}
+
+.charsheet .sheet-paper h1:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 9px;
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/title.png") center no-repeat;
+    background-size: contain;
+}
+
+.charsheet .sheet-paper input,
+.charsheet .sheet-paper select {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.charsheet .sheet-paper .sheet-section {
+    margin-bottom: 45px;
+}
+
+.charsheet .sheet-paper table {
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+
+.charsheet .sheet-paper table thead th {
+    background-color: rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+.charsheet .sheet-paper table th span {
+    display: inline-block;
+    line-height: 23px;
+    height: 23px;
+    font-size: 105%;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+.charsheet .sheet-paper table tbody td {
+    padding: 3px;
+    height: 36px;
+}
+
+.charsheet .sheet-paper .sheet-input-group span {
+    line-height: 23px;
+}
+
+.charsheet .sheet-paper input,
+.charsheet .sheet-paper select {
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+}
+
+.charsheet .sheet-paper input:disabled, .charsheet input.sheet-disabled {
+    cursor: default;
+    pointer-events:none;
+}
+
+.charsheet .sheet-paper input:disabled, .charsheet .sheet-paper input[type="text"].sheet-disabled {
+    background: transparent repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 7px);
+    border: none;
+}
+
+.charsheet .sheet-paper input.sheet-text-strong:disabled, .sheet-paper input[type="text"].sheet-text-strong.sheet-disabled {
+    background: rgba(0, 0, 0, 0.04);
+    border: none;
+}
+
+.charsheet .sheet-paper textarea {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    resize: vertical;
+    min-height: calc(16px + 2px + 20px);
+    height: calc(16px + 2px + 4 * 20px);
+    padding: 8px;
+    line-height: 20px;
+}
+
+.charsheet .sheet-paper span[title]:not(.sheet-alert) {
+    text-decoration: underline dashed;
+    text-decoration-color: inherit;
+    cursor: help;
+}
+
+.charsheet .sheet-paper .sheet-input-group.sheet-disabled {
+    background: transparent repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 7px);
+}
+
+.charsheet .sheet-paper .sheet-input-group.sheet-disabled input,
+.charsheet .sheet-paper .sheet-input-group.sheet-disabled select {
+    background: none !important;
+}
+
+/* took 120px as colomn width for reference */
+/* character */
+input[name="attr_foo_character_strength_total_alert"][value="show"] ~ div input[name="attr_character_strength_total"],
+input[name="attr_foo_character_strength_total_alert"][value="show"] ~ div input[name="attr_character_strength_mod"],
+input[name="attr_foo_character_dexterity_total_alert"][value="show"] ~ div input[name="attr_character_dexterity_total"],
+input[name="attr_foo_character_dexterity_total_alert"][value="show"] ~ div input[name="attr_character_dexterity_mod"],
+input[name="attr_foo_character_dexterity_mod_alert"][value="show"] ~ div input[name="attr_character_dexterity_mod"],
+input[name="attr_foo_armor_class_dexterity_alert"][value="show"] ~ div input[name="attr_armor_class_dexterity"],
+input[name="attr_foo_combat_maneuver_defense_alert"][value="show"] ~ div input[name="attr_combat_maneuver_defense_dexteriy"] {
+    color: rgb(200, 82, 58);
+}
+
+.charsheet .sheet-character-life-points {
+    max-width: 720px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-non-lethal-damage {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-wound-points {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-vitality {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-level {
+    max-width: 480px;
+}
+
+.charsheet .sheet-animal-life-points {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-animal-level {
+    max-width: 120px;
+}
+
+.sheet-counter {
+    max-width: 360px;
+}
+
+.sheet-character-race-standard,
+.sheet-character-race-custom {
+    display: none;
+}
+
+input[name="attr_character_race_custom"][value="show"] ~ div .sheet-character-race-custom,
+input[name="attr_character_race_custom"][value="hide"] ~ div .sheet-character-race-standard{
+    display: block;
+}
+
+.charsheet .sheet-character-race {
+    max-width: 720px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-animal-race {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-appearance {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-background {
+    max-width: 420px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-language {
+    max-width: 420px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-language-modal {
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-label {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/select_dropdown.png") no-repeat center right;
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content {
+    left: 50%;
+    bottom: 0;
+    width: 584px;
+    transform: translate(-50%, 100%);
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content h1 {
+    text-align: center;
+    color: rgb(200, 200, 200);
+    font-size: 100%;
+    line-height: 32px;
+    height: 26px;
+    margin: 0 0 8px;
+    font-weight: bold;
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content h1::after {
+    content: none;
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0 -8px -8px;
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content li {
+    list-style: none;
+    min-width: 180px;
+    padding: 0 8px 8px;
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content .sheet-input-group {
+    margin-top: 26px;
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content span:not(.sheet-button-switch-label),
+.charsheet .sheet-character-language-modal .sheet-modal-content input {
+    color: rgb(200, 200, 200);
+}
+
+.charsheet .sheet-character-language-modal .sheet-modal-content input {
+    border-bottom: 1px solid rgb(100, 100, 100);
+}
+
+.charsheet .sheet-character-size {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-weight {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-attribute table {
+    max-width: 1200px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-character-movement table {
+    max-width: 840px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-class {
+    max-width: 1440px;
+}
+
+.sheet-class-container-toggle input {
+    display: none;
+}
+
+.sheet-class-toggle[value="show"] ~ table .sheet-class-container-toggle select {
+    max-width: 120px;
+}
+
+.sheet-class-toggle[value="show"] ~ table .sheet-class-container-toggle input {
+    display: block;
+}
+
+/* weapon proficiency */
+.charsheet .sheet-weapon-proficiency {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-weapon-proficiency-modal .sheet-modal-label {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/select_dropdown.png") no-repeat center right;
+}
+
+.charsheet .sheet-weapon-proficiency-modal .sheet-modal-content {
+    left: 50%;
+    bottom: 0;
+    width: 240px;
+    transform: translate(-50%, 100%);
+}
+
+.charsheet .sheet-weapon-proficiency-modal .sheet-modal-content ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0 -8px -8px;
+}
+
+.charsheet .sheet-weapon-proficiency-modal .sheet-modal-content li {
+    list-style: none;
+    width: 100%;
+    padding: 0 8px 8px;
+}
+
+/* armor proficiency */
+.charsheet .sheet-armor-proficiency li {
+    max-width: 240px;
+}
+
+.charsheet .sheet-armor-proficiency {
+    max-width: 240px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-armor-proficiency .sheet-modal-label {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/select_dropdown.png") no-repeat center right;
+}
+
+.charsheet .sheet-armor-proficiency .sheet-modal-content {
+    left: 50%;
+    bottom: 0;
+    width: 240px;
+    transform: translate(-50%, 100%);
+}
+
+.charsheet .sheet-armor-proficiency .sheet-modal-content ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0 -8px -8px;
+}
+
+.charsheet .sheet-armor-proficiency .sheet-modal-content li {
+    list-style: none;
+    width: 100%;
+    padding: 0 8px 8px;
+}
+
+/* class favorite */
+.charsheet .sheet-class-specialization-content {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-class-specialization input,
+.charsheet .sheet-class-specialization select {
+    border-bottom: none !important;
+}
+
+.charsheet .sheet-class-specialization-description {
+    min-height: 240px;
+    height: 240px;
+}
+
+/* battle */
+.charsheet .sheet-initiative table {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-combat-maneuver-bonus table {
+    max-width: 960px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-battle {
+    max-width: calc(30px + 30px + 1080px);
+}
+
+.charsheet .sheet-battle-note {
+    min-height: 90px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-battle-roll,
+.charsheet .sheet-battle-roll button {
+    width: 30px;
+}
+
+.charsheet .sheet-battle-roll > button {
+    margin-top: 15px;
+}
+
+.charsheet .sheet-battle-content {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-battle-label {
+    max-width: 840px;
+}
+
+.charsheet .sheet-battle-name {
+    border: none !important;
+}
+
+.charsheet .sheet-battle-subcontent table {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-battle-table-roll {
+    max-width: 960px;
+}
+
+.charsheet .sheet-battle-table-damage {
+    max-width: 960px;
+}
+
+.charsheet .sheet-battle-subcontent-note {
+    min-height: 90px;
+    max-width: 840px;
+}
+
+/* magic */
+.charsheet .sheet-caster-level table {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-contact-attack table {
+    max-width: 960px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-summary table {
+    max-width: 1080px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-grimoire {
+    margin-left: -20px;
+    margin-right: -35px;
+    margin-bottom: -30px !important;
+}
+
+.charsheet .sheet-grimoire .sheet-tab {
+    max-width: 984px;
+    min-height: 620px;
+    padding: 30px 45px 55px;
+    border-image-source: url("https://github.com/aloade/pathfinder/raw/master/image/sheets-static.png");
+    border-image-slice: 100 fill;
+    border-image-width: 94px;
+    border-image-repeat: stretch;
+}
+
+.charsheet .sheet-grimoire .sheet-tab-input,
+.charsheet .sheet-grimoire .sheet-tab-label {
+    left: -15px;
+    width: 30px !important;
+    height: 45px !important;
+}
+
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(1), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(1) { top: 40px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(2), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(2) { top: 100px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(3), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(3) { top: 150px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(4), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(4) { top: 200px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(5), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(5) { top: 250px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(6), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(6) { top: 300px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(7), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(7) { top: 350px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(8), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(8) { top: 400px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(9), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(9) { top: 450px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(10), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(10) { top: 500px; }
+.charsheet .sheet-grimoire .sheet-tab-input:nth-of-type(11), .charsheet .sheet-grimoire .sheet-tab-label:nth-of-type(11) { top: 550px; }
+
+.charsheet .sheet-grimoire .sheet-tab-label {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    background-color: rgb(176, 162, 131);
+    line-height: 45px;
+    text-align: center;
+}
+
+.charsheet .sheet-grimoire .sheet-tab-label span {
+    color: inherit;
+    text-decoration-color: inherit;
+}
+
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(10) ~ .sheet-tab-label:nth-of-type(10),
+.charsheet .sheet-grimoire .sheet-tab-input:checked:nth-of-type(11) ~ .sheet-tab-label:nth-of-type(11) {
+    left: -6px;
+    color: white;
+    text-decoration-color: white;
+    background-color: green;
+}
+
+.charsheet .sheet-spell-failure table {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-roll button {
+    margin-top: 15px;
+}
+
+.charsheet .sheet-spell-name {
+    border: none;
+}
+
+.charsheet .sheet-spell hr {
+    width: 100%;
+}
+
+.charsheet .sheet-spell-incantation-type {
+    max-width: 240px;
+    margin-bottom: 15px;
+}
+
+.sheet-spell-melee-touch,
+.sheet-spell-ranged-touch,
+.sheet-spell-none,
+.sheet-spell-standard {
+    display: none;
+}
+
+.sheet-spell-incantation-type-toggle[value="melee-touch"] ~ div .sheet-spell-melee-touch,
+.sheet-spell-incantation-type-toggle[value="ranged-touch"] ~ div .sheet-spell-ranged-touch,
+.sheet-spell-incantation-type-toggle[value="none"] ~ div .sheet-spell-none,
+.sheet-spell-incantation-type-toggle[value="standard"] ~ div .sheet-spell-standard {
+    display: block;
+}
+
+.charsheet .sheet-spell-standard table {
+    max-width: 360px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-melee-touch table {
+    max-width: 960px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-ranged-touch table {
+    max-width: 960px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-concentration table {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-damage-roll {
+    max-width: 120px;
+    margin-bottom: 15px;
+}
+
+.sheet-spell-damage-toggle[value="hide"] ~ div .sheet-spell-damage .sheet-spell-damage-effect,
+.sheet-spell-damage-toggle[value="hide"] ~ div .sheet-spell-damage .sheet-horizontal-button-group {
+    display: none;
+}
+
+.charsheet .sheet-spell-damage-effect {
+    max-width: 300px;
+    margin-bottom: 15px;
+}
+
+.sheet-spell-save-toggle[value="hide"] ~ div .sheet-spell-save .sheet-spell-save-roll-type,
+.sheet-spell-save-toggle[value="hide"] ~ div .sheet-spell-save .sheet-spell-save-difficulty-class {
+    display: none;
+}
+
+.charsheet .sheet-spell-save-roll {
+    max-width: 120px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-save-roll-type {
+    max-width: 240px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-save-difficulty-class {
+    max-width: 600px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-note {
+    min-height: 185px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-aside {
+    max-width: 360px;
+}
+
+.charsheet .sheet-spell-aside table {
+    margin-bottom: 15px;
+}
+
+/* defense */
+.charsheet .sheet-saves table {
+    max-width: 1080px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-defense-armor-class {
+    max-width: 480px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-defense-armor-class-detail {
+    max-width: 960px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-combat-maneuver-defense table {
+    max-width: 1080px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-spell-resistance table {
+    max-width: 720px;
+    margin-bottom: 15px;
+}
+
+/* skills */
+.charsheet .sheet-skill-summary table {
+    max-width: 240px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-paper .sheet-status-alert {
+    display: block;
+    color: rgb(200, 82, 58);
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 20px;
+}
+
+.charsheet .sheet-skill {
+    max-width: 1200px;
+}
+
+/* feat */
+.charsheet .sheet-featracial {}
+
+.charsheet .sheet-featracial-content {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-featracial-label {
+    border-bottom: none !important;
+}
+
+.charsheet .sheet-featracial-description {
+    min-height: 240px;
+    height: 240px;
+}
+
+.charsheet .sheet-feat {}
+
+.charsheet .sheet-feat-content {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-feat span {
+    display: inline-block;
+}
+
+.charsheet .sheet-feat-description-short {
+    border-bottom: none !important;
+    margin-top: 8px !important;
+}
+
+.charsheet .sheet-feat-description {
+    min-height: 240px;
+    height: 240px;
+}
+
+/* inventory */
+.charsheet .sheet-currency table {
+    max-width: 480px;
+}
+
+.charsheet .sheet-currency .sheet-currency-coin {
+    display: inline-block;
+    text-align: center;
+    font-size: 75%;
+    width: 23px;
+    height: 23px;
+    line-height: 15px !important;
+    border: 2px solid transparent;
+    border-radius: 100%;
+}
+
+.charsheet .sheet-currency .sheet-currency-platinum {
+    background-color: rgb(212, 221, 230);
+    border-color: rgb(233, 241, 247);
+    color: rgb(253, 255, 255);
+    box-shadow: 0 1px rgb(212, 221, 230), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.charsheet .sheet-currency .sheet-currency-gold {
+    background-color: rgb(207, 181, 59);
+    border-color: rgb(255, 200, 46);
+    color: rgb(240, 196, 27);
+    box-shadow: 0 2px rgb(207, 181, 59), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.charsheet .sheet-currency .sheet-currency-silver {
+    background-color: rgb(192, 201, 210);
+    border-color: rgb(213, 221, 227);
+    color: rgb(233, 239, 245);
+    box-shadow: 0 1px rgb(192, 201, 210), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.charsheet .sheet-currency .sheet-currency-copper {
+    background-color: rgb(223, 144, 97);
+    border-color: rgb(251, 201, 166);
+    color: rgb(251, 213, 188);
+    box-shadow: 0 1px rgb(223, 144, 97), 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.charsheet .sheet-inventory-weight table {
+    max-width: 360px;
+}
+
+.charsheet .sheet-weight-charge {
+    width: 100%;
+    height: 8px;
+}
+
+/* progress bar */
+.charsheet .sheet-paper .sheet-progress {
+    position: relative;
+}
+
+.charsheet .sheet-paper .sheet-progress-bar {
+    position: relative;
+    margin-bottom: 16px;
+    height: 10px;
+    border: 1px solid rgb(150, 150, 150);
+}
+
+.charsheet .sheet-paper .sheet-progress-bar::before,
+.charsheet .sheet-paper .sheet-progress-bar::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 8px;
+    border-left: inherit;
+    z-index: 1;
+    top: 0;
+}
+
+.charsheet .sheet-paper .sheet-progress-bar::before {
+    left: 33%;
+}
+
+.charsheet .sheet-paper .sheet-progress-bar::after {
+    left: 67%;
+}
+
+.charsheet .sheet-paper .sheet-progress-bar-current {
+    width: 0;
+    height: 100%;
+    background-color: transparent;
+    transition: width 0.35s ease, background-color 0.35s ease;
+}
+
+.charsheet .sheet-paper .sheet-progress-percent,
+.charsheet .sheet-paper .sheet-progress-light,
+.charsheet .sheet-paper .sheet-progress-medium,
+.charsheet .sheet-paper .sheet-progress-heavy {
+    height: 16px;
+    font-size: 10px;
+    border: none;
+    cursor: default;
+}
+
+.charsheet .sheet-paper .sheet-progress-light {
+    position: absolute;
+    left: 33%;
+    top: 100%;
+    transform: translate(-50%, 0);
+}
+
+.charsheet .sheet-paper .sheet-progress-medium {
+    position: absolute;
+    left: 67%;
+    top: 100%;
+    transform: translate(-50%, 0);
+}
+
+.charsheet .sheet-paper .sheet-progress-heavy {
+    position: absolute;
+    left: 100%;
+    top: 100%;
+    transform: translate(-50%, 0);
+}
+
+.charsheet .sheet-paper .sheet-progress .sheet-paper input[type="hidden"][value="0"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 0; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.01"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 1%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.02"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 2%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.03"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 3%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.04"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 4%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.05"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 5%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.06"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 6%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.07"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 7%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.08"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 8%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.09"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 9%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.1"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 10%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.11"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 11%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.12"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 12%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.13"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 13%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.14"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 14%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.15"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 15%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.16"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 16%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.17"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 17%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.18"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 18%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.19"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 19%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.2"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 20%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.21"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 21%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.22"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 22%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.23"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 23%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.24"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 24%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.25"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 25%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.26"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 26%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.27"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 27%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.28"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 28%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.29"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 29%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.3"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 30%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.31"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 31%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.32"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 32%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.33"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 33%; background-color: rgb(36, 147, 61); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.34"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 34%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.35"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 35%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.36"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 36%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.37"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 37%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.38"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 38%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.39"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 39%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.4"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 40%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.41"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 41%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.42"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 42%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.43"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 43%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.44"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 44%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.45"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 45%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.46"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 46%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.47"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 47%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.48"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 48%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.49"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 49%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.5"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 50%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.51"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 51%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.52"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 52%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.53"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 53%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.54"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 54%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.55"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 55%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.56"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 56%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.57"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 57%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.58"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 58%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.59"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 59%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.6"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 60%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.61"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 61%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.62"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 62%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.63"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 63%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.64"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 64%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.65"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 65%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.66"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 66%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.67"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 67%; background-color: yellow; }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.68"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 68%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.69"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 69%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.7"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 70%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.71"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 71%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.72"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 72%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.73"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 73%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.74"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 74%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.75"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 75%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.76"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 76%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.77"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 77%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.78"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 78%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.79"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 79%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.8"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 80%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.81"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 81%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.82"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 82%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.83"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 83%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.84"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 84%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.85"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 85%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.86"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 86%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.87"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 87%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.88"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 88%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.89"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 89%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.9"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 90%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.91"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 91%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.92"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 92%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.93"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 93%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.94"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 94%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.95"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 95%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.96"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 96%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.97"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 97%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.98"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 98%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="0.99"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 99%; background-color: rgb(255, 193, 7); }
+.charsheet .sheet-paper .sheet-progress input[type="hidden"][value="1"] ~ .sheet-progress-bar .sheet-progress-bar-current { width: 100%; background-color: rgb(200, 35, 51); }
+
+.charsheet .sheet-equipment-weapon {
+    max-width: 1080px;
+}
+
+.charsheet .sheet-equipment-weapon .repcontrol {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-equipment-armor {
+    max-width: 1080px;
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-equipment-armor .repcontrol {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-equipement {
+    max-width: 480px;
+}
+
+.charsheet .sheet-equipment-magic table {
+    max-width: 600px;
+}
+
+.charsheet .sheet-equipment-magic tbody {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-equipment-magic-spacer {
+    height: 15px;
+}
+
+.charsheet .sheet-equipment-magic tbody tr td:first-child {
+    text-align: center;
+}
+
+/* notes */
+.charsheet .sheet-note-content {
+    margin-bottom: 15px;
+}
+
+.charsheet .sheet-note-label {
+    border-bottom: none !important;
+}
+
+.charsheet .sheet-note-description {
+    min-height: 240px;
+    height: 240px;
+}
+
+/* --------------------------------------------------- */
+/* option */
+/* --------------------------------------------------- */
+.charsheet .sheet-option {
+    max-width: 90px;
+    margin: 0 auto;
+    transition: color 0.25s ease;
+}
+
+.charsheet .sheet-option:hover .sheet-modal-label {
+    color: rgb(255, 255, 255);
+}
+
+.charsheet .sheet-option .sheet-modal-label {
+    display: inline-block;
+    width: 100%;
+}
+
+.charsheet .sheet-option .sheet-modal-content {
+    right: 0;
+    bottom: 0;
+    width: 436px;
+}
+
+.charsheet .sheet-option .sheet-modal-content h1 {
+    text-align: center;
+    color: rgb(200, 200, 200);
+    font-size: 100%;
+    line-height: 32px;
+    height: 26px;
+    margin: 0 0 8px;
+    font-weight: bold;
+}
+
+.charsheet .sheet-option .sheet-modal-content ul {
+    padding: 0;
+    margin: 0;
+}
+
+.charsheet .sheet-option .sheet-modal-content li {
+    list-style: none;
+    margin-bottom: 8px;
+}
+
+/* --------------------------------------------------- */
+/* status */
+/* --------------------------------------------------- */
+.charsheet .sheet-status {
+    width: 100%;
+    max-width: 630px;
+    margin: 0 auto;
+}
+
+.charsheet .sheet-status .sheet-modal-checkbox {
+    width: 90px !important;
+}
+
+.charsheet .sheet-status .sheet-modal-status-fake-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px !important;
+    z-index: 1;
+}
+
+.charsheet .sheet-status .sheet-modal-label {
+    height: 25px;
+    line-height: 25px;
+    color: rgb(150, 150, 150);
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+}
+
+.charsheet .sheet-modal-status-resume {
+    margin-let: 90px;
+    cursor: default;
+}
+
+.charsheet .sheet-status .sheet-modal-content {
+    left: 0;
+    bottom: 0;
+    width: 630px;
+}
+
+.charsheet .sheet-status .sheet-modal-content h1 {
+    text-align: center;
+    color: rgb(200, 200, 200);
+    font-size: 100%;
+    line-height: 32px;
+    height: 26px;
+    margin: 0 0 8px;
+    font-weight: bold;
+}
+
+.charsheet .sheet-status .sheet-modal-content input {
+    border-bottom: 1px solid rgb(100, 100, 100);
+}
+
+.charsheet .sheet-status .sheet-modal-content .sheet-input-group {
+    height: 26px;
+    margin-bottom: 8px;
+}
+
+.charsheet .sheet-status .sheet-modal-content ul {
+    padding: 0;
+    margin: 0;
+}
+
+.charsheet .sheet-status .sheet-modal-content li {
+    list-style: none;
+    width: 180px;
+    margin-bottom: 8px;
+}
+
+.charsheet .sheet-status-negative-level .sheet-input-group-text span, .charsheet .sheet-status-negative-level input,
+.charsheet .sheet-status-effect {
+    color: rgb(200, 200, 200);
+}
+
+.charsheet .sheet-status-effect {
+    width: 100%;
+    border: none;
+    background: transparent;
+    resize: none;
+    height: calc(100% - 68px);
+    overflow-y: auto;
+    padding: 0;
+    cursor: default;
+    line-height: 20px;
+}
+/* --------------------------------------------------- */
+/* rolltemplate */
+/* --------------------------------------------------- */
+/* generic */
+.sheet-rolltemplate-roll * {
+    font-family: "Gloria Hallelujah", "Patrick Hand", sans-serif;
+}
+
+.sheet-rolltemplate-roll {
+    padding: 12px;
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/paper_rolled.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.sheet-rolltemplate-roll p {
+    margin: 0 0 15px;
+    font-size: 16px;
+    color: rgb(56, 61, 65);
+}
+
+.sheet-rolltemplate-roll span[title]:not(.inlinerollresult ) {
+    text-decoration: underline dashed rgb(50, 50, 50);
+    cursor: help;
+}
+
+.sheet-rolltemplate-roll .inlinerollresult {
+    display: inline-block;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    text-align: center;
+    line-height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: rgba(50, 50, 50, 0.07);
+    border: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.sheet-rolltemplate-roll .inlinerollresult.importantroll {
+    background-color: transparent;
+    border: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.sheet-rolltemplate-roll .inlinerollresult.fullcrit {
+    color: rgb(255, 255, 255);
+    background-color: rgb(40, 167, 69);
+    border: 1px solid rgb(40, 167, 69);
+}
+
+.sheet-rolltemplate-roll .inlinerollresult.fullfail {
+    color: rgb(255, 255, 255);
+    background-color: rgb(200, 35, 51);
+    border: 1px solid rgb(190, 33, 48);
+}
+
+/* flex */
+.sheet-rolltemplate-roll .sheet-flex-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 -8px;
+}
+
+.sheet-rolltemplate-roll .sheet-flex-col {
+    position: relative;
+    width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 0 8px;
+}
+
+.sheet-rolltemplate-roll .sheet-left {
+    text-align: left;
+}
+
+.sheet-rolltemplate-roll .sheet-right {
+    text-align: right;
+}
+
+.sheet-rolltemplate-roll .sheet-center {
+    text-align: center;
+}
+
+.sheet-rolltemplate-roll .sheet-footer {
+    text-align: center;
+}
+
+.sheet-rolltemplate-roll .sheet-footer p {
+    font-style: italic;
+    color: rgb(120, 120, 120);
+    margin: 0;
+}
+
+.sheet-rolltemplate-roll .sheet-critic {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/critical_hit.png") no-repeat center;
+    background-size: contain;
+}
+
+.sheet-rolltemplate-roll .sheet-warning span {
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.75);
+    font-weight: bold;
+}
+
+.sheet-rolltemplate-roll .sheet-danger span {
+    color: rgb(200, 35, 51);
+    font-weight: bold;
+}
+
+/* template - basic */
+.sheet-rolltemplate-roll .sheet-basic {}
+
+/* template - battle */
+.sheet-rolltemplate-roll .sheet-battle {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/versus.png") no-repeat center;
+    background-size: contain;
+}
+
+/* template - magic */
+.sheet-rolltemplate-roll .sheet-magic {
+    background: url("https://github.com/aloade/pathfinder/raw/master/image/pentacle.png") no-repeat center;
+    background-size: contain;
+}
