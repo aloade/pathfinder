@@ -39,13 +39,12 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - L'âge limite pour la jeunesse n'est pas définit clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
 
 - Global
-    - nettoyer le fichier "translation.js" des relicats et doublons
-    - ajouter la possibilitées de n'envoyer les roll qu'au GM
     
 - Entête
     
 - Personnage
     - vérifier les classes de personnages
+    - implémenter les règles complètes des blessures https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules/
 
 - Combat
 
