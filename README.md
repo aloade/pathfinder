@@ -56,10 +56,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Compétences
       
 - Inventaire
-  - ajout des nombre à virgules pour les poids des armes
-  - ajout des nombre à virgules pour les poids des armures
-  - ajout des nombre à virgules pour les poids des équipements
-  - ajout des nombre à virgules pour les poids des équipements magiques
+  - ajout colonne "consigne", ajouter bouton de transfert inventaire <-> consigne
 
 - rolltemplate
   - remplacer le terme "Attaque" par "jet d'Attaque" ( y'a de la place )
