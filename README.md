@@ -58,6 +58,9 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Inventaire
   - ajout des nombre à virguls pour les poids des armures
 
+- rolltemplate
+  - remplacer le terme "Attaque" par "jet d'Attaque" ( y'a de la place )
+  
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
 
