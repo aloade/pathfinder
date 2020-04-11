@@ -15,7 +15,8 @@ la fiche est basé sur pathfinder 2nd édition, les sources vienent du site http
 
 les fonctionnalitées sont les suivantes :
 - template pour un personnage et un animal/familier/compagnon animal
-- envoie des jet dans le chat ou uniquement au maêtre de jeu
+- les lancés de combat peuvent se faire par ciblage ou non ( selon les options )
+- envoie des jet dans le chat ou uniquement au maître du jeu
 - utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
 - commentaire complet au survol de la souris pour chaque lancé de dés
 - application des status par un click
@@ -43,21 +44,18 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Entête
     
 - Personnage
-    - vérifier les classes de personnages
-    - implémenter les règles complètes des blessures https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules/
+    - implémenter les règles complètes des blessures https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules/ ( non présent dansles règles francaises )
+    - implémenter les points héroïques ( à placer dans l'entête ) https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx
 
 - Combat
 
 - Magie
-    - ajouter le drop du compendium
 
 - Défense
 
 - Compétences
-    - limiter les points de ***rangs*** au niveau du personnage
       
 - Inventaire
-    - ajouter argent sotckés dans une banque ?
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
