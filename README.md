@@ -64,6 +64,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - rolltemplate
   - remplacer le terme "Attaque" par "jet d'Attaque" ( y'a de la place )
   - faute sur "ignore l'échec des sorts profanes" ( i majuscule )
+  - faute sur "test de perception" ( p de perception )
   
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
