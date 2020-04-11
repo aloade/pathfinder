@@ -56,6 +56,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Compétences
       
 - Inventaire
+  - ajout des nombre à virguls pour les poids des armures
 
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
