@@ -39,6 +39,8 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
  
 - L'âge limite pour la jeunesse n'est pas définit clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
 
+## Modification de la fiche prévues
+
 - Global
     
 - Entête
