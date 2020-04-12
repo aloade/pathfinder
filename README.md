@@ -42,6 +42,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 ## Modification de la fiche prévues
 
 - Global
+  - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
     
 - Entête
     
