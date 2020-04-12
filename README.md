@@ -105,11 +105,11 @@ Compilation des règles CSS utilisable pour la mise en page.
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - HTML
-    - **ne pas** utiliser le terme **_max** ou **_maximum** pour les variables utilisés dans des calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 )
+    - **ne pas** utiliser le terme **_max** ou **_maximum** pour les variables utilisés dans des calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 ), les réservé pour les input à lié avec les tokens. **Attention** à mettre la valeur entre paranthèses si elle contient plusieurs variables, par exemple : ( @{var1}+@{var2} )
     - pour un "radio" les inputs **doivent** se suivre dans le code et **doivent** avoir l'attribute value
     - les balises html5 dans leur majorité ne sont pas autorisés
     - les attributes "data" pour les balises sont supprimés
-    - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe
+    - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe, mais faisable pour les variables dans le repeating, par exemple "repeating_var1_var2_var3" -> "repeating_var1" + "var2_var3"
     
 - ECMAscript
     
