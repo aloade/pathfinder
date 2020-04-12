@@ -112,7 +112,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
   - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe, mais faisable pour les variables dans le repeating, par exemple "repeating_var1_var2_var3" -> "repeating_var1" + "var2_var3"
     
 - ECMAscript
-  - "<script data-type="text/worker" est valide pour roll20, utilise pour interpréteur ECMAscript pendant le dev.
+  - "<script data-type="text/worker>" est valide pour roll20 ( au lieu de <script type="text/worker"> ), utile pour un interpréteur ECMAscript pendant le dev.
     
 - CSS
   - les règles pour "rolltemplate" sont indépendants du "character sheet"
