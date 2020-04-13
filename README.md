@@ -43,6 +43,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 
 - Global
   - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
+  - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
     
 - Entête
     
