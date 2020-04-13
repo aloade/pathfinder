@@ -65,6 +65,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - pour NLS remplacer "temporaire" par "divers"
 
 - Défense
+  - ajouter "Parade" pour la DMD
 
 - Compétences
       
