@@ -73,7 +73,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - Sauvegarde : remplacer "Résist." par "Malus"
   - CA : ajouter "Temp."
   - DMD : ajouter "Parade" et "Temp."
-  - Résistance magique : remplacer "Divers" par "Temp."
+  - Résistance magique : ajouter "Temp."
 
 - Compétences
       
