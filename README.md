@@ -59,13 +59,21 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - pour "port d'armure" laisser en input séparés pour "léger", "intermédiaire" et "lourd" ( agrandir le résumé pour tout faire rentrer
   
 - Combat
-  - pour les attaques remplacer "temporaire" par "divers"
+  - BMO : remplacer "Divers" par "Malus"
+  - attaques : remplacer "equpmnt." par "Divers"
 
 - Magie
-  - pour NLS remplacer "temporaire" par "divers"
+  - NLS : ajouter "Temp."
+  - Risque échec aux sorts profanes : ajouter "Divers"
+  - Sortilèges / Incantaton : ajouter "Temp."
+  - Sortilèges / Concentration : ajouter "Temp."
+  - Sortilèges / Sauvegarde : ajouter "Temp."
 
 - Défense
-  - ajouter "Parade" pour la DMD
+  - Sauvegarde : remplacer "Résist." par "Malus"
+  - CA : ajouter "Temp."
+  - DMD : ajouter "Parade" et "Temp."
+  - Résistance magique : remplacer "Divers" par "Temp."
 
 - Compétences
       
