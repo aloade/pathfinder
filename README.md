@@ -44,8 +44,10 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Global
   - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
   - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
+  - ajout des variables d'initialisation dans sheet.json
     
 - Entête
+  - les option vie, whisper, attack roll voit le javascript supprimé pour une gestion par input avec nom en doublon
     
 - Personnage
   - implémenter les règles complètes des blessures https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules/ ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
