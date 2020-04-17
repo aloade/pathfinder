@@ -11,7 +11,7 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - remplacer le fichier ***translation.json*** par celui de la langue choisie dans le répertoire language
 
 ## Fonctionnalitées
-la fiche est basé sur pathfinder 2nd édition, les sources vienent du site https://www.d20pfsrd.com et https://www.pathfinder-fr.org/
+la fiche est basé sur pathfinder 2nd édition, les sources vienent du site [d20pfsrd](https://www.d20pfsrd.com) et [pathfinder-fr](https://www.pathfinder-fr.org)
 
 les fonctionnalitées sont les suivantes :
 - template pour un personnage et un animal/familier/compagnon animal
@@ -44,7 +44,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Global
   - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
   - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
-  - ajout des variables d'initialisation dans sheet.json [https://wiki.roll20.net/Default_Sheet_Settings](Default Sheet Settings)
+  - ajout des variables d'initialisation dans sheet.json [Default Sheet Settings](https://wiki.roll20.net/Default_Sheet_Settings)
     
 - Entête
   - les option health, whisper, attack roll voit le javascript supprimé pour une gestion par input avec nom en doublon
@@ -52,9 +52,9 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - changer template "monster" par "companion"
     
 - Personnage
-  - implémenter les règles complètes des blessures https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules/ ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
-  - voir pour implémentation des niveau négatif pour la vie alternative https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx
-  - changer le placeholder des compteurs pour y ajouter "points héroiques" https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx
+  - implémenter les règles complètes des blessures[wound tresholds option rules](https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules) ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
+  - voir pour implémentation des niveau négatif pour la vie alternative [blessure vitalité](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx)
+  - changer le placeholder des compteurs pour y ajouter "points héroiques" [points héroiques](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx)
   - ajouter couleur des yeux et des cheveux dans physionomie
   - ajouter race autre pour les monstre ( comme pour le PJ )
 
