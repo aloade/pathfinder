@@ -44,7 +44,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Global
   - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
   - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
-  - ajout des variables d'initialisation dans sheet.json
+  - ajout des variables d'initialisation dans sheet.json [https://wiki.roll20.net/Default_Sheet_Settings](Default Sheet Settings)
     
 - Entête
   - les option health, whisper, attack roll voit le javascript supprimé pour une gestion par input avec nom en doublon
