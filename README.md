@@ -49,6 +49,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Entête
   - les option health, whisper, attack roll voit le javascript supprimé pour une gestion par input avec nom en doublon
   - l'option template, voit sa gestion CSS changé (utilisation d'une classe pour utiliser le noeud DOM )
+  - changer template "monster" par "companion"
     
 - Personnage
   - implémenter les règles complètes des blessures https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules/ ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
