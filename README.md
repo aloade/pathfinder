@@ -67,6 +67,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - attaques : remplacer "equpmnt." par "Divers"
 
 - Magie
+  - ajouter compter maximum pour les sorts de niveau 0
   - NLS : ajouter "Temp."
   - Risque échec aux sorts profanes : ajouter "Divers"
   - Sortilèges / Incantaton : ajouter "Temp."
