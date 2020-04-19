@@ -57,6 +57,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - changer le placeholder des compteurs pour y ajouter "points héroiques" [points héroiques](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx)
   - ajouter couleur des yeux et des cheveux dans physionomie
   - ajouter race autre pour les monstre ( comme pour le PJ )
+  - ajouter vision ("normale" ou "nocturne" ou "dans le noir" ) + distance
 
 - Spécialisation
   - ajoute champ libre pour la classe pour "classes de prédilection" ( idem que pour les classes )
