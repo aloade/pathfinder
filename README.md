@@ -123,6 +123,8 @@ Compilation des règles CSS utilisable pour la mise en page.
 ## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
+- sheet.json
+  - pour utiliser la traduction **description** et **descriptiontranslationkey** doivent avoir une valeur autre que null ou vide, utiliser par exemple **"foo"**
 - HTML
   - **ne pas** utiliser le terme **_max** ou **_maximum** pour les variables utilisés dans des calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 ), les réservé pour les input à lié avec les tokens. **Attention** à mettre la valeur entre paranthèses si elle contient plusieurs variables, par exemple : ( @{var1}+@{var2} )
   - pour un "radio" les inputs **doivent** se suivre dans le code et **doivent** avoir l'attribute value
