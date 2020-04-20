@@ -54,7 +54,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Personnage
   - implémenter les règles complètes des blessures[wound tresholds option rules](https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules) ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
   - voir pour implémentation des niveau négatif pour la vie alternative [blessure vitalité](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx)
-  - changer le placeholder des compteurs pour y ajouter "points héroiques" [points héroiques](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx)
 
 - Spécialisation
 
@@ -67,7 +66,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Compétences
 
 - Inventaire
-  - ajout repeating "consigne" sous la réserve d'argent, ajouter bouton de transfert inventaire <-> consigne
 
 - rolltemplate
   
