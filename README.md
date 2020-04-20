@@ -55,42 +55,24 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - implémenter les règles complètes des blessures[wound tresholds option rules](https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules) ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
   - voir pour implémentation des niveau négatif pour la vie alternative [blessure vitalité](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx)
   - changer le placeholder des compteurs pour y ajouter "points héroiques" [points héroiques](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx)
-  - ajouter couleur des yeux et des cheveux dans physionomie
-  - ajouter race autre pour les monstre ( comme pour le PJ )
-  - ajouter vision ("normale" ou "nocturne" ou "dans le noir" ) + distance
 
 - Spécialisation
-  - ajoute champ libre pour la classe pour "classes de prédilection" ( idem que pour les classes )
-  - pour "port d'armure" laisser en input séparés pour "léger", "intermédiaire" et "lourd" ( agrandir le résumé pour tout faire rentrer
-  
+    
 - Combat
-  - BMO : remplacer "Divers" par "Malus"
-  - attaques : remplacer "equpmnt." par "Divers"
 
 - Magie
-  - ajouter compter maximum pour les sorts de niveau 0
-  - NLS : ajouter "Temp."
-  - Risque échec aux sorts profanes : ajouter "Divers"
   - Sortilèges / Incantaton : ajouter "Temp."
   - Sortilèges / Concentration : ajouter "Temp."
   - Sortilèges / Sauvegarde : ajouter "Temp."
 
 - Défense
-  - Sauvegarde : remplacer "Résist." par "Malus"
-  - CA : ajouter "Temp."
-  - DMD : ajouter "Parade" et "Temp."
-  - Résistance magique : ajouter "Temp."
 
 - Compétences
       
 - Inventaire
-  - faire deux colonnes, à gauche les notes à droite, la réserve d'argent
   - ajout repeating "consigne" sous la réserve d'argent, ajouter bouton de transfert inventaire <-> consigne
 
 - rolltemplate
-  - remplacer le terme "Attaque" par "jet d'Attaque" ( y'a de la place )
-  - faute sur "ignore l'échec des sorts profanes" ( i majuscule )
-  - faute sur "test de perception" ( p de perception )
   
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
