@@ -57,18 +57,15 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - changer le placeholder des compteurs pour y ajouter "points héroiques" [points héroiques](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Points%20h%c3%a9ro%c3%afques.ashx)
 
 - Spécialisation
-    
+
 - Combat
 
 - Magie
-  - Sortilèges / Incantaton : ajouter "Temp."
-  - Sortilèges / Concentration : ajouter "Temp."
-  - Sortilèges / Sauvegarde : ajouter "Temp."
 
 - Défense
 
 - Compétences
-      
+
 - Inventaire
   - ajout repeating "consigne" sous la réserve d'argent, ajouter bouton de transfert inventaire <-> consigne
 
