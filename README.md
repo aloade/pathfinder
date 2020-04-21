@@ -47,9 +47,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - ajout des variables d'initialisation dans sheet.json [Default Sheet Settings](https://wiki.roll20.net/Default_Sheet_Settings) [example](https://github.com/MadCoder253/roll20-character-sheets/blob/master/GURPS/sheet.json)
     
 - Entête
-  - les option health, whisper, attack roll voit le javascript supprimé pour une gestion par input avec nom en doublon
-  - l'option template, voit sa gestion CSS changé (utilisation d'une classe pour utiliser le noeud DOM )
-  - changer template "monster" par "companion"
     
 - Personnage
   - implémenter les règles complètes des blessures[wound tresholds option rules](https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules) ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
