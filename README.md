@@ -58,13 +58,14 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Combat
 
 - Magie
-  ajouter malus de niveau pour le jet de sort utilisant le NLS ( NLS <> jet de NLS )
+  - ajouter malus de niveau pour le jet de sort utilisant le NLS ( NLS <> jet de NLS )
 
 - Défense
 
 - Compétences
 
 - Inventaire
+  - ajouter dégâts sur les armes ( ET )
 
 - rolltemplate
   
