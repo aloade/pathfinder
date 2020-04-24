@@ -45,9 +45,9 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
   - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
   - ajout des variables d'initialisation dans sheet.json [Default Sheet Settings](https://wiki.roll20.net/Default_Sheet_Settings) [example](https://github.com/MadCoder253/roll20-character-sheets/blob/master/GURPS/sheet.json)
+  - ajouter taux de progression xp dans sheet.json
     
 - Entête
-  - pour le title de mvt, ajouter descriptif de charge ( +2 aux jets de bousculade +2 aux jets d'attaques -2 CA )
     
 - Personnage
   - afficher un indicateur pour les seuils de blessure [wound tresholds option rules](https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules) ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
