@@ -100,6 +100,8 @@ Compilation des règles CSS utilisable pour la mise en page.
 ## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
+- général
+  - liaison champ avec un token, uniquement les input simples ( sans **disable** ou valeurs calculées ) peuvent être lié à un token, la seule solution est d'utiliser du ECMAscript pour changer la valeur
 - sheet.json
   - pour utiliser la traduction de **description**, utiliser **displaytranslationkey** ( **description** peut etre omis )
   - pour utiliser la traduction de **description**, utiliser **descriptiontranslationkey** (**description** doit avoir une valeur autre que null ou vide, utiliser par exemple **"foo"** )
@@ -137,6 +139,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
       
 - translation.json
   - le message d'erreur "Foudn a pre-defined key order!" correspond à une liste d'élément ordonné contenant une erreur.
+  
 - rollTemplate
   - pas de calculs conditionnels utilisable, uniquement de l'affichage
     par exemple pour s'assurer qu'une valeur est au minimum à 1, utiliser :
