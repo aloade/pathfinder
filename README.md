@@ -114,7 +114,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     
 - ECMAscript
   - "<script data-type="text/worker>" est valide pour roll20 ( au lieu de <script type="text/worker"> ), utile pour un interpréteur ECMAscript pendant le dev.
-  - utiliser setAttr() pour créer un nouvel élément n'apparait pas dans les évènements déclanchant **change** ou **remove**
+  - utiliser removeRepeatingRow() ne déclenche pas les events **on("change:foo")** ni **on("remove:foo")**, compensable si suivit de **setAttrs(payload, {silent:true}, callback)** ou **setAttrs(payload, {silent:false}, callback)**
     
 - CSS
   - les règles pour "rolltemplate" sont indépendants du "character sheet"
