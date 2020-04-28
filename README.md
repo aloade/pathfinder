@@ -36,7 +36,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
   > Force compris entre 0 à 10 : 5 x Force
   
-  > Force supérieuré à 10 : 24.9087 e^( 0.1386 x Force )
+  > Force supérieur à 10 : 24.9087 e^( 0.1386 x Force )
  
 - L'âge limite pour la jeunesse n'est pas définit clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
 
