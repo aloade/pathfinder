@@ -103,11 +103,11 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
   - pour utiliser la traduction de **description**, utiliser **displaytranslationkey** ( **description** peut etre omis )
   - pour utiliser la traduction de **description**, utiliser **descriptiontranslationkey** (**description** doit avoir une valeur autre que null ou vide, utiliser par exemple **"foo"** )
 - HTML
-  - **ne pas** utiliser le terme **_max** ou **_maximum** pour les variables utilisés dans des calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 ), les réservé pour les input à lié avec les tokens. **Attention** à mettre la valeur entre paranthèses si elle contient plusieurs variables, par exemple : ( @{var1}+@{var2} )
+  - **ne pas** utiliser le terme **_max** ou **_maximum** pour les variables utilisés dans des calculs; des comportements aléatoires sont à prévoir ( par exemple "@{hitpoints_max}" renvoie toujours 0 ), les réserver aux inputs à lier avec les tokens.
   - pour un "radio" les inputs **doivent** se suivre dans le code et **doivent** avoir l'attribute value
   - les balises html5 dans leur majorité ne sont pas autorisés
   - les attributes "data" pour les balises sont supprimés
-  - pour les fieldset "repeating_xxx" ne pas utliser les undescore pour le nommage de la classe, mais faisable pour les variables dans le repeating, par exemple "repeating_var1_var2_var3" -> "repeating_var1" + "var2_var3"
+  - pour les fieldset **repeating_xxx"** et les boutons **act_** ne pas utliser des undescores pour le nommage de la classe, mais faisable pour les variables dans le repeating, par exemple "repeating_var1_var2_var3" -> "repeating_var1" + "var2_var3"
     
 - ECMAscript
   - "<script data-type="text/worker>" est valide pour roll20 ( au lieu de <script type="text/worker"> ), utile pour un interpréteur ECMAscript pendant le dev.
