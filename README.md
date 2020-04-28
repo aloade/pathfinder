@@ -16,7 +16,7 @@ la fiche est basé sur pathfinder 2nd édition, les sources vienent du site [d20
 les fonctionnalitées sont les suivantes :
 - template pour un personnage et un animal/familier/compagnon animal
 - les lancés de combat peuvent se faire par ciblage ou non ( selon les options )
-- envoie des jet dans le chat ou uniquement au maître du jeu
+- envoie des jet dans le chat ou uniquement au maître du jeu ( selon les options )
 - utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
 - commentaire complet au survol de la souris pour chaque lancé de dés
 - application des status par un click
@@ -27,11 +27,12 @@ les fonctionnalitées sont les suivantes :
 - pour le sorts gestion des échecs aux sorts profanes lors d'un lancé de dé, et prise en compte de la résistance magique
 - glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités et selon la catégorie de la taille si souhaité par l'utilisateur )
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
+- transfert des armes et objets dans un dépôt ( utile pour la gestion des charges transportables )
 
 ## Modifications des règles Pathfinder
 certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
 
-- lors d'une attaque la classe d'armure est indiqué pour la cible, alors que pour les sorts la résistance magique n'apparait pas; car lors d'un combat si un personn age assite à un combat, il est capable de deviner ses capacités ( reflété par la CA ), à l'inverse d'un sort lancé ou l'on ne peut deviner les capacités magique de défenses.
+- les status concernant les CA ne sont pas toujours clair dans les règle; à savoir si la CMD est concernée ou pas, dans le doute, sans mention contraire le status est appliqué à la CA et la DMD
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
   > Force compris entre 0 à 10 : 5 x Force
   
@@ -42,12 +43,13 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 ## Modification de la fiche prévues
 
 - Global
-  - pour les règles de vie, point de blessure/vitalité, le terme officiels sont wound/vigor ( et non wound/vitaliy )
   - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
   - ajout des variables d'initialisation dans sheet.json [Default Sheet Settings](https://wiki.roll20.net/Default_Sheet_Settings) [example](https://github.com/MadCoder253/roll20-character-sheets/blob/master/GURPS/sheet.json)
   - ajouter taux de progression xp dans sheet.json
     
 - Entête
+  - ajouter l'ajout de status personnalisé ( un titre, le label a affiché dans status,un bouton d'activation + panneau déroulant contenant un repeating pour ajouter les attributs à modifer
+  )
     
 - Personnage
   - afficher un indicateur pour les seuils de blessure [wound tresholds option rules](https://www.d20pfsrd.com/gamemastering/other-rules/unchained-rules/wound-thresholds-optional-rules) ( non présent dans les règles francaises, status activable/désactivable, indication proche points de vie )
@@ -65,7 +67,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Compétences
 
 - Inventaire
-  - ajouter dégâts sur les armes ( ET )
 
 - rolltemplate
   
