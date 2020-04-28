@@ -32,7 +32,7 @@ les fonctionnalitées sont les suivantes :
 ## Modifications des règles Pathfinder
 certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
 
-- les status concernant les CA ne sont pas toujours clair dans les règle; à savoir si la CMD est concernée ou pas, dans le doute, sans mention contraire le status est appliqué à la CA et la DMD
+- les status concernant les CA ne sont pas toujours clair dans les règles qaund la CMD est concernée ou pas, dans le doute sans mention contraire le status est appliqué à la CA et la DMD.
 - le poids transportable utilise un tableau pour déterminer ses valeurs, par simplicité la formule suivante a été retenu 
   > Force compris entre 0 à 10 : 5 x Force
   
@@ -45,14 +45,13 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Global
   - ajouter fiche PNJ ( utiliser variables disctinctes commencant par "monster_") se baser sur fiche PNJ
   - ajout des variables d'initialisation dans sheet.json [Default Sheet Settings](https://wiki.roll20.net/Default_Sheet_Settings) [example](https://github.com/MadCoder253/roll20-character-sheets/blob/master/GURPS/sheet.json)
-  - ajouter taux de progression xp dans sheet.json
     
 - Entête
   - ajouter l'ajout de status personnalisé ( un titre, le label a affiché dans status,un bouton d'activation + panneau déroulant contenant un repeating pour ajouter les attributs à modifer
   )
     
 - Personnage
-  - voir pour implémentation des niveau négatif pour la vie alternative [blessure vitalité](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx)
+  - voir pour implémentation des niveau négatifs pour la vie alternative [blessure vitalité](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx)
 
 - Spécialisation
 
