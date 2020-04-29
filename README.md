@@ -59,8 +59,10 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Magie
 
 - Défense
+  - impact sur la CA mêlée et distance, lié à la CA de contact ?
 
 - Compétences
+  - ajout bonus CA pour les points investis en esquive ?
 
 - Inventaire
 
