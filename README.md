@@ -62,7 +62,8 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - impact sur la CA mêlée et distance, lié à la CA de contact ?
 
 - Compétences
-  - Un personnage possédant un rang de 3 ou plus en Acrobaties bénéficie d’un bonus d’esquive de +3 à la CA lorsqu’il combat sur la défensive (au lieu du bonus normal de +2) et d’un bonus d’esquive de +6 à la CA lorsqu’il décide de se mettre en défense totale (au lieu du bonus normal de +4). -> afficher dans effects status 
+  - Acrobatie : Un personnage possédant un rang de 3 ou plus en Acrobaties bénéficie d’un bonus d’esquive de +3 à la CA lorsqu’il combat sur la défensive (au lieu du bonus normal de +2) et d’un bonus d’esquive de +6 à la CA lorsqu’il décide de se mettre en défense totale (au lieu du bonus normal de +4).
+  - Vol : Les créatures dont la taille n’est pas M reçoivent également un bonus (ou un malus) dépendant de leur taille aux tests de Vol : infime +8, minuscule +6, très petit +4, petit +2, grand -2, très grand -4, gigantesque -6, colossal -8.
 
 - Inventaire
 
