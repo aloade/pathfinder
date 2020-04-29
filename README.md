@@ -33,6 +33,7 @@ les fonctionnalitées sont les suivantes :
 certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
 
 - les status concernant les CA ne sont pas toujours clair dans les règles qaund la CMD est concernée ou pas, dans le doute sans mention contraire le status est appliqué à la CA et la DMD.
+- toujours pour la CA pour l'esquive, la règle n'est pas clair, donc si un status implique une perte de la CA où e bonus de d extérité pour la CA est perdue, il impacte la l'esquive de la CA
 - le poids transportable utilise un tableau pour déterminer ses valeurs, qui montre de gros soucis passé les 29 de force ( à calculer et a être cohérent ), par simplicité la formule suivante a été retenue. 
   > Force compris entre 0 à 10 : 5 x Force
   
@@ -59,7 +60,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Magie
 
 - Défense
-  - impact sur la CA mêlée et distance, lié à la CA de contact ?
 
 - Compétences
   - Acrobatie : Un personnage possédant un rang de 3 ou plus en Acrobaties bénéficie d’un bonus d’esquive de +3 à la CA lorsqu’il combat sur la défensive (au lieu du bonus normal de +2) et d’un bonus d’esquive de +6 à la CA lorsqu’il décide de se mettre en défense totale (au lieu du bonus normal de +4).
