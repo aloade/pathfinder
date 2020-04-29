@@ -62,7 +62,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - impact sur la CA mêlée et distance, lié à la CA de contact ?
 
 - Compétences
-  - ajout bonus CA pour les points investis en esquive ?
+  - Un personnage possédant un rang de 3 ou plus en Acrobaties bénéficie d’un bonus d’esquive de +3 à la CA lorsqu’il combat sur la défensive (au lieu du bonus normal de +2) et d’un bonus d’esquive de +6 à la CA lorsqu’il décide de se mettre en défense totale (au lieu du bonus normal de +4). -> afficher dans effects status 
 
 - Inventaire
 
