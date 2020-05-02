@@ -62,7 +62,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Défense
 
 - Compétences
- - pour les performances ajouter le modifier de force à celui de charisme [lien](
+ - pour les performances ajouter le modifier de force à celui de charisme ( awe-inspiring smash )
 
 - Inventaire
 
