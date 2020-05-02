@@ -33,7 +33,7 @@ les fonctionnalitées sont les suivantes :
 certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
 
 - les status concernant les CA ne sont pas toujours clair dans les règles qaund la CMD est concernée ou pas, dans le doute sans mention contraire le status est appliqué à la CA et la DMD.
-- lors de la perte du bonus d'esquive ou que la dextérite vaut 0, le bonus d'esquive pour la CAvaut 0.
+- combattre sur la défensive peut se faire en action simple ou complexe, vu la similitude dans les règles, seul la CA (esquive) est impactée
 - le poids transportable utilise un tableau pour déterminer ses valeurs, qui montre de gros soucis passé les 29 de force ( à calculer et a être cohérent ), par simplicité la formule suivante a été retenue. 
   > Force compris entre 0 à 10 : 5 x Force
   
