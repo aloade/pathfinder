@@ -117,7 +117,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
     
 - CSS
   - les règles pour "rolltemplate" sont indépendants du "character sheet"
-  - les input ont la règle "width" trop restrictif; obligation d'utiliser "important" pour appliquer un style personnalisé
+  - des styles sont appliqués pour ".ui-dialog .charsheet", mais appliquer un style à ".ui-dialog <child>" est automatiquement retiré, obligeant a être restrictifs sur les styles ( exemple width et height des inputs )
   - les règles sur "html" sont ignorées, donc au revoir les tailles en "rem"
   - les images en base64 ne peuvent être intégrés dans les styles CSS
 - SheetWorker
