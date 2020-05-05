@@ -59,6 +59,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Combat
 
 - Magie
+  - ajouter un choix pour afficher un effet dans le rolltemplate ( champ texte )
 
 - Défense
 
