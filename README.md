@@ -44,15 +44,11 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 ## Modification de la fiche prévues
 
 - Global
-  - ajouter fiche PNJ
-  - ajout des variables d'initialisation dans sheet.json [Default Sheet Settings](https://wiki.roll20.net/Default_Sheet_Settings) [example](https://github.com/MadCoder253/roll20-character-sheets/blob/master/GURPS/sheet.json)
-  - implémenter les dons de combat dans les status [d20pfsrd combat feats](https://d20pfsrd.com/feats/combat-feats)
-    
+  - changer navigation onglet selon [css wizardy](https://wiki.roll20.net/CSS_Wizardry)
+  
 - Entête
-  - ajouter l'ajout de status personnalisé ( un titre, un label a affiché dans status, un bouton d'activation + panneau déroulant contenant un repeating pour ajouter les attributs à modifer )
     
 - Personnage
-  - voir pour implémentation des niveau négatifs pour la vie alternative [blessure vitalité](https://www.pathfinder-fr.org/Wiki/Pathfinder-RPG.Blessures%20et%20vitalit%C3%A9.ashx)
 
 - Spécialisation
 
