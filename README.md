@@ -63,6 +63,7 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Défense
 
 - Compétences
+  - si malus du à l'encombrement s'applique, l'ajouter pour les compétences custom si dext/force est utilisé
 
 - Inventaire
 
