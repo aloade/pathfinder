@@ -55,7 +55,9 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Combat
 
 - Magie
-  - ajouter un choix pour afficher un effet dans le rolltemplate ( champ texte )
+  - change nom dégâts critique dans rolltemplate
+  - séparer les incantation pour les contact ( qui se fait tout le temps )
+  - retirer effect critique
 
 - Défense
 
