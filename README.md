@@ -55,9 +55,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 - Combat
 
 - Magie
-  - change nom dégâts critique dans rolltemplate
-  - séparer les incantation pour les contact ( qui se fait tout le temps )
-  - retirer effect critique
 
 - Défense
 
