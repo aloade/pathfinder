@@ -55,6 +55,9 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   
 - Entête
     - pas d'info au survol pour max point de vie
+    - status personnalisé : placeholder remplacer "forumule" par "formule"
+    - status personnalisé : changer title en minuscule
+    - le textes des boutons a un line-height mauvais
     
 - Personnage
 
