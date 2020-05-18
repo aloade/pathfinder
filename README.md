@@ -45,48 +45,27 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 
 - Global
   - changer navigation onglet selon [css wizardy](https://wiki.roll20.net/CSS_Wizardry)
-  - manque la traduction(fr) "spell-concentration-pinned-label"
-  - manque la traduction(fr) "status-effect-strength-ceiling"
-  - manque la traduction(fr) "status-effect-dexterity-ceiling"
   - le status lié à l'age ne s'affiche pas
   - erreur ordre liste des écoles (racine)
   - mauvais ordre pour les sorts d'illusion
-  - enlever title pour "modifier-status"
   
 - Entête
-    - pas d'info au survol pour max point de vie
-    - status personnalisé : placeholder remplacer "forumule" par "formule"
-    - status personnalisé : changer title en minuscule
-    - le textes des boutons a un line-height mauvais
+    - le texte des boutons a un line-height mauvais
     
 - Personnage
 
 - Spécialisation
 
 - Combat
-  - BMO : changer title, les mot ne sont pas mis en majuscule, changer "+ Malus"  par " - |Malus|"
-  - Attaque : changer title lancé de dé "+ Total" par "+ Bonus Atq."
-  - Attaque : changer title BBA "+ Equipment" par "+ Divers"
 
 - Magie
-  - NLS : enlever title de "Status"
-  - NLS : changer title du lancé de dé "+ Total + Status" par "+ Total"
-  - risque échec aux sorts profanes : ajouter "Status" au title de total
 
 - Défense
-  - CA : ajouter pour standard, distane et dépourvu au title "+ Parade"
-  - CA : pour contact ajouter "(ignore ... Parade)"
-  - DMD : pour le title déplacer "status" avant "Base"
 
 - Compétences
-  - ordonnancement des compétences n'est pas actif ( erreur sur item "sabotage" )
-  - manque "skill-class-competence-short"
   - si malus du à l'encombrement s'applique, l'ajouter pour les compétences custom si dext/force est utilisé
-  - natation : title remplacer "Batation" par "Natation"
-  - représentation : title remplacer "rprésentation" par "représentation"
 
 - Inventaire
-  - pour les boutons de déplacement d'objet, enlever les majuscules
 
 - rolltemplate
   
