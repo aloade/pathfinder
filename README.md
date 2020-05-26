@@ -32,6 +32,9 @@ les fonctionnalitées sont les suivantes :
 ## Modifications des règles Pathfinder
 certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
 
+- le port d'armure n'est pas clair sur qui est impacté, donc :
+  - avec formation : jet de compétences basés sur la force ou la dextérité
+  - sans formation : jet de compétences basés sur la force ou la dextérité + jet d'attaque + CA + DMD + reflexes
 - les status concernant les CA ne sont pas toujours clair dans les règles qaund la CMD est concernée ou pas, dans le doute sans mention contraire le status est appliqué à la CA et la DMD.
 - combattre sur la défensive peut se faire en action simple ou complexe, vu la similitude dans les règles, seul la CA (esquive) est impactée
 - le poids transportable utilise un tableau pour déterminer ses valeurs, qui montre de gros soucis passé les 29 de force ( à calculer et a être cohérent ), par simplicité la formule suivante a été retenue. 
@@ -50,7 +53,6 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
   - mauvais ordre pour les sorts d'illusion
   
 - Entête
-    - le texte des boutons a un line-height mauvais
     
 - Personnage
 
