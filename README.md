@@ -30,7 +30,7 @@ les fonctionnalitées sont les suivantes :
 - transfert des armes et objets dans un dépôt ( utile pour la gestion des charges transportables )
 
 ## Modifications des règles Pathfinder
-certains point sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
+certains points sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
 
 - le port d'armure n'est pas clair sur qui est impacté, donc :
   - avec formation : jet de compétences basés sur la force ou la dextérité
