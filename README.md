@@ -14,20 +14,23 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 la fiche est basé sur pathfinder 2nd édition, les sources vienent du site [d20pfsrd](https://www.d20pfsrd.com) et [pathfinder-fr](https://www.pathfinder-fr.org)
 
 les fonctionnalitées sont les suivantes :
-- template pour un personnage et un animal/familier/compagnon animal
-- les lancés de combat peuvent se faire par ciblage ou non ( selon les options )
+- template pour un personnage, un animal/familier/compagnon animal ou un PNJ
 - envoie des jet dans le chat ou uniquement au maître du jeu ( selon les options )
 - utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
 - commentaire complet au survol de la souris pour chaque lancé de dés
-- application des status par un click
+- gestion des status dans une fenêtre unique, avec application de leurs effets en un click
 - gestion des malus lié à l'âge du personnage
 - classes, langues et races préintégrés dans la fiche
-- calcul automatique des tailles et poids des personnages et déplacement selon la race et ses caracétristiques
+- calcul automatique des tailles et poids des personnages et déplacement selon la race et ses caractéristiques
 - gestion des malus de charge selon le poid des objets
 - pour le sorts gestion des échecs aux sorts profanes lors d'un lancé de dé, et prise en compte de la résistance magique
 - glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités et selon la catégorie de la taille si souhaité par l'utilisateur )
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
-- transfert des armes et objets dans un dépôt ( utile pour la gestion des charges transportables )
+- transfert des armes, armures et objets dans un dépôt ( utile pour la gestion des charges transportables par un tier ou une mule )
+
+note sur choix de design :
+- le ciblage n'est pas utilisé, car alourdi énormement la gestion, même si d'un premier abord ca simplife les calculs, dans la pratique ca demande beaucoup de click, et en cas de multi-ciblage le système est rendu caduc.
+- pour une gestion complète de la santé, changer les valeurs sur le token ne peut fonctionner ( valeur temporaires, status des niveaux négatif ou status de somnolence par exemple ); leurs valeurs doivent être changées dans la fiche du personnage.
 
 ## Modifications des règles Pathfinder
 certains points sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
@@ -48,7 +51,6 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 
 - Global
   - changer navigation onglet selon [css wizardy](https://wiki.roll20.net/CSS_Wizardry)
-  - le status lié à l'age ne s'affiche pas
   - erreur ordre liste des écoles (racine)
   - mauvais ordre pour les sorts d'illusion
   
@@ -80,7 +82,7 @@ Compilation des règles CSS utilisable pour la mise en page.
   flex-col-auto
 - input-group
     input-group
-    input-group-prepend input-group-append input-group-text
+    input-group-text
 - accordéon
     accordion
     accordion-checkbox accordion-label
@@ -103,7 +105,7 @@ Compilation des règles CSS utilisable pour la mise en page.
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - général
-  - liaison champ avec un token, uniquement les input simples ( sans **disable** ou valeurs calculées ) peuvent être lié à un token, la seule solution est d'utiliser du ECMAscript pour changer la valeur
+  - liaison champ avec un token, uniquement les input simples ( sans **disabled** ou valeurs calculées ) peuvent être lié à un token, la seule solution est d'utiliser du ECMAscript pour changer la valeur
 - sheet.json
   - pour utiliser la traduction de **description**, utiliser **displaytranslationkey** ( **description** peut etre omis )
   - pour utiliser la traduction de **description**, utiliser **descriptiontranslationkey** (**description** doit avoir une valeur autre que null ou vide, utiliser par exemple **"foo"** )
