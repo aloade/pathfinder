@@ -34,8 +34,8 @@ certains point sont discutables pour l'interprétation de certaines règles, voi
 
 - le port d'armure n'est pas clair sur qui est impacté, donc :
   - avec formation : jet de compétences basés sur la force ou la dextérité
-  - sans formation : jet de compétences basés sur la force ou la dextérité + jet d'attaque + CA + DMD + reflexes
-- les status concernant les CA ne sont pas toujours clair dans les règles qaund la CMD est concernée ou pas, dans le doute sans mention contraire le status est appliqué à la CA et la DMD.
+  - sans formation : jet de compétences basés sur la force ou la dextérité + initiative + jet d'attaque + DMD + reflexes
+- les status concernant la CA ne sont pas toujours clair dans les règles quand la CMD est concernée ou pas, dans le doute sans mention contraire le status est appliqué à la CA et la DMD, sauf pour l'encombrement qui n'est pas appliqué à la CA.
 - combattre sur la défensive peut se faire en action simple ou complexe, vu la similitude dans les règles, seul la CA (esquive) est impactée
 - le poids transportable utilise un tableau pour déterminer ses valeurs, qui montre de gros soucis passé les 29 de force ( à calculer et a être cohérent ), par simplicité la formule suivante a été retenue. 
   > Force compris entre 0 à 10 : 5 x Force
