@@ -57,6 +57,7 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Entête
     
 - Personnage
+  - vérifier les jet de caractéristique si c'est basé sur total ou mod. ( car les PNJ n'ont pas de mod, donc pas de test la dessus ? )
 
 - Spécialisation
 
