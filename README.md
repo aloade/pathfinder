@@ -57,7 +57,6 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Entête
     
 - Personnage
-  - vérifier les jet de caractéristique si c'est basé sur total ou mod. ( car les PNJ n'ont pas de mod, donc pas de test la dessus ? )
 
 - Spécialisation
 
@@ -120,7 +119,7 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
 - ECMAscript
   - "<script data-type="text/worker>" est valide pour roll20 ( au lieu de <script type="text/worker"> ), utile pour un interpréteur ECMAscript pendant le dev.
   - utiliser removeRepeatingRow() ne déclenche pas les events **on("change:foo")** ni **on("remove:foo")**, compensable si suivit de **setAttrs(payload, {silent:true}, callback)** ou **setAttrs(payload, {silent:false}, callback)**
-    
+  - BUG : l'utilisation de variables dans un élément ordonné via *data-i18n* renvoie une valeur non connu ( les raisons du déclenchant ne sont pas connus )
 - CSS
   - les règles pour "rolltemplate" sont indépendants du "character sheet"
   - des styles sont appliqués pour ".ui-dialog .charsheet", mais appliquer un style à ".ui-dialog <child>" est automatiquement retiré, obligeant a être restrictifs sur les styles ( exemple width et height des inputs )
