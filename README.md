@@ -104,6 +104,8 @@ Compilation des règles CSS utilisable pour la mise en page.
 ## Remarques sur roll20 et la création de la fiche de personnage
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
+- BUG
+  - utiliser GetAttr() pour un select utilisant *data-i18n-list* renvoie systématiquement le **premier élément** de la liste une fois ordonnée ( côté client le select est sur le bon élément )
 - général
   - liaison champ avec un token, uniquement les input simples ( sans **disabled** ou valeurs calculées ) peuvent être lié à un token, la seule solution est d'utiliser du ECMAscript pour changer la valeur
 - sheet.json
@@ -119,7 +121,6 @@ quelques "pense-bête" pour certains aspects pas évident à deviner lors de la 
 - ECMAscript
   - "<script data-type="text/worker>" est valide pour roll20 ( au lieu de <script type="text/worker"> ), utile pour un interpréteur ECMAscript pendant le dev.
   - utiliser removeRepeatingRow() ne déclenche pas les events **on("change:foo")** ni **on("remove:foo")**, compensable si suivit de **setAttrs(payload, {silent:true}, callback)** ou **setAttrs(payload, {silent:false}, callback)**
-  - BUG : l'utilisation de variables dans un élément ordonné via *data-i18n* renvoie l'id du premier élement une fois ordonné
 - CSS
   - les règles pour "rolltemplate" sont indépendants du "character sheet"
   - des styles sont appliqués pour ".ui-dialog .charsheet", mais appliquer un style à ".ui-dialog <child>" est automatiquement retiré, obligeant a être restrictifs sur les styles ( exemple width et height des inputs )
