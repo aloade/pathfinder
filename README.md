@@ -61,6 +61,7 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Spécialisation
 
 - Combat
+  - soucis sur le champ force/dext pour appliqué le bonus d'attaque
 
 - Magie
 
