@@ -31,10 +31,8 @@ les fonctionnalitées secondaires :
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
 - transfert des armes, armures et objets dans un dépôt ( utile pour la gestion des charges transportables par un tier ou une mule )
 
-note pour la récupération des données du compendium :
-beaucoup de fiches contiennent des erreurs, qui sont pour la pluspart gérées par la fiche de personnage, exepté un cas ; le mauvais type de données dans la fiche ( par exemple "-" pour une valeur de constitution, alors que ca devrait être un nombre ).
-
 note sur choix de design :
+- beaucoup de fiches contiennent des erreurs, qui sont pour la pluspart gérées par la fiche de personnage, exepté un cas ; le mauvais type de données dans la fiche ( par exemple "-" pour une valeur de constitution, alors que ca devrait être un nombre ).
 - le ciblage n'est pas utilisé, car alourdi énormement la gestion, même si d'un premier abord ca simplife les calculs, dans la pratique ca demande beaucoup de click, et en cas de multi-ciblage le système est rendu caduc.
 - pour une gestion complète de la santé, changer les valeurs sur le token ne peut fonctionner ( valeur temporaires, status des niveaux négatif ou status de somnolence par exemple ); leurs valeurs doivent être changées dans la fiche du personnage.
 
