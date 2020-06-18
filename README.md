@@ -11,22 +11,28 @@ La mise en page CSS utilise une structure pouvant être réutilisé sans modific
 - remplacer le fichier ***translation.json*** par celui de la langue choisie dans le répertoire language
 
 ## Fonctionnalitées
-la fiche est basé sur pathfinder 2nd édition, les sources vienent du site [d20pfsrd](https://www.d20pfsrd.com) et [pathfinder-fr](https://www.pathfinder-fr.org)
+la fiche est basé sur pathfinder 2nd édition, les sources vienent des sites, par ordre décroissant d'utilisation [d20pfsrd](https://www.d20pfsrd.com) et [pathfinder-fr](https://www.pathfinder-fr.org)
 
-les fonctionnalitées sont les suivantes :
+les fonctionnalitées princpales sont les suivantes :
 - template pour un personnage, un animal/familier/compagnon animal ou un PNJ
-- envoie des jet dans le chat ou uniquement au maître du jeu ( selon les options )
-- utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
-- commentaire complet au survol de la souris pour chaque lancé de dés
 - gestion des status dans une fenêtre unique, avec application de leurs effets en un click
 - gestion des malus lié à l'âge du personnage
 - classes, langues et races préintégrés dans la fiche
-- calcul automatique des tailles et poids des personnages et déplacement selon la race et ses caractéristiques
 - gestion des malus de charge selon le poid des objets
-- pour le sorts gestion des échecs aux sorts profanes lors d'un lancé de dé, et prise en compte de la résistance magique
 - glissé déposé du compendium Pathfinder pour les objets et les sorts ( avec conversion des unités et selon la catégorie de la taille si souhaité par l'utilisateur )
+- pour le sorts gestion des échecs aux sorts profanes lors d'un lancé de dé, et prise en compte de la résistance magique
+
+les fonctionnalitées secondaires :
+- envoie des jet dans le chat ou uniquement au maître du jeu ( selon les options )
+- utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
+- commentaire complet au survol de la souris pour chaque lancé de dés
+- conversion des longueur, poids, et taille selon la race et ses caractéristiques
+- conversion des longueurs et poids lors d'un glissé-déposé du compendium ( selon les options )
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
 - transfert des armes, armures et objets dans un dépôt ( utile pour la gestion des charges transportables par un tier ou une mule )
+
+note pour la récupération des données du compendium :
+beaucoup de fiches contiennent des erreurs, qui sont pour la pluspart gérées par la fiche de personnage, exepté un cas ; le mauvais type de données dans la fiche ( par exemple "-" pour une valeur de constitution, alors que ca devrait être un nombre ).
 
 note sur choix de design :
 - le ciblage n'est pas utilisé, car alourdi énormement la gestion, même si d'un premier abord ca simplife les calculs, dans la pratique ca demande beaucoup de click, et en cas de multi-ciblage le système est rendu caduc.
@@ -61,14 +67,12 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Spécialisation
 
 - Combat
-  - soucis sur le champ force/dext pour appliqué le bonus d'attaque
 
 - Magie
 
 - Défense
 
 - Compétences
-  - si malus du à l'encombrement s'applique, l'ajouter pour les compétences custom si dext/force est utilisé
 
 - Inventaire
 
@@ -106,7 +110,7 @@ Compilation des règles CSS utilisable pour la mise en page.
 quelques "pense-bête" pour certains aspects pas évident à deviner lors de la création de la fiche de personnage.
 
 - BUG
-  - utiliser GetAttr() pour un select utilisant *data-i18n-list* renvoie systématiquement le **premier élément** de la liste une fois ordonnée ( côté client le select est sur le bon élément )
+  - utiliser getAttr() pour un select utilisant *data-i18n-list* renvoie systématiquement le **premier élément** de la liste une fois ordonnée ( côté client le select est sur le bon élément )
 - général
   - liaison champ avec un token, uniquement les input simples ( sans **disabled** ou valeurs calculées ) peuvent être lié à un token, la seule solution est d'utiliser du ECMAscript pour changer la valeur
 - sheet.json
