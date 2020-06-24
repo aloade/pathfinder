@@ -74,6 +74,7 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 
 - Inventaire
   - drop du compendium pour les armes, la valeur du dé de dégâts ne s'affiche pas
+  - arrondier les points à 0.5
 
 - rolltemplate
   
