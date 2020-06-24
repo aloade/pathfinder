@@ -61,6 +61,7 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Entête
     
 - Personnage
+  - revoir nom en francais des divinité "Sarenrae" -> "Sarenraé" par exemple
 
 - Spécialisation
 
@@ -75,6 +76,7 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Inventaire
   - drop du compendium pour les armes, la valeur du dé de dégâts ne s'affiche pas
   - arrondier les points à 0.5
+  - bug lors d'un objet équipé applique des malus pour arme dont on est formé
 
 - rolltemplate
   
