@@ -3,7 +3,7 @@ Proposition d'une fiche de personnage pour le jeux Pathfinder.
 Le but est de coller au mieux aux règles tout en simplifiant les calculs rébarbartifs, néanmoins le joueur est mis à contribution pour les parties importantes, pour éviter de trop le guider, qui pourrait se reposer sur la fiche sans comprendre les règles.
 
 La mise en page se veut "responsive friendly"; à comprendre que la fiche de personne peut s'utiliser dans différentes tailles de fenêtre sans altérer la mise en page.
-La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir les [règles](README.md#règles-css) pour d'amples informations.
+La mise en page CSS utilise une structure pouvant être réutilisé sans modification du code CSS, voir les [règles](README.md#règles-css) pour plus amples informations.
 
 ## Notes pour translation.json
 - la propriété ***language*** est necessaire pour une fonction de tri des chaînes de caractères.
@@ -53,30 +53,9 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 
 - le poids des objets peuvent varier de ce qui est trouvable sur le wiki français, les poids du compendium étant en pieds pour passer en kilogramme les valeurs sont converties puis arrondi au 0.5 le plus proche. Par exemple: 6 lb = 2.71 kg -> 2.5kg ( et non 3 kg comme on peut le trouver dans le wiki français); à noter que les poids totaux sont de cette façon plus cohérent et évite de froler la surcharge en se basant sur le wiki français.
 
-## Modification de la fiche prévues
-
-- Global
-  - changer navigation onglet selon [css wizardy](https://wiki.roll20.net/CSS_Wizardry)
-  - erreur ordre liste des écoles (racine)
-  
-- Entête
-    
-- Personnage
-  - revoir nom en francais des divinité "Sarenrae" -> "Sarenraé" par exemple
-
-- Spécialisation
-
-- Combat
-
-- Magie
-
-- Défense
-
-- Compétences
-
-- Inventaire
-
-- rolltemplate
+## Modification et informations au sujet de la fiche
+  - une erreur existe pour l'ordre de la liste des écoles pour les sorts ( pas trouvé pourquoi :x )
+  - dans les status de classes seul deux sont affichés car ils ont des liés complexes et donc ne peuvent être reproduits en tant que status personnalisés ( il doit en exister d'autre;  faire un retour pour des ajouts )
   
 ## Règles CSS
 Compilation des règles CSS utilisable pour la mise en page.
