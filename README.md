@@ -51,7 +51,7 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
  
 - L'âge limite pour la jeunesse n'est pas défini clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
 
-- le poids des objets peuvent varier de ce qui est trouvable sur le wiki français, les poids du compendium étant en pieds pour passer en kilogramme les valeurs sont converties puis arrondi au 0.5 le plus proche. Par exemple: 6 lb = 2.71 kg -> 2.5kg ( et non 3 kg comme on peut le trouver dans le wiki français).
+- le poids des objets peuvent varier de ce qui est trouvable sur le wiki français, les poids du compendium étant en pieds pour passer en kilogramme les valeurs sont converties puis arrondi au 0.5 le plus proche. Par exemple: 6 lb = 2.71 kg -> 2.5kg ( et non 3 kg comme on peut le trouver dans le wiki français); à noter que les poids totaux sont de cette façon plus cohérent et évite de froler la surcharge en se basant sur le wiki français.
 
 ## Modification de la fiche prévues
 
