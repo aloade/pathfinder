@@ -54,7 +54,8 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - le poids des objets peuvent varier de ce qui est trouvable sur le wiki français, les poids du compendium étant en pieds pour passer en kilogramme les valeurs sont converties puis arrondi au 0.5 le plus proche. Par exemple: 6 lb = 2.71 kg -> 2.5kg ( et non 3 kg comme on peut le trouver dans le wiki français); à noter que les poids totaux sont de cette façon plus cohérent et évite de froler la surcharge en se basant sur le wiki français.
 
 ## Modification et informations au sujet de la fiche
-  - une erreur existe pour l'ordre de la liste des écoles pour les sorts ( pas trouvé pourquoi :x )
+  - un erreur existe pour l'ordre du champ déroulant pour la vitesse de déplacement ( options ) -> raison non trouvée
+  - une erreur existe pour l'ordre de la liste des écoles pour les sorts ( magie ) -> raison non trouvée
   - dans les status de classes seul deux sont affichés car ils ont des liés complexes et donc ne peuvent être reproduits en tant que status personnalisés ( il doit en exister d'autre;  faire un retour pour des ajouts )
   
 ## Règles CSS
