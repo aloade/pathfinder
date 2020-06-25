@@ -51,6 +51,8 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
  
 - L'âge limite pour la jeunesse n'est pas défini clairement dans les règles, donc les personnages auront les malus de la jeunesse tant qu'ils n'ont pas atteient l'âge adulte.
 
+- le poids des objets peuvent varier de ce qui est trouvable sur le wiki français, les poids du compendium étant en pieds pour passer en kilogramme les valeurs sont converties puis arrondi au 0.5 le plus proche. Par exemple: 6 lb = 2.71 kg --(conversion)--> 2.5kg ( et non 3 kg comme on peut le trouver dans le wiki français).
+
 ## Modification de la fiche prévues
 
 - Global
@@ -74,9 +76,6 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Compétences
 
 - Inventaire
-  - drop du compendium pour les armes, la valeur du dé de dégâts ne s'affiche pas
-  - arrondier les points à 0.5
-  - bug lors d'un objet équipé applique des malus pour arme dont on est formé
 
 - rolltemplate
   
