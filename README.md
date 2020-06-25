@@ -25,16 +25,16 @@ les fonctionnalitées principales sont les suivantes :
 les fonctionnalitées secondaires :
 - envoie des jet dans le chat ou uniquement au maître du jeu ( selon les options )
 - utilisation de la fiche avec l'unité souhaitée ( longueur, distance et poids )
-- commentaire complet au survol de la souris pour chaque lancé de dés
+- au survol de chaque bouton pour lancr un dé; note sur le fonctionnement et formule utilisée
 - conversion des longueur, poids, et taille selon la race et ses caractéristiques
 - conversion des longueurs et poids lors d'un glissé-déposé du compendium ( selon les options )
 - création d'une attaque a partir d'une arme de l'inventaire via un bouton
 - transfert des armes, armures et objets dans un dépôt ( utile pour la gestion des charges transportables par un tier ou une mule )
 
 note sur choix de design :
-- beaucoup de fiches contiennent des erreurs, qui sont pour la pluspart gérées par la fiche de personnage, exepté un cas ; le mauvais type de données dans la fiche ( par exemple "-" pour la CMB, alors que ca devrait être un nombre ) 
-- le ciblage n'est pas utilisé, car alourdi énormement la gestion, même si d'un premier abord ca simplife les calculs, dans la pratique ca demande beaucoup de click, et en cas de multi-ciblage le système est rendu caduc.
-- pour une gestion complète de la santé, changer les valeurs sur le token ne peut fonctionner ( valeur temporaires, status des niveaux négatif ou status de somnolence par exemple ); leurs valeurs doivent être changées dans la fiche du personnage.
+- beaucoup de fiches de créatures du compendium contiennent des erreurs, qui sont pour la plupart gérées par la fiche de personnage, exepté un cas ; le mauvais type de données dans la fiche ( par exemple "-" ou "&Mdash;" au lieu d'afficher des nombres ) 
+- le ciblage n'est pas utilisé, car ça alourdi énormement la gestion des tests, même si d'un premier abord ca simplife les calculs, dans la pratique ca demande beaucoup de click, et en cas de multi-ciblage le système est caduc.
+- associer des valeurs à un token ne peuvent être changé sur le token, ( santé, status des niveaux négatif ou status de somnolence par exemple ); leurs valeurs doivent être changées dans la fiche du personnage ( ceci est dû à une mécanique interne de roll20 ne pouvant être changé ).
 
 ## Modifications des règles Pathfinder
 certains points sont discutables pour l'interprétation de certaines règles, voici la liste de ce qui a été décidé :
@@ -58,7 +58,6 @@ certains points sont discutables pour l'interprétation de certaines règles, vo
 - Global
   - changer navigation onglet selon [css wizardy](https://wiki.roll20.net/CSS_Wizardry)
   - erreur ordre liste des écoles (racine)
-  - mauvais ordre pour les sorts d'illusion
   
 - Entête
     
